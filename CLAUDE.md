@@ -20,13 +20,22 @@ The Next.js app serves both the public pages and the member area (no separate pu
 - **Timezone:** Europe/Amsterdam (CET) fixed
 - **Language:** English only for MVP
 
-## Architecture Decisions (To Be Made)
+## Architecture Decisions
 
-When starting development, decide on:
-- Next.js app directory vs pages directory structure
-- Database ORM (Prisma, Drizzle, or Knex)
-- Component library approach
-- Testing framework
+- **Routing:** Next.js App Router (app directory)
+- **Source Structure:** `src/` directory with `@/*` import alias
+- **Styling:** Tailwind CSS (minimal usage for brutalist design)
+- **Database ORM:** TBD (Prisma, Drizzle, or Knex)
+- **Testing:** TBD
+
+## Build Commands
+
+```bash
+npm run dev      # Start development server (http://localhost:3000)
+npm run build    # Create production build
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
 
 ## Domain Model
 
