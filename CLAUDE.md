@@ -6,15 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Community Sauna is an internal booking platform for a community sauna, designed to be reusable for any community-oriented booking platform. Members can log in, book time slots, manage memberships, and make payments. Admins manage schedules, memberships, and view activity.
 
+The Next.js app serves both the public pages and the member area (no separate public website).
+
 ## Technical Stack
 
 - **Framework:** Next.js with TypeScript
 - **Database:** MariaDB (Infomaniak hosted)
-- **Auth:** NextAuth
-- **Payments:** Mollie
-- **Email:** Infomaniak Mail Service (transactional)
+- **Auth:** NextAuth (email/password only, no social login)
+- **Payments:** Mollie (account to be set up)
+- **Email:** Infomaniak Mail Service (plain text transactional emails)
 - **Hosting:** Infomaniak Node.js Hosting
 - **Deployment:** GitHub Actions → Infomaniak (SSH/SFTP)
+- **Timezone:** Europe/Amsterdam (CET) fixed
+- **Language:** English only for MVP
 
 ## Architecture Decisions (To Be Made)
 
@@ -34,11 +38,41 @@ When starting development, decide on:
 - **Booking** - User reservation for a time slot
 - **Payment** - Mollie payment records (linked to membership or walk-in booking)
 
-### Roles
+### Roles (Stacking)
+Roles stack: admin has all host permissions, host has all member permissions.
 - **Member**: Book/cancel slots, manage own membership and profile
 - **Host**: View bookings for hosted sessions, see member contact info
-- **Admin**: Manage all users, memberships, schedules, content
+- **Admin**: Manage all users, memberships, schedules, content; assign hosts to slots
 - **Superadmin**: Manage admin users
+
+## Authentication & Registration
+
+- **No email verification required** - booking confirmation email serves as implicit verification
+- **Required fields**: email, password, first name, phone
+- **Optional fields**: last name, gender, emergency contact
+- **Password reset**: Magic link via email
+- **First admin**: Created via database seed script
+- **Abandoned accounts**: Keep indefinitely
+
+## Booking Flow
+
+1. User clicks "book" on public schedule page
+2. Redirects to app subdomain for login/registration
+3. After auth, completes payment (if needed)
+4. Booking confirmed, location details revealed
+
+### Booking Rules
+- **No booking window limit** - can book any future slot
+- **No limit on active bookings** per member
+- **One booking per account per slot** - cannot book for others
+- **Payment issues block new bookings** until resolved
+- **Availability updates on interaction** - re-fetch when user clicks a slot
+
+## Schedule Display
+
+- **Week view calendar** with navigation between weeks
+- **Public shows spots remaining** (e.g., "3 of 5 spots left")
+- **Location only shown after booking confirmed**
 
 ## Business Rules
 
@@ -63,17 +97,39 @@ When starting development, decide on:
 2. Slot must have capacity (default: 5)
 3. No double bookings (same user, same slot)
 4. User must have active membership with credits OR pay walk-in fee
+5. User must not have outstanding payment failures
 
 ### Cancellation Rules
 - **Bookings**: Cancel 24+ hours before → credit/refund restored; under 24 hours → no refund
+- **Booking cancellation reason**: Optional text field
 - **Subscriptions**: After minimum commitment, cancel with 1 month notice
 - **Punch cards**: Cannot be cancelled
+- **Suspended status**: Admin action only (manual)
+
+### Slot Cancellation by Admin
+When admin cancels a time slot with existing bookings:
+- Auto-cancel all bookings
+- Restore credits to members
+- Send email notification automatically
+
+## Admin Features
+
+- **Dashboard focus**: This week overview (7-day bookings and capacity)
+- **Host assignment**: Admin manually assigns hosts to time slots
+- **Renewal notices**: Email sent 7 days before membership expiry/renewal
+
+## Communication
+
+- **Contact host/organizer**: Simple mailto: email link
+- **Email format**: Plain text only
+- **Booking reminders**: 24 hours before slot (email)
 
 ## Key Integration Points
 
 ### NextAuth
+- Email/password authentication only
 - Role-based session with `member`, `host`, `admin`, `superadmin`
-- Password reset flow required
+- Magic link password reset flow
 
 ### Mollie Payments
 - One-time payments for punch cards and walk-ins
@@ -84,13 +140,18 @@ When starting development, decide on:
 - Daily membership expiry check
 - 24-hour booking reminders (email)
 - Auto-renewal payment attempts
+- 7-day renewal notice emails
 
 ## Design Principles
 
-- **Brutalist UI**: Minimal styling, DIY culture aesthetic
+- **Brutalist UI**: Minimal styling, DIY culture aesthetic (design references to be shared)
 - **Mobile-first**: Responsive design
 - **WCAG accessible**: Clear, logical UX
 - **Reusable**: All content admin-configurable for other communities
+
+## Legal Requirements
+
+- Privacy policy page needed (GDPR compliance for storing member data)
 
 ## Documentation
 

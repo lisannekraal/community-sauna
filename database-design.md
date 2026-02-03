@@ -6,15 +6,15 @@
 | Field | Type | Notes |
 |-------|------|-------|
 | id | INT, PK, AUTO | |
-| email | VARCHAR(255), UNIQUE | |
-| password_hash | VARCHAR(255) | |
-| first_name | VARCHAR(100) | |
-| last_name | VARCHAR(100) | |
-| phone | VARCHAR(20) | |
-| gender | ENUM('male', 'female', 'non_binary', 'other', 'prefer_not_to_say') | |
-| emergency_contact_name | VARCHAR(200) | |
-| emergency_contact_phone | VARCHAR(20) | |
-| role | ENUM('member', 'host', 'admin') | |
+| email | VARCHAR(255), UNIQUE | Required |
+| password_hash | VARCHAR(255) | Required |
+| first_name | VARCHAR(100) | Required |
+| last_name | VARCHAR(100), NULL | Optional |
+| phone | VARCHAR(20) | Required |
+| gender | ENUM('male', 'female', 'non_binary', 'other', 'prefer_not_to_say'), NULL | Optional |
+| emergency_contact_name | VARCHAR(200), NULL | Optional |
+| emergency_contact_phone | VARCHAR(20), NULL | Optional |
+| role | ENUM('member', 'host', 'admin', 'superadmin') | Default: member |
 | created_at | DATETIME | |
 | updated_at | DATETIME | |
 
