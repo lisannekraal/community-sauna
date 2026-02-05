@@ -63,10 +63,18 @@ Roles stack: admin has all host permissions, host has all member permissions.
 - **First admin**: Created via database seed script
 - **Abandoned accounts**: Keep indefinitely
 
+## Routing Structure
+
+- **Public pages** (`/`): Homepage, schedule - accessible without login
+- **Internal app** (`/app`): Member area - requires authentication
+  - `/app` - Internal home (shows role-appropriate content)
+  - `/app/login` - Login page
+  - `/app/register` - Registration page
+
 ## Booking Flow
 
 1. User clicks "book" on public schedule page
-2. Redirects to app subdomain for login/registration
+2. Redirects to `/app` for login/registration
 3. After auth, completes payment (if needed)
 4. Booking confirmed, location details revealed
 

@@ -175,12 +175,12 @@ Roles stack: Admin inherits Host permissions, Host inherits Member permissions.
 
 ### Screen Guidance
 
-- The public section of the website has a clear "log in" button in the navbar. This sends you to [app.nameofwebsite.nl](http://app.nameofwebsite.nl) which shows you a log in page.
-- On the log in page it is possible to create an account as well, as well as forget password functionality.
-- The public part of the website also shows the sauna schedule in which you can view a sauna slot and have a CTA to "book this session" this sends you to the [app.nameofwebsite.nl](http://app.nameofwebsite.nl)/create-account, remembering what sauna slot the user wanted to book.
-- In the /create-account steps, the user goes directly to the process of doing a booking and creating an account, before returning to the Home of the internal website.
-- When an existing user logs in, it gets redirected to home (stays on app.nameofwebsite.nl) and is able to view any community notifications, news, active bookings, the current sauna schedule to make new bookings, manage its subscription, find resources like Q&A, and any other of the features in a clear, non-cluttered UX.
-- When an admin logs in, it sees a dashboard with this week's overview and all the features it needs to manage the ongoing sauna slots, as well as a separate page for managing members, managing memberships, managing schedules, managing admin users, etc.
+- The public section of the website has a clear "log in" button in the navbar. This sends you to `/app` which shows a login page.
+- On the login page it is possible to create an account as well, as well as forget password functionality.
+- The public part of the website also shows the sauna schedule in which you can view a sauna slot and have a CTA to "book this session" - this sends you to `/app/register`, remembering what sauna slot the user wanted to book.
+- In the registration steps, the user goes directly to the process of creating an account and doing a booking, before returning to the home of the internal website.
+- When an existing user logs in, they are redirected to `/app` (the internal home) and can view community notifications, news, active bookings, the current sauna schedule to make new bookings, manage their subscription, find resources like Q&A, and any other features in a clear, non-cluttered UX.
+- The internal home page (`/app`) shows different content based on role: members see their bookings and membership info, admins additionally see management features and this week's overview.
 
 ## Design
 
