@@ -102,12 +102,34 @@ Roles stack: Admin inherits Host permissions, Host inherits Member permissions.
 - **Manage** admin users
 - First superadmin account is created via database seed script
 
+## Flows
+
+### Signup
+
+#### From public schedule
+
+Guest clicks "Book timeslot" on schedule on public site
+    ↓
+"Log in or create account to confirm"
+    ↓
+[Register form] ←→ [Login form] (toggle)
+    ↓
+Account created → booking confirmed → /app/dashboard
+
+#### 
+
+Guest clicks "Sign up"
+    ↓
+[Register form] ←→ [Login form] (toggles to Register)
+    ↓
+Account created → /app/dashboard (empty state: "Book your first session")
+
 ## Features
 
 ### Must have
 
 - Viewable sauna schedule (week view calendar with navigation between weeks)
-- For each sauna slot, show spots remaining (e.g., "3 of 5 spots left") on public pages
+- For each sauna slot, show spots remaining (e.g., "3 of 5 spots left")
 - Community members can log in to make a reservation for a time slot
 - Reservations can also be cancelled (with optional reason)
 - Role/permission system (distinguish between regular members, hosts and admins)
