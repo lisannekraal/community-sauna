@@ -25,7 +25,7 @@ The Next.js app serves both the public pages and the member area (no separate pu
 - **Routing:** Next.js App Router (app directory)
 - **Source Structure:** `src/` directory with `@/*` import alias
 - **Styling:** Tailwind CSS (minimal usage for brutalist design)
-- **Database ORM:** TBD (Prisma, Drizzle, or Knex)
+- **Database ORM:** Prisma with MySQL provider (MariaDB compatible)
 - **Testing:** TBD
 
 ## Build Commands
@@ -35,6 +35,15 @@ npm run dev      # Start development server (http://localhost:3000)
 npm run build    # Create production build
 npm run start    # Start production server
 npm run lint     # Run ESLint
+```
+
+## Database Commands
+
+```bash
+npm run db:push     # Push schema to database (dev)
+npm run db:seed     # Seed membership plans + superadmin
+npm run db:studio   # Open Prisma Studio GUI
+npx prisma generate # Regenerate Prisma client after schema changes
 ```
 
 ## Domain Model
@@ -70,6 +79,13 @@ Roles stack: admin has all host permissions, host has all member permissions.
   - `/app` - Internal home (shows role-appropriate content)
   - `/app/login` - Login page
   - `/app/register` - Registration page
+
+## Security Architecture
+
+- **Route protection**: `src/proxy.ts` handles redirects for `/app/*` routes (Next.js 16 proxy convention)
+- **Auth verification**: Pages use `getServerSession(authOptions)` for actual authorization
+- **Defense in depth**: Proxy for redirects + page-level session checks
+- **Role checking**: Use `hasRole(userRole, requiredRole)` from `@/types` for permission checks
 
 ## Booking Flow
 
@@ -169,6 +185,15 @@ When admin cancels a time slot with existing bookings:
 ## Legal Requirements
 
 - Privacy policy page needed (GDPR compliance for storing member data)
+
+## Key Files
+
+- `src/proxy.ts` - Route protection for /app/* (redirects only)
+- `src/lib/auth.ts` - NextAuth configuration with JWT strategy
+- `src/lib/db.ts` - Prisma client singleton
+- `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities
+- `prisma/schema.prisma` - Database schema with all entities
+- `prisma/seed.ts` - Seeds membership plans and first superadmin
 
 ## Documentation
 
