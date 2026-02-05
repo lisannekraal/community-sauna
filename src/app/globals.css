@@ -3,18 +3,33 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Font families */
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'Archivo Black', Impact, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Tailwind font family utilities */
+  --font-family-mono: var(--font-mono);
+  --font-family-sans: var(--font-sans);
+  --font-family-display: var(--font-display);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
+
+/* Utility classes for fonts */
+.font-mono { font-family: var(--font-mono); }
+.font-sans { font-family: var(--font-sans); }
+.font-display { font-family: var(--font-display); }
 
 *:focus-visible {
   outline: 2px solid black;

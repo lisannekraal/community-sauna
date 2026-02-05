@@ -10,7 +10,7 @@ export function Header() {
     <header className="border-b-2 border-black">
       <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold">
+          <Link href="/" className="text-xl font-display uppercase">
             Community Sauna
           </Link>
 
