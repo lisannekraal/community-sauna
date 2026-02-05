@@ -24,13 +24,23 @@ const accountSchema = Yup.object({
 const personalSchema = Yup.object({
   firstName: Yup.string().trim().required('First name is required'),
   lastName: Yup.string(),
-  phone: Yup.string().trim().required('Phone number is required'),
+  phone: Yup.string()
+    .trim()
+    .required('Phone number is required')
+    .matches(/^[+\d\s\-()]+$/, 'Invalid phone number')
+    .test('min-digits', 'Phone number too short', val => 
+      (val?.replace(/\D/g, '').length || 0) >= 10
+    ),
   gender: Yup.string(),
 });
 
 const emergencySchema = Yup.object({
   emergencyContactName: Yup.string(),
-  emergencyContactPhone: Yup.string(),
+  emergencyContactPhone: Yup.string()
+    .matches(/^[+\d\s\-()]*$/, 'Invalid phone number')
+    .test('min-digits', 'Phone number too short', val => 
+      !val || (val.replace(/\D/g, '').length >= 10)
+    ),
 });
 
 const schemas = [accountSchema, personalSchema, emergencySchema];
@@ -321,6 +331,7 @@ export default function RegisterPage() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       autoComplete="off"
+                      error={touched.emergencyContactPhone && errors.emergencyContactPhone ? errors.emergencyContactPhone : undefined}
                     />
                   </>
                 )}
