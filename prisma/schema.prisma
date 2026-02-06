@@ -87,12 +87,13 @@ model User {
   updatedAt              DateTime  @updatedAt @map("updated_at")
 
   // Relations
-  memberships   Membership[]
-  bookings      Booking[]
-  payments      Payment[]
-  notifications Notification[]
-  articles      Article[]
-  hostedSlots   TimeSlot[]     @relation("HostedSlots")
+  memberships         Membership[]
+  bookings            Booking[]
+  payments            Payment[]
+  notifications       Notification[]
+  articles            Article[]
+  hostedSlots         TimeSlot[]           @relation("HostedSlots")
+  passwordResetTokens PasswordResetToken[]
 
   @@map("users")
 }
@@ -259,4 +260,18 @@ model Notification {
   user User @relation(fields: [userId], references: [id])
 
   @@map("notifications")
+}
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  tokenHash String   @map("token_hash") @db.VarChar(255)
+  expiresAt DateTime @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_reset_tokens")
 }

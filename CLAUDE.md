@@ -26,6 +26,7 @@ The Next.js app serves both the public pages and the member area (no separate pu
 - **Source Structure:** `src/` directory with `@/*` import alias
 - **Styling:** Tailwind CSS (minimal usage for brutalist design)
 - **Database ORM:** Prisma with MySQL provider (MariaDB compatible)
+- **Form Handling:** Formik with Yup schema validation
 - **Testing:** TBD
 
 ## Build Commands
@@ -181,6 +182,12 @@ When admin cancels a time slot with existing bookings:
 - **Mobile-first**: Responsive design
 - **WCAG accessible**: Clear, logical UX
 - **Reusable**: All content admin-configurable for other communities
+
+### Typography
+Fonts are self-hosted via Fontsource (no external CDNs):
+- **Archivo Black** (`font-display`) - Headings, uppercase
+- **Space Mono** (`font-mono`) - Step numbers, technical elements
+- **Space Grotesk** (`font-sans`) - Body text, default
 
 ## Legal Requirements
 

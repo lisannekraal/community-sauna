@@ -9,7 +9,6 @@ export async function POST(request: Request) {
 
     const { email, password, firstName, lastName, phone, gender, emergencyContactName, emergencyContactPhone } = body;
 
-    // Validate required fields
     if (!email || !password || !firstName || !phone) {
       return NextResponse.json(
         { error: 'Email, password, first name, and phone are required' },
@@ -17,7 +16,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check password length
     if (password.length < 8) {
       return NextResponse.json(
         { error: 'Password must be at least 8 characters' },
@@ -25,7 +23,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });

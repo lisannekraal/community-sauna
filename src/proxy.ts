@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 // Auth pages within /app that don't require login
-const authRoutes = ['/app/login', '/app/register'];
+const authRoutes = ['/app/login', '/app/register', '/app/forgot-password', '/app/reset-password'];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
