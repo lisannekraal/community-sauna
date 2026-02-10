@@ -179,6 +179,7 @@ Account created → /app/dashboard (empty state: "Book your first session")
 - Basic audit log (who changed what and when, especially for admin actions)
 - Time slot schedule should be available outside of the internal website as well. So on the public pages, the API that holds the schedule data can be called to show the sauna schedule
 - Multi language: add Dutch or other languages. We will start with English.
+- Keyboard navigation (arrow keys) on mobile day picker for WCAG accessibility
 
 ## UX
 
