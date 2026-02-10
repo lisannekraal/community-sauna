@@ -1,4 +1,5 @@
-import { type TimeSlotData } from './week-schedule';
+import { type TimeSlotData } from '@/types';
+import { CapacityMeter } from './capacity-meter';
 
 interface SlotCardProps {
   slot: TimeSlotData;
@@ -9,22 +10,9 @@ interface SlotCardProps {
   compact?: boolean;
 }
 
-function CapacityMeter({ booked, capacity }: { booked: number; capacity: number }) {
-  return (
-    <div className="flex gap-[3px]" aria-label={`${booked} of ${capacity} spots booked`}>
-      {Array.from({ length: capacity }, (_, i) => (
-        <div
-          key={i}
-          className={`w-[10px] h-[10px] rounded-full border border-current ${
-            i < booked ? 'bg-current' : ''
-          }`}
-        />
-      ))}
-    </div>
-  );
-}
-
 export function SlotCard({ slot, isToday, isDayPast, nowTime, onSlotClick, compact }: SlotCardProps) {
+  // Status computed inline from parent-provided props to avoid creating a Date per card.
+  // Keep in sync with getSlotStatus() in @/lib/schedule.
   const spotsLeft = slot.capacity - slot.bookedCount;
   const isFull = spotsLeft <= 0;
   const slotPast = isDayPast || (isToday && slot.startTime < nowTime);

@@ -1,23 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { type TimeSlotData } from '@/types';
+import { formatDateISO, formatNowTime } from '@/lib/schedule';
 import { SlotCard } from './slot-card';
+import { SlotDetailPanel } from './slot-detail-panel';
 
-export interface TimeSlotData {
-  id: number;
-  date: string;
-  startTime: string;
-  endTime: string;
-  capacity: number;
-  bookedCount: number;
-  type: string | null;
-  description: string | null;
-  isCancelled: boolean;
-}
-
-interface WeekScheduleProps {
+interface ScheduleProps {
   timeSlots: TimeSlotData[];
-  onSlotClick?: (slot: TimeSlotData) => void;
 }
 
 function getWeekDates(reference: Date): Date[] {
@@ -33,19 +23,14 @@ function getWeekDates(reference: Date): Date[] {
   });
 }
 
-function formatDate(date: Date): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-}
-
 const DAY_LABELS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
-export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
+export function Schedule({ timeSlots }: ScheduleProps) {
   const [weekOffset, setWeekOffset] = useState(0);
+  const [selectedSlot, setSelectedSlot] = useState<TimeSlotData | null>(null);
+
   const now = new Date();
-  const todayStr = formatDate(now);
+  const todayStr = formatDateISO(now);
 
   const ref = new Date(now);
   ref.setDate(ref.getDate() + weekOffset * 7);
@@ -53,7 +38,7 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
 
   // Mobile: default selected day is today (if in current week), else first day
   const defaultSelectedIndex = weekOffset === 0
-    ? weekDates.findIndex(d => formatDate(d) === todayStr)
+    ? weekDates.findIndex(d => formatDateISO(d) === todayStr)
     : 0;
   const [selectedDayIndex, setSelectedDayIndex] = useState(
     defaultSelectedIndex >= 0 ? defaultSelectedIndex : 0
@@ -65,14 +50,14 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
     if (newOffset === 0) {
       const newRef = new Date(now);
       const newWeekDates = getWeekDates(newRef);
-      const todayIdx = newWeekDates.findIndex(d => formatDate(d) === todayStr);
+      const todayIdx = newWeekDates.findIndex(d => formatDateISO(d) === todayStr);
       setSelectedDayIndex(todayIdx >= 0 ? todayIdx : 0);
     } else {
       setSelectedDayIndex(0);
     }
   };
 
-  const nowTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  const nowTime = formatNowTime(now);
 
   const slotsByDate: Record<string, TimeSlotData[]> = {};
   for (const slot of timeSlots) {
@@ -105,7 +90,7 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
 
   // Mobile: selected day data
   const selectedDate = weekDates[selectedDayIndex];
-  const selectedDateStr = formatDate(selectedDate);
+  const selectedDateStr = formatDateISO(selectedDate);
   const selectedIsToday = selectedDateStr === todayStr;
   const selectedIsPast = selectedDateStr < todayStr;
   const selectedSlots = slotsByDate[selectedDateStr] || [];
@@ -155,7 +140,7 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
           {/* Day picker — all 7 days visible */}
           <div className="grid grid-cols-7 border-b-2 border-black">
             {weekDates.map((date, i) => {
-              const dateStr = formatDate(date);
+              const dateStr = formatDateISO(date);
               const isToday = dateStr === todayStr;
               const isPast = dateStr < todayStr;
               const isSelected = i === selectedDayIndex;
@@ -225,7 +210,7 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
                     isToday={selectedIsToday}
                     isDayPast={selectedIsPast}
                     nowTime={nowTime}
-                    onSlotClick={onSlotClick}
+                    onSlotClick={setSelectedSlot}
                   />
                 ))}
               </div>
@@ -237,7 +222,7 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
         <div className="hidden md:block">
           <div className="grid grid-cols-7">
             {weekDates.map((date, i) => {
-              const dateStr = formatDate(date);
+              const dateStr = formatDateISO(date);
               const isToday = dateStr === todayStr;
 
               return (
@@ -264,7 +249,7 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
           {/* Day columns with slots */}
           <div className="grid grid-cols-7">
             {weekDates.map((date, i) => {
-              const dateStr = formatDate(date);
+              const dateStr = formatDateISO(date);
               const isToday = dateStr === todayStr;
               const isDayPast = dateStr < todayStr;
               const daySlots = slotsByDate[dateStr] || [];
@@ -289,7 +274,7 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
                           isToday={isToday}
                           isDayPast={isDayPast}
                           nowTime={nowTime}
-                          onSlotClick={onSlotClick}
+                          onSlotClick={setSelectedSlot}
                           compact
                         />
                       ))}
@@ -301,7 +286,14 @@ export function WeekSchedule({ timeSlots, onSlotClick }: WeekScheduleProps) {
           </div>
         </div>
       </div>
+
+      {/* Slot detail panel */}
+      <SlotDetailPanel
+        slot={selectedSlot}
+        isBooked={false}
+        onClose={() => setSelectedSlot(null)}
+        onBook={() => {}}
+      />
     </div>
   );
 }
-
