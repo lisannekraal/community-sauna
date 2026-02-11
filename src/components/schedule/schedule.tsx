@@ -268,6 +268,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                     isToday={selectedIsToday}
                     isDayPast={selectedIsPast}
                     nowTime={nowTime}
+                    isBooked={slot.id in userBookings}
                     onSlotClick={setSelectedSlot}
                   />
                 ))}
@@ -332,6 +333,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                           isToday={isToday}
                           isDayPast={isDayPast}
                           nowTime={nowTime}
+                          isBooked={slot.id in userBookings}
                           onSlotClick={setSelectedSlot}
                           compact
                         />

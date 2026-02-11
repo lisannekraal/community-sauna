@@ -6,24 +6,28 @@ interface SlotCardProps {
   isToday: boolean;
   isDayPast: boolean;
   nowTime: string;
+  isBooked?: boolean;
   onSlotClick?: (slot: TimeSlotData) => void;
   compact?: boolean;
 }
 
-export function SlotCard({ slot, isToday, isDayPast, nowTime, onSlotClick, compact }: SlotCardProps) {
+export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotClick, compact }: SlotCardProps) {
   // Status computed inline from parent-provided props to avoid creating a Date per card.
   // Keep in sync with getSlotStatus() in @/lib/schedule.
   const spotsLeft = slot.capacity - slot.bookedCount;
   const isFull = spotsLeft <= 0;
   const slotPast = isDayPast || (isToday && slot.startTime < nowTime);
 
-  const isDisabled = slot.isCancelled || slotPast || isFull;
+  // Disabled when cancelled, past, or full — unless the user booked it (so they can still cancel)
+  const isDisabled = slot.isCancelled || slotPast || (isFull && !isBooked);
 
   let stateClasses: string;
   if (slot.isCancelled) {
     stateClasses = 'border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed';
   } else if (slotPast) {
     stateClasses = 'border-gray-300 text-gray-400 cursor-default';
+  } else if (isBooked) {
+    stateClasses = 'border-black bg-black text-white cursor-pointer';
   } else if (isFull) {
     stateClasses = 'border-black bg-gray-200 text-gray-500 cursor-not-allowed';
   } else {
@@ -55,6 +59,10 @@ export function SlotCard({ slot, isToday, isDayPast, nowTime, onSlotClick, compa
         {slot.isCancelled ? (
           <span className={`font-mono uppercase line-through ${compact ? 'text-[9px]' : 'text-xs'}`}>
             Cancelled
+          </span>
+        ) : isBooked ? (
+          <span className={`font-mono uppercase font-bold ${compact ? 'text-[9px]' : 'text-xs'}`}>
+            &#10003; Booked
           </span>
         ) : isFull ? (
           <span className={`font-mono uppercase font-bold ${compact ? 'text-[9px]' : 'text-xs'}`}>
