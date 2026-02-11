@@ -13,6 +13,11 @@ export function formatNowTime(date: Date): string {
   return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
 }
 
+/** Format a Prisma @db.Time field (stored as UTC) as HH:MM */
+export function formatTimeUTC(date: Date): string {
+  return `${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}`;
+}
+
 /** Format a YYYY-MM-DD string for display, e.g. "TUESDAY 11 FEB" */
 export function formatDisplayDate(dateStr: string): string {
   const [y, m, d] = dateStr.split('-').map(Number);

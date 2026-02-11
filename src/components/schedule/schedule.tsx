@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { type TimeSlotData } from '@/types';
 import { formatDateISO, formatNowTime } from '@/lib/schedule';
 import { SlotCard } from './slot-card';
@@ -8,6 +8,7 @@ import { SlotDetailPanel } from './slot-detail-panel';
 
 interface ScheduleProps {
   timeSlots: TimeSlotData[];
+  userBookings: Record<number, number>; // { timeslotId: bookingId }
 }
 
 function getWeekDates(reference: Date): Date[] {
@@ -25,9 +26,11 @@ function getWeekDates(reference: Date): Date[] {
 
 const DAY_LABELS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
-export function Schedule({ timeSlots }: ScheduleProps) {
+export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUserBookings }: ScheduleProps) {
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState<TimeSlotData | null>(null);
+  const [timeSlots, setTimeSlots] = useState(initialTimeSlots);
+  const [userBookings, setUserBookings] = useState(initialUserBookings);
 
   const now = new Date();
   const todayStr = formatDateISO(now);
@@ -56,6 +59,61 @@ export function Schedule({ timeSlots }: ScheduleProps) {
       setSelectedDayIndex(0);
     }
   };
+
+  const handleBook = useCallback(async (slot: TimeSlotData): Promise<{ success: boolean; error?: string; bookingId?: number }> => {
+    const res = await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ timeslotId: slot.id }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return { success: false, error: data.error || 'Failed to book' };
+    }
+
+    // Update local state
+    setTimeSlots(prev => prev.map(s =>
+      s.id === slot.id ? { ...s, bookedCount: s.bookedCount + 1 } : s
+    ));
+    setUserBookings(prev => ({ ...prev, [slot.id]: data.booking.id }));
+    setSelectedSlot(prev => prev?.id === slot.id ? { ...prev, bookedCount: prev.bookedCount + 1 } : prev);
+
+    return { success: true, bookingId: data.booking.id };
+  }, []);
+
+  const handleCancel = useCallback(async (bookingId: number, reason?: string): Promise<{ success: boolean; error?: string }> => {
+    const res = await fetch(`/api/bookings/${bookingId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return { success: false, error: data.error || 'Failed to cancel' };
+    }
+
+    // Find which timeslotId this booking was for
+    const timeslotId = Object.entries(userBookings).find(([, bId]) => bId === bookingId)?.[0];
+
+    if (timeslotId) {
+      const slotId = parseInt(timeslotId, 10);
+      setTimeSlots(prev => prev.map(s =>
+        s.id === slotId ? { ...s, bookedCount: Math.max(0, s.bookedCount - 1) } : s
+      ));
+      setSelectedSlot(prev => prev?.id === slotId ? { ...prev, bookedCount: Math.max(0, prev.bookedCount - 1) } : prev);
+      setUserBookings(prev => {
+        const next = { ...prev };
+        delete next[slotId];
+        return next;
+      });
+    }
+
+    return { success: true };
+  }, [userBookings]);
 
   const nowTime = formatNowTime(now);
 
@@ -290,9 +348,11 @@ export function Schedule({ timeSlots }: ScheduleProps) {
       {/* Slot detail panel */}
       <SlotDetailPanel
         slot={selectedSlot}
-        isBooked={false}
+        isBooked={selectedSlot ? selectedSlot.id in userBookings : false}
+        bookingId={selectedSlot ? userBookings[selectedSlot.id] ?? null : null}
         onClose={() => setSelectedSlot(null)}
-        onBook={() => {}}
+        onBook={handleBook}
+        onCancel={handleCancel}
       />
     </div>
   );
