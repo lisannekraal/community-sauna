@@ -53,3 +53,18 @@ export const ROLE_HIERARCHY: Record<UserRole, number> = {
 export function hasRole(userRole: UserRole, requiredRole: UserRole): boolean {
   return ROLE_HIERARCHY[userRole] >= ROLE_HIERARCHY[requiredRole];
 }
+
+// Schedule types
+export interface TimeSlotData {
+  id: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  capacity: number;
+  bookedCount: number;
+  type: string | null;
+  description: string | null;
+  isCancelled: boolean;
+}
+
+export type SlotStatus = 'cancelled' | 'past' | 'full' | 'available';

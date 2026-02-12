@@ -128,14 +128,14 @@ Account created → /app/dashboard (empty state: "Book your first session")
 
 ### Must have
 
-- Viewable sauna schedule (week view calendar with navigation between weeks)
-- For each sauna slot, show spots remaining (e.g., "3 of 5 spots left")
+✓ Viewable sauna schedule (week view calendar with navigation between weeks)
+✓ For each sauna slot, show spots remaining (e.g., "3 of 5 spots left")
 - Community members can log in to make a reservation for a time slot
 - Reservations can also be cancelled (with optional reason)
-- Role/permission system (distinguish between regular members, hosts and admins)
+✓ Role/permission system (distinguish between regular members, hosts and admins)
 - Admins, hosts (when they are hosting) can see all bookings for each time slot
 - Admins can see all member profiles and view their memberships
-- Member registration/account creation with the following fields:
+✓ Member registration/account creation with the following fields:
     - Required: email, password, first name, phone
     - Optional: last name, gender (Male, Female, Non-binary, Other, Prefer not to say), emergency contact
 - No email verification required; booking confirmation email serves as implicit verification
@@ -143,7 +143,7 @@ Account created → /app/dashboard (empty state: "Book your first session")
 - For each community member, we keep membership status states (active, expired, payment pending, suspended)
 - For each community member, we keep track of past sauna bookings
 - System validation to determine if a slot reservation can be made (no double bookings, slot has capacity, membership active, no outstanding payment failures)
-- Password forget/reset functionality (magic link via email)
+✓ Password forget/reset functionality (magic link via email)
 - Privacy policy page (GDPR compliance for member data)
 
 ### Should have
@@ -179,6 +179,7 @@ Account created → /app/dashboard (empty state: "Book your first session")
 - Basic audit log (who changed what and when, especially for admin actions)
 - Time slot schedule should be available outside of the internal website as well. So on the public pages, the API that holds the schedule data can be called to show the sauna schedule
 - Multi language: add Dutch or other languages. We will start with English.
+- Keyboard navigation (arrow keys) on mobile day picker for WCAG accessibility
 
 ## UX
 

@@ -123,6 +123,26 @@ async function main() {
   });
 
   console.log(`Created superadmin: ${superadmin.email}`);
+
+  // Seed time slots for February 2026
+  const slots = [
+    { date: '2026-02-13', start: '13:00', end: '15:00' },
+    { date: '2026-02-16', start: '13:00', end: '15:00' },
+    { date: '2026-02-19', start: '13:00', end: '15:00' },
+  ];
+
+  for (const slot of slots) {
+    await prisma.timeSlot.create({
+      data: {
+        date: new Date(slot.date),
+        startTime: new Date(`1970-01-01T${slot.start}:00Z`),
+        endTime: new Date(`1970-01-01T${slot.end}:00Z`),
+        capacity: 5,
+      },
+    });
+  }
+
+  console.log(`Created ${slots.length} time slots`);
   console.log('Seeding complete!');
 }
 

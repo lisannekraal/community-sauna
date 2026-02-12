@@ -193,14 +193,30 @@ Fonts are self-hosted via Fontsource (no external CDNs):
 
 - Privacy policy page needed (GDPR compliance for storing member data)
 
+## API Routes
+
+- `POST /api/bookings` - Create a booking (validates slot, capacity, membership credits)
+- `DELETE /api/bookings/[id]` - Cancel a booking (with optional reason)
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/forgot-password` - Request password reset
+- `POST /api/auth/reset-password` - Complete password reset
+
+## Prisma Date/Time Handling
+
+Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` fields return JS Dates like `1970-01-01THH:MM:00.000Z`. When formatting:
+- **Dates**: Use `formatDateISO()` from `src/lib/schedule.ts` (local time methods work in CET)
+- **Times**: Use `formatTimeUTC()` from `src/lib/schedule.ts` (must use UTC methods since time is stored as UTC)
+
 ## Key Files
 
 - `src/proxy.ts` - Route protection for /app/* (redirects only)
 - `src/lib/auth.ts` - NextAuth configuration with JWT strategy
-- `src/lib/db.ts` - Prisma client singleton
+- `src/lib/db.ts` - Prisma client singleton (query logging controlled here)
+- `src/lib/bookings.ts` - Credit check and booking validation logic
+- `src/lib/schedule.ts` - Date/time formatters, slot status logic
 - `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities
 - `prisma/schema.prisma` - Database schema with all entities
-- `prisma/seed.ts` - Seeds membership plans and first superadmin
+- `prisma/seed.ts` - Seeds membership plans, superadmin
 
 ## Documentation
 
