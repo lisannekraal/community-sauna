@@ -23,7 +23,7 @@ const loginSchema = Yup.object({
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/app';
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   const [serverError, setServerError] = useState('');
 
@@ -81,7 +81,7 @@ function LoginForm() {
               error={touched.password && errors.password ? errors.password : undefined}
             />
             <div className="mt-2 text-right">
-              <Link href="/app/forgot-password" className="text-sm underline hover:no-underline">
+              <Link href="/forgot-password" className="text-sm underline hover:no-underline">
                 Forgot password?
               </Link>
             </div>
@@ -108,7 +108,7 @@ export default function LoginPage() {
 
         <p className="mt-8 text-center">
           Don&apos;t have an account?{' '}
-          <Link href="/app/register" className="underline font-medium hover:no-underline">
+          <Link href="/register" className="underline font-medium hover:no-underline">
             Register
           </Link>
         </p>

@@ -17,7 +17,7 @@ export function Header() {
           <nav className="flex items-center gap-6">
             {status === 'authenticated' ? (
               <>
-                <Link href="/app" className="hover:underline">
+                <Link href="/" className="hover:underline">
                   App
                 </Link>
                 <button
@@ -28,7 +28,7 @@ export function Header() {
                 </button>
               </>
             ) : (
-              <Link href="/app/login" className="hover:underline">
+              <Link href="/login" className="hover:underline">
                 Login
               </Link>
             )}

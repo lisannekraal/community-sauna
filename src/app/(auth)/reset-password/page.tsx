@@ -89,7 +89,7 @@ function ResetPasswordForm() {
           Please request a new one.
         </div>
         <Link
-          href="/app/forgot-password"
+          href="/forgot-password"
           className="block text-center underline hover:no-underline"
         >
           Request new reset link
@@ -105,7 +105,7 @@ function ResetPasswordForm() {
           Your password has been reset successfully.
         </div>
         <Link
-          href="/app/login"
+          href="/login"
           className="block w-full p-3 font-medium border-2 bg-black text-white border-black text-center hover:bg-gray-800"
         >
           Go to login

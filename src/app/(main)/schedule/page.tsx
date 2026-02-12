@@ -6,11 +6,11 @@ import { type TimeSlotData } from '@/types';
 import { formatDateISO, formatTimeUTC } from '@/lib/schedule';
 import { Schedule } from '@/components/schedule/schedule';
 
-export default async function AppHomePage() {
+export default async function SchedulePage() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
-    redirect('/app/login');
+    redirect('/login');
   }
 
   const userId = parseInt(session.user.id, 10);
@@ -36,7 +36,6 @@ export default async function AppHomePage() {
     isCancelled: slot.isCancelled,
   }));
 
-  // Fetch user's confirmed bookings as a map: { timeslotId: bookingId }
   const userBookings = await prisma.booking.findMany({
     where: {
       userId,
@@ -55,7 +54,7 @@ export default async function AppHomePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-display uppercase mb-8">Welcome, {session.user.name}</h1>
+      <h1 className="text-3xl font-display uppercase mb-8">Schedule</h1>
       <Schedule timeSlots={timeSlots} userBookings={userBookingsMap} />
     </div>
   );
