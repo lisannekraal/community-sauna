@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
 import { getMainNavItems, getSecondaryNavItems } from '@/lib/navigation';
+import { AdminModeToggle } from './admin-mode-toggle';
 import { Xmark, Menu, LogOut } from 'iconoir-react';
 
 interface HamburgerMenuProps {
@@ -22,7 +23,7 @@ function isActive(pathname: string, href: string): boolean {
 export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { isAdminMode, toggleAdminMode } = useAdminMode();
+  const { isAdminMode } = useAdminMode();
   const isAdmin = hasRole(userRole, 'admin');
 
   const mainItems = getMainNavItems(userRole, isAdminMode);
@@ -44,17 +45,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
         <div className="fixed inset-0 z-50 bg-white flex flex-col animate-[fadeIn_150ms_ease-out]">
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4">
-            {isAdmin ? (
-              <button
-                onClick={toggleAdminMode}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 text-[13px] tracking-wide"
-              >
-                <span className={`w-2 h-2 rounded-full ${isAdminMode ? 'bg-black' : 'bg-black/20'}`} />
-                {isAdminMode ? 'Switch to member view' : 'Switch to admin view'}
-              </button>
-            ) : (
-              <div />
-            )}
+            {isAdmin ? <AdminModeToggle /> : <div />}
             <button
               onClick={() => setIsOpen(false)}
               className="p-2"
@@ -125,7 +116,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
             <span className="text-sm">{userName}</span>
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
-              className="flex items-center gap-2 text-sm"
+              className="flex items-center gap-2 text-sm cursor-pointer"
             >
               <LogOut width={16} height={16} strokeWidth={1.5} />
               Log out

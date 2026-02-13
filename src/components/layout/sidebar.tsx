@@ -6,6 +6,8 @@ import { signOut } from 'next-auth/react';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
 import { getMainNavItems, getSecondaryNavItems } from '@/lib/navigation';
+import { AdminModeToggle } from './admin-mode-toggle';
+import { LogOut } from 'iconoir-react';
 
 interface SidebarProps {
   userName: string;
@@ -19,83 +21,89 @@ function isActive(pathname: string, href: string): boolean {
 
 export function Sidebar({ userName, userRole }: SidebarProps) {
   const pathname = usePathname();
-  const { isAdminMode, toggleAdminMode } = useAdminMode();
+  const { isAdminMode } = useAdminMode();
   const isAdmin = hasRole(userRole, 'admin');
 
   const mainItems = getMainNavItems(userRole, isAdminMode);
   const secondaryItems = getSecondaryNavItems(userRole, isAdminMode);
 
   return (
-    <aside className="fixed left-0 top-0 w-60 h-screen border-r-2 border-black flex flex-col bg-white z-40">
+    <aside className="fixed left-0 top-0 w-60 h-screen border-r border-black/10 flex flex-col bg-white z-40">
       {/* Branding */}
-      <div className="p-4 border-b-2 border-black">
-        <Link href="/" className="text-lg font-display uppercase">
+      <div className="px-5 py-5">
+        <Link href="/" className="text-lg font-display">
           Community Sauna
         </Link>
       </div>
 
-      {/* Main nav */}
-      <nav className="flex-1 overflow-y-auto">
-        <ul className="py-2">
-          {mainItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={`block px-4 py-3 font-medium ${
-                  isActive(pathname, item.href)
-                    ? 'bg-black text-white'
-                    : 'hover:bg-gray-100'
-                }`}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto px-3">
+        <ul>
+          {mainItems.map((item) => {
+            const active = isActive(pathname, item.href);
+            const Icon = item.icon;
+
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`flex items-center gap-3 px-3 py-2.5 transition-colors ${
+                    active
+                      ? 'bg-black text-white'
+                      : 'hover:bg-black hover:text-white'
+                  }`}
+                >
+                  <Icon width={20} height={20} strokeWidth={1.5} />
+                  <span className="text-[15px]">{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
-        <div className="border-t-2 border-black mx-4" />
+        {/* Divider */}
+        <div className="border-t border-black/10 my-3 mx-2" />
 
         {/* Secondary nav */}
-        <ul className="py-2">
-          {secondaryItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={`block px-4 py-2 text-sm ${
-                  isActive(pathname, item.href)
-                    ? 'bg-black text-white'
-                    : 'hover:bg-gray-100'
-                }`}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ul>
+          {secondaryItems.map((item) => {
+            const active = isActive(pathname, item.href);
+            const Icon = item.icon;
 
-        {/* Admin toggle */}
-        {isAdmin && (
-          <>
-            <div className="border-t-2 border-black mx-4" />
-            <div className="px-4 py-3">
-              <button
-                onClick={toggleAdminMode}
-                className="w-full text-left text-sm font-medium px-2 py-2 border-2 border-black hover:bg-gray-100"
-              >
-                {isAdminMode ? 'Switch to member view' : 'Switch to admin view'}
-              </button>
-            </div>
-          </>
-        )}
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`flex items-center gap-3 px-3 py-2 transition-colors ${
+                    active
+                      ? 'bg-black text-white'
+                      : 'hover:bg-black hover:text-white'
+                  }`}
+                >
+                  <Icon width={18} height={18} strokeWidth={1.5} />
+                  <span className="text-[13px]">{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
 
+      {/* Admin toggle — sticks above footer */}
+      {isAdmin && (
+        <div className="px-5 py-3">
+          <AdminModeToggle />
+        </div>
+      )}
+
       {/* Footer */}
-      <div className="border-t-2 border-black p-4">
-        <p className="text-sm font-medium truncate mb-2">{userName}</p>
+      <div className="px-5 py-4 border-t border-black/10 flex items-center justify-between">
+        <span className="text-sm truncate">{userName}</span>
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
-          className="text-sm hover:underline"
+          className="flex items-center gap-1.5 text-sm shrink-0 cursor-pointer"
         >
+          <LogOut width={16} height={16} strokeWidth={1.5} />
           Log out
         </button>
       </div>
