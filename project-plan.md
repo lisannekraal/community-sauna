@@ -130,8 +130,8 @@ Account created → /app/dashboard (empty state: "Book your first session")
 
 ✓ Viewable sauna schedule (week view calendar with navigation between weeks)
 ✓ For each sauna slot, show spots remaining (e.g., "3 of 5 spots left")
-- Community members can log in to make a reservation for a time slot
-- Reservations can also be cancelled (with optional reason)
+✓ Community members can log in to make a reservation for a time slot
+✓ Reservations can also be cancelled (with optional reason)
 ✓ Role/permission system (distinguish between regular members, hosts and admins)
 - Admins, hosts (when they are hosting) can see all bookings for each time slot
 - Admins can see all member profiles and view their memberships

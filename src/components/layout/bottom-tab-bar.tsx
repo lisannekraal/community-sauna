@@ -21,26 +21,66 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
   const items = getMainNavItems(userRole, isAdminMode);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t-2 border-black bg-white z-40 pb-[env(safe-area-inset-bottom)]">
-      <ul className="flex">
-        {items.map((item, i) => {
-          const active = isActive(pathname, item.href);
-          const isCenter = i === 2;
+    <nav className="fixed bottom-0 left-0 right-0 z-40 pb-[env(safe-area-inset-bottom)]">
+      <div className="relative bg-white border-t border-black/10">
+        <ul className="flex items-end">
+          {items.map((item, i) => {
+            const active = isActive(pathname, item.href);
+            const isCenter = i === 2;
+            const Icon = item.icon;
 
-          return (
-            <li key={item.href} className="flex-1">
-              <Link
-                href={item.href}
-                className={`flex items-center justify-center py-3 text-xs uppercase font-mono tracking-wide ${
-                  active ? 'font-bold border-t-2 border-black -mt-[2px]' : ''
-                } ${isCenter ? 'text-sm font-bold' : ''}`}
-              >
-                {item.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+            if (isCenter) {
+              return (
+                <li key={item.href} className="flex-1 flex justify-center -mt-4">
+                  <Link
+                    href={item.href}
+                    className="flex flex-col items-center"
+                  >
+                    <div
+                      className={`w-13 h-13 rounded-full flex items-center justify-center border-2 border-black transition-colors ${
+                        active
+                          ? 'bg-black text-white'
+                          : 'bg-white text-black'
+                      }`}
+                    >
+                      <Icon width={22} height={22} strokeWidth={1.8} />
+                    </div>
+                    <span
+                      className={`text-[11px] tracking-wide ${
+                        active ? 'font-bold' : ''
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </Link>
+                </li>
+              );
+            }
+
+            return (
+              <li key={item.href} className="flex-1">
+                <Link
+                  href={item.href}
+                  className="flex flex-col items-center gap-0.5 pt-2.5 pb-2"
+                >
+                  <Icon
+                    width={20}
+                    height={20}
+                    strokeWidth={active ? 2 : 1.5}
+                  />
+                  <span
+                    className={`text-[11px] tracking-wide ${
+                      active ? 'font-bold' : 'text-black/50'
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </nav>
   );
 }

@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
-import { getSecondaryNavItems } from '@/lib/navigation';
+import { getMainNavItems, getSecondaryNavItems } from '@/lib/navigation';
+import { Xmark, Menu, LogOut } from 'iconoir-react';
 
 interface HamburgerMenuProps {
   userName: string;
@@ -24,6 +25,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
   const { isAdminMode, toggleAdminMode } = useAdminMode();
   const isAdmin = hasRole(userRole, 'admin');
 
+  const mainItems = getMainNavItems(userRole, isAdminMode);
   const secondaryItems = getSecondaryNavItems(userRole, isAdminMode);
 
   return (
@@ -31,82 +33,105 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
       {/* Hamburger button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-4 right-4 z-50 w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-white border-2 border-black"
+        className="fixed top-4 right-4 z-50 p-2"
         aria-label="Open menu"
       >
-        <span className="block w-5 h-0.5 bg-black" />
-        <span className="block w-5 h-0.5 bg-black" />
-        <span className="block w-5 h-0.5 bg-black" />
+        <Menu width={22} height={22} strokeWidth={2} />
       </button>
 
-      {/* Overlay + slide-in menu */}
+      {/* Full-screen overlay menu */}
       {isOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/30 z-50"
-            onClick={() => setIsOpen(false)}
-          />
-
-          {/* Menu panel */}
-          <div className="fixed top-0 right-0 bottom-0 w-72 bg-white border-l-2 border-black z-50 flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b-2 border-black">
-              <span className="text-lg font-display uppercase">Community Sauna</span>
+        <div className="fixed inset-0 z-50 bg-white flex flex-col animate-[fadeIn_150ms_ease-out]">
+          {/* Header */}
+          <div className="flex items-center justify-between px-6 py-4">
+            {isAdmin ? (
               <button
-                onClick={() => setIsOpen(false)}
-                className="w-10 h-10 flex items-center justify-center border-2 border-black"
-                aria-label="Close menu"
+                onClick={toggleAdminMode}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 text-[13px] tracking-wide"
               >
-                ✕
+                <span className={`w-2 h-2 rounded-full ${isAdminMode ? 'bg-black' : 'bg-black/20'}`} />
+                {isAdminMode ? 'Switch to member view' : 'Switch to admin view'}
               </button>
-            </div>
-
-            {/* Admin toggle */}
-            {isAdmin && (
-              <div className="px-4 py-3 border-b-2 border-black">
-                <button
-                  onClick={toggleAdminMode}
-                  className="w-full text-left text-sm font-medium px-2 py-2 border-2 border-black hover:bg-gray-100"
-                >
-                  {isAdminMode ? 'Switch to member view' : 'Switch to admin view'}
-                </button>
-              </div>
+            ) : (
+              <div />
             )}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2"
+              aria-label="Close menu"
+            >
+              <Xmark width={22} height={22} strokeWidth={2} />
+            </button>
+          </div>
 
-            {/* Nav items */}
-            <nav className="flex-1 overflow-y-auto">
-              <ul className="py-2">
-                {secondaryItems.map((item) => (
+          {/* Nav content */}
+          <nav className="flex-1 overflow-y-auto px-6 pt-2">
+            {/* Main nav items — large */}
+            <ul>
+              {mainItems.map((item) => {
+                const active = isActive(pathname, item.href);
+                const Icon = item.icon;
+
+                return (
+                  <li key={item.href} className="border-b border-black/10">
+                    <Link
+                      href={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center gap-4 py-4 -mx-3 px-3 ${
+                        active
+                          ? 'bg-black text-white'
+                          : ''
+                      }`}
+                    >
+                      <Icon width={22} height={22} strokeWidth={1.5} />
+                      <span className="text-xl font-display">
+                        {item.label}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Secondary nav items — smaller */}
+            <ul className="mt-2">
+              {secondaryItems.map((item) => {
+                const active = isActive(pathname, item.href);
+                const Icon = item.icon;
+
+                return (
                   <li key={item.href}>
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className={`block px-4 py-3 ${
-                        isActive(pathname, item.href)
+                      className={`flex items-center gap-4 py-2.5 -mx-3 px-4 ${
+                        active
                           ? 'bg-black text-white'
-                          : 'hover:bg-gray-100'
+                          : ''
                       }`}
                     >
-                      {item.label}
+                      <Icon width={18} height={18} strokeWidth={1.5} />
+                      <span className="text-[15px]">{item.label}</span>
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </nav>
+                );
+              })}
+            </ul>
 
-            {/* Footer */}
-            <div className="border-t-2 border-black p-4">
-              <p className="text-sm font-medium truncate mb-2">{userName}</p>
-              <button
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className="text-sm hover:underline"
-              >
-                Log out
-              </button>
-            </div>
+          </nav>
+
+          {/* Footer */}
+          <div className="px-6 py-5 border-t border-black/10 flex items-center justify-between">
+            <span className="text-sm">{userName}</span>
+            <button
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="flex items-center gap-2 text-sm"
+            >
+              <LogOut width={16} height={16} strokeWidth={1.5} />
+              Log out
+            </button>
           </div>
-        </>
+        </div>
       )}
     </>
   );
