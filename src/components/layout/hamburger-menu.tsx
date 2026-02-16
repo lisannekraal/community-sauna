@@ -6,18 +6,13 @@ import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
-import { getMainNavItems, getSecondaryNavItems } from '@/lib/navigation';
+import { getMainNavItems, getSecondaryNavItems, isActiveRoute } from '@/lib/navigation';
 import { AdminModeToggle } from './admin-mode-toggle';
 import { Xmark, Menu, LogOut } from 'iconoir-react';
 
 interface HamburgerMenuProps {
   userName: string;
   userRole: UserRole;
-}
-
-function isActive(pathname: string, href: string): boolean {
-  if (href === '/') return pathname === '/';
-  return pathname === href || pathname.startsWith(href + '/');
 }
 
 export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
@@ -40,12 +35,11 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
         <Menu width={22} height={22} strokeWidth={2} />
       </button>
 
-      {/* Full-screen overlay menu */}
+      {/* Overlay menu */}
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-white flex flex-col animate-[fadeIn_150ms_ease-out]">
-          {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4">
-            {isAdmin ? <AdminModeToggle /> : <div />}
+          <div className={`flex items-center px-6 py-4 ${isAdmin ? 'justify-between' : 'justify-end'}`}>
+            {isAdmin && <AdminModeToggle />}
             <button
               onClick={() => setIsOpen(false)}
               className="p-2"
@@ -55,12 +49,11 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
             </button>
           </div>
 
-          {/* Nav content */}
           <nav className="flex-1 overflow-y-auto px-6 pt-2">
-            {/* Main nav items — large */}
+            {/* Primary nav items */}
             <ul>
               {mainItems.map((item) => {
-                const active = isActive(pathname, item.href);
+                const active = isActiveRoute(pathname, item.href);
                 const Icon = item.icon;
 
                 return (
@@ -84,10 +77,10 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
               })}
             </ul>
 
-            {/* Secondary nav items — smaller */}
+            {/* Secondary nav items */}
             <ul className="mt-2">
               {secondaryItems.map((item) => {
-                const active = isActive(pathname, item.href);
+                const active = isActiveRoute(pathname, item.href);
                 const Icon = item.icon;
 
                 return (
@@ -111,7 +104,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
 
           </nav>
 
-          {/* Footer */}
+          {/* Overlay footer */}
           <div className="px-6 py-5 border-t border-black/10 flex items-center justify-between">
             <span className="text-sm">{userName}</span>
             <button

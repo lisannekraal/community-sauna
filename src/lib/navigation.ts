@@ -10,7 +10,6 @@ import {
   Lock,
   Settings,
   Megaphone,
-  ChatLines,
   Table,
 } from 'iconoir-react';
 
@@ -19,37 +18,41 @@ export type IconComponent = React.ComponentType<{ width: number; height: number;
 export interface NavItem {
   label: string;
   href: string;
-  section: 'main' | 'secondary';
   icon: IconComponent;
+}
+
+export function isActiveRoute(pathname: string, href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(href + '/');
 }
 
 export function getMainNavItems(role: UserRole, isAdminMode: boolean): NavItem[] {
   const fifthItem: NavItem =
     isAdminMode && hasRole(role, 'admin')
-      ? { label: 'Members', href: '/members', section: 'main', icon: Community }
-      : { label: 'Help', href: '/help', section: 'main', icon: HelpCircle };
+      ? { label: 'Members', href: '/members', icon: Community }
+      : { label: 'Help', href: '/help', icon: HelpCircle };
 
   return [
-    { label: 'Home', href: '/', section: 'main', icon: Sandals },
-    { label: 'Bookings', href: '/bookings', section: 'main', icon: ClipboardCheck },
-    { label: 'Schedule', href: '/schedule', section: 'main', icon: Calendar },
-    { label: 'Plans', href: '/plans', section: 'main', icon: MultiplePages },
+    { label: 'Home', href: '/', icon: Sandals },
+    { label: 'Bookings', href: '/bookings', icon: ClipboardCheck },
+    { label: 'Schedule', href: '/schedule', icon: Calendar },
+    { label: 'Plans', href: '/plans', icon: MultiplePages },
     fifthItem,
   ];
 }
 
 export function getSecondaryNavItems(role: UserRole, isAdminMode: boolean): NavItem[] {
   const items: NavItem[] = [
-    { label: 'My Profile', href: '/profile', section: 'secondary', icon: ProfileCircle },
-    { label: 'My Account', href: '/account', section: 'secondary', icon: Lock },
+    { label: 'My Profile', href: '/profile', icon: ProfileCircle },
+    { label: 'My Account', href: '/account', icon: Lock },
   ];
 
   if (isAdminMode && hasRole(role, 'admin')) {
     items.push(
-      { label: 'Admin Settings', href: '/admin/settings', section: 'secondary', icon: Settings },
-      { label: 'Manage Announcements', href: '/admin/announcements', section: 'secondary', icon: Megaphone },
-      { label: 'Manage Q&A', href: '/admin/qa', section: 'secondary', icon: ChatLines },
-      { label: 'Edit Schedule Templates', href: '/admin/templates', section: 'secondary', icon: Table },
+      { label: 'Admin Settings', href: '/admin/settings', icon: Settings },
+      { label: 'Manage Announcements', href: '/admin/announcements', icon: Megaphone },
+      { label: 'Manage Q&A', href: '/admin/qa', icon: HelpCircle },
+      { label: 'Edit Schedule Templates', href: '/admin/templates', icon: Table },
     );
   }
 

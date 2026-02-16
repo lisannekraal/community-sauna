@@ -4,15 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { type UserRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
-import { getMainNavItems } from '@/lib/navigation';
+import { getMainNavItems, isActiveRoute } from '@/lib/navigation';
 
 interface BottomTabBarProps {
   userRole: UserRole;
-}
-
-function isActive(pathname: string, href: string): boolean {
-  if (href === '/') return pathname === '/';
-  return pathname === href || pathname.startsWith(href + '/');
 }
 
 export function BottomTabBar({ userRole }: BottomTabBarProps) {
@@ -25,7 +20,7 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
       <div className="relative bg-white border-t border-black/10">
         <ul className="flex items-end">
           {items.map((item, i) => {
-            const active = isActive(pathname, item.href);
+            const active = isActiveRoute(pathname, item.href);
             const isCenter = i === 2;
             const Icon = item.icon;
 

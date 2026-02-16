@@ -3,7 +3,7 @@ import { getToken } from 'next-auth/jwt';
 
 const authRoutes = ['/login', '/register', '/forgot-password', '/reset-password'];
 
-const protectedRoutes = ['/schedule', '/bookings', '/plans', '/profile', '/account', '/help', '/members'];
+const protectedRoutes = ['/schedule', '/bookings', '/plans', '/profile', '/account', '/help', '/members', '/admin'];
 
 const adminRoutes = ['/members', '/admin'];
 
@@ -11,8 +11,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isAuthRoute = authRoutes.some((route) => pathname === route);
-  const isProtectedRoute = protectedRoutes.some((route) => pathname === route) ||
-    pathname.startsWith('/admin/');
+  const isProtectedRoute = protectedRoutes.some((route) => pathname === route || pathname.startsWith(route + '/'));
 
   // Only handle auth and protected routes
   if (!isAuthRoute && !isProtectedRoute) {
@@ -54,13 +53,13 @@ export const config = {
     '/register',
     '/forgot-password',
     '/reset-password',
-    '/schedule',
-    '/bookings',
-    '/plans',
-    '/profile',
-    '/account',
-    '/help',
-    '/members',
+    '/schedule/:path*',
+    '/bookings/:path*',
+    '/plans/:path*',
+    '/profile/:path*',
+    '/account/:path*',
+    '/help/:path*',
+    '/members/:path*',
     '/admin/:path*',
   ],
 };

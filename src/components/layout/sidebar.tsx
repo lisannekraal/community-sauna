@@ -5,18 +5,13 @@ import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
-import { getMainNavItems, getSecondaryNavItems } from '@/lib/navigation';
+import { getMainNavItems, getSecondaryNavItems, isActiveRoute } from '@/lib/navigation';
 import { AdminModeToggle } from './admin-mode-toggle';
 import { LogOut } from 'iconoir-react';
 
 interface SidebarProps {
   userName: string;
   userRole: UserRole;
-}
-
-function isActive(pathname: string, href: string): boolean {
-  if (href === '/') return pathname === '/';
-  return pathname === href || pathname.startsWith(href + '/');
 }
 
 export function Sidebar({ userName, userRole }: SidebarProps) {
@@ -40,7 +35,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
       <nav className="flex-1 overflow-y-auto px-3">
         <ul>
           {mainItems.map((item) => {
-            const active = isActive(pathname, item.href);
+            const active = isActiveRoute(pathname, item.href);
             const Icon = item.icon;
 
             return (
@@ -67,7 +62,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
         {/* Secondary nav */}
         <ul>
           {secondaryItems.map((item) => {
-            const active = isActive(pathname, item.href);
+            const active = isActiveRoute(pathname, item.href);
             const Icon = item.icon;
 
             return (
