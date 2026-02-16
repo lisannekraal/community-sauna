@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { FormInput, PasswordInput, Button } from '@/components/ui';
+import { feedback, interactive } from '@/lib/design-tokens';
 
 const loginSchema = Yup.object({
   email: Yup.string()
@@ -54,7 +55,7 @@ function LoginForm() {
       {({ values, errors, touched, handleChange, handleBlur, isSubmitting }) => (
         <Form className="space-y-6" noValidate>
           {serverError && (
-            <div className="border-2 border-red-600 bg-red-50 p-4 text-red-600" role="alert">
+            <div className={feedback.alertError} role="alert">
               {serverError}
             </div>
           )}
@@ -81,7 +82,7 @@ function LoginForm() {
               error={touched.password && errors.password ? errors.password : undefined}
             />
             <div className="mt-2 text-right">
-              <Link href="/forgot-password" className="text-sm underline hover:no-underline">
+              <Link href="/forgot-password" className={`text-sm ${interactive.link}`}>
                 Forgot password?
               </Link>
             </div>
@@ -108,7 +109,7 @@ export default function LoginPage() {
 
         <p className="mt-8 text-center">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="underline font-medium hover:no-underline">
+          <Link href="/register" className={`font-medium ${interactive.link}`}>
             Register
           </Link>
         </p>

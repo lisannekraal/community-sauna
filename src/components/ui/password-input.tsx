@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useState } from 'react';
+import { inputs, colors } from '@/lib/design-tokens';
 
 export interface PasswordInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label: string;
@@ -24,7 +25,7 @@ function getPasswordStrength(password: string): { label: string; color: string }
   if (/[0-9]/.test(password)) score++;
   if (/[^a-zA-Z0-9]/.test(password)) score++;
 
-  if (score <= 2) return { label: 'Weak', color: 'text-red-600' };
+  if (score <= 2) return { label: 'Weak', color: colors.textError };
   if (score <= 4) return { label: 'Medium', color: 'text-yellow-600' };
   return { label: 'Strong', color: 'text-green-600' };
 }
@@ -38,9 +39,9 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 
     return (
       <div>
-        <label htmlFor={inputId} className="block font-medium mb-1">
+        <label htmlFor={inputId} className={inputs.label}>
           {label}
-          {required && <span className="text-red-600 ml-1">*</span>}
+          {required && <span className={inputs.requiredMark}>*</span>}
         </label>
         <div className="relative">
           <input
@@ -49,8 +50,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             type={showPassword ? 'text' : 'password'}
             required={required}
             value={value}
-            className={`w-full border-2 p-2 pr-12 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 ${
-              error ? 'border-red-600' : 'border-black'
+            className={`${inputs.base} pr-12 ${
+              error ? colors.borderError : colors.borderPrimary
             } ${className}`}
             aria-invalid={error ? 'true' : 'false'}
             aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
@@ -59,7 +60,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-600 hover:text-black focus:outline-none focus:ring-2 focus:ring-black"
+            className={`absolute right-2 top-1/2 -translate-y-1/2 p-1 ${colors.textSubtle} hover:text-black focus:outline-none focus:ring-2 focus:ring-black`}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (
@@ -78,18 +79,18 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           </button>
         </div>
         {hint && !error && !strength?.label && (
-          <p id={`${inputId}-hint`} className="text-sm text-gray-600 mt-1">
+          <p id={`${inputId}-hint`} className={inputs.hint}>
             {hint}
           </p>
         )}
         {showStrength && strength?.label && (
           <p className={`text-sm mt-1 ${strength.color}`}>
             Strength: {strength.label}
-            {hint && <span className="text-gray-600"> — {hint}</span>}
+            {hint && <span className={colors.textSubtle}> — {hint}</span>}
           </p>
         )}
         {error && (
-          <p id={`${inputId}-error`} className="text-sm text-red-600 mt-1" role="alert">
+          <p id={`${inputId}-error`} className={inputs.error} role="alert">
             {error}
           </p>
         )}

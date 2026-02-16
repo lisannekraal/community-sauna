@@ -1,4 +1,5 @@
 import { type TimeSlotData } from '@/types';
+import { colors, typography, interactive } from '@/lib/design-tokens';
 import { CapacityMeter } from './capacity-meter';
 
 interface SlotCardProps {
@@ -23,22 +24,22 @@ export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotCl
 
   let stateClasses: string;
   if (slot.isCancelled) {
-    stateClasses = 'border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed';
+    stateClasses = `${colors.borderDisabled} ${colors.bgSubtle} ${colors.textDisabled} ${interactive.cursorDisabled}`;
   } else if (slotPast) {
-    stateClasses = 'border-gray-300 text-gray-400 cursor-default';
+    stateClasses = `${colors.borderDisabled} ${colors.textDisabled} cursor-default`;
   } else if (isBooked) {
-    stateClasses = 'border-black bg-black text-white cursor-pointer';
+    stateClasses = `${colors.borderPrimary} ${colors.bgPrimary} ${colors.textInverse} ${interactive.cursorPointer}`;
   } else if (isFull) {
-    stateClasses = 'border-black bg-gray-200 text-gray-500 cursor-not-allowed';
+    stateClasses = `${colors.borderPrimary} ${colors.bgDisabled} text-gray-500 ${interactive.cursorDisabled}`;
   } else {
-    stateClasses = 'border-black hover:bg-black hover:text-white cursor-pointer group';
+    stateClasses = `${colors.borderPrimary} ${interactive.hoverInvert} ${interactive.cursorPointer} group`;
   }
 
   return (
     <button
       onClick={() => onSlotClick?.(slot)}
       disabled={isDisabled}
-      className={`w-full text-left border-2 transition-colors ${stateClasses} ${
+      className={`w-full text-left border-2 ${interactive.transition} ${stateClasses} ${
         compact ? 'p-1.5' : 'p-3'
       }`}
     >
@@ -76,7 +77,7 @@ export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotCl
           <div className="flex items-center justify-between gap-2">
             <CapacityMeter booked={slot.bookedCount} capacity={slot.capacity} />
             {!compact && (
-              <span className="font-mono text-[10px] shrink-0">
+              <span className={`${typography.mono.tiny} shrink-0`}>
                 {spotsLeft}/{slot.capacity}
               </span>
             )}

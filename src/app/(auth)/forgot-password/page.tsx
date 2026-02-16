@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { FormInput, Button } from '@/components/ui';
+import { colors, feedback, interactive } from '@/lib/design-tokens';
 
 const forgotPasswordSchema = Yup.object({
   email: Yup.string()
@@ -55,13 +56,13 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <h1 className="text-3xl font-display uppercase mb-4">Reset Password</h1>
-        <p className="text-gray-600 mb-8">
+        <p className={`${colors.textSubtle} mb-8`}>
           Enter your email address and we&apos;ll send you a link to reset your password.
         </p>
 
         {success ? (
           <div className="space-y-6">
-            <div className="border-2 border-green-600 bg-green-50 p-4 text-green-800" role="status">
+            <div className={feedback.alertSuccess} role="status">
               If an account exists with this email, a password reset link has been sent.
               Please check your inbox.
             </div>
@@ -84,7 +85,7 @@ export default function ForgotPasswordPage() {
 
             <Link
               href="/login"
-              className="block text-center underline hover:no-underline"
+              className={`block text-center ${interactive.link}`}
             >
               Back to login
             </Link>
@@ -98,7 +99,7 @@ export default function ForgotPasswordPage() {
             {({ values, errors, touched, handleChange, handleBlur, isSubmitting }) => (
               <Form className="space-y-6" noValidate>
                 {serverError && (
-                  <div className="border-2 border-red-600 bg-red-50 p-4 text-red-600" role="alert">
+                  <div className={feedback.alertError} role="alert">
                     {serverError}
                   </div>
                 )}
@@ -125,7 +126,7 @@ export default function ForgotPasswordPage() {
         {!success && (
           <p className="mt-8 text-center">
             Remember your password?{' '}
-            <Link href="/login" className="underline font-medium hover:no-underline">
+            <Link href="/login" className={`font-medium ${interactive.link}`}>
               Login
             </Link>
           </p>

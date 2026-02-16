@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef } from 'react';
+import { inputs, colors } from '@/lib/design-tokens';
 
 export interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -14,28 +15,28 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
     return (
       <div>
-        <label htmlFor={inputId} className="block font-medium mb-1">
+        <label htmlFor={inputId} className={inputs.label}>
           {label}
-          {required && <span className="text-red-600 ml-1">*</span>}
+          {required && <span className={inputs.requiredMark}>*</span>}
         </label>
         <input
           ref={ref}
           id={inputId}
           required={required}
-          className={`w-full border-2 p-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 ${
-            error ? 'border-red-600' : 'border-black'
+          className={`${inputs.base} ${
+            error ? colors.borderError : colors.borderPrimary
           } ${className}`}
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
           {...props}
         />
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="text-sm text-gray-600 mt-1">
+          <p id={`${inputId}-hint`} className={inputs.hint}>
             {hint}
           </p>
         )}
         {error && (
-          <p id={`${inputId}-error`} className="text-sm text-red-600 mt-1" role="alert">
+          <p id={`${inputId}-error`} className={inputs.error} role="alert">
             {error}
           </p>
         )}

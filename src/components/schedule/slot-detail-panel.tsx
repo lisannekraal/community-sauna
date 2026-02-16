@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { type TimeSlotData } from '@/types';
 import { getSlotStatus, formatDisplayDate } from '@/lib/schedule';
+import { colors, typography, buttons, interactive, animation, feedback } from '@/lib/design-tokens';
 import { CapacityMeter } from './capacity-meter';
 
 type PanelView = 'details' | 'confirmed' | 'cancel';
@@ -81,35 +82,35 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 animate-[fadeIn_150ms_ease-out]"
+        className={`absolute inset-0 ${colors.bgOverlay} ${animation.fadeIn}`}
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Panel — bottom sheet on mobile, centered modal on desktop */}
       <div
-        className="
+        className={`
           absolute bottom-0 left-0 right-0
           md:bottom-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2
           md:max-w-md md:w-full
-          bg-white border-t-4 border-black
+          ${colors.bgSecondary} border-t-4 ${colors.borderPrimary}
           md:border-4
-          animate-[slideUp_200ms_ease-out] md:animate-[scaleIn_150ms_ease-out]
-        "
+          ${animation.slideUp} md:${animation.scaleIn}
+        `}
         role="dialog"
         aria-modal="true"
         aria-label="Time slot details"
       >
         {/* Header bar */}
-        <div className="flex items-center justify-between border-b-2 border-black">
+        <div className={`flex items-center justify-between border-b-2 ${colors.borderPrimary}`}>
           <div className="px-4 py-3">
-            <span className="font-mono text-xs uppercase tracking-wider">
+            <span className={typography.mono.label}>
               {view === 'confirmed' ? 'Booking confirmed' : view === 'cancel' ? 'Cancel booking' : 'Session details'}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="border-l-2 border-black px-4 py-3 font-mono text-sm hover:bg-black hover:text-white transition-colors cursor-pointer"
+            className={`border-l-2 ${colors.borderPrimary} px-4 py-3 ${typography.mono.caption} ${interactive.hoverInvert} ${interactive.transition} ${interactive.cursorPointer}`}
             aria-label="Close"
           >
             &times;
@@ -119,12 +120,12 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
         {/* Content */}
         <div className="p-5 md:p-6">
           {/* Date */}
-          <div className="font-mono text-xs tracking-wider opacity-60">
+          <div className={`${typography.mono.label} opacity-60`}>
             {formatDisplayDate(slot.date)}
           </div>
 
           {/* Time */}
-          <div className="text-3xl font-display uppercase leading-none mt-2">
+          <div className={`text-3xl ${typography.display.heading} leading-none mt-2`}>
             {slot.startTime}–{slot.endTime}
           </div>
 
@@ -138,15 +139,15 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
           {/* === CONFIRMATION VIEW === */}
           {view === 'confirmed' && (
             <>
-              <div className="border-t-2 border-black mt-5 pt-4">
+              <div className={`border-t-2 ${colors.borderPrimary} mt-5 pt-4`}>
                 <div className="text-center py-4">
-                  <div className="text-2xl font-display uppercase">Booking confirmed!</div>
-                  <p className="font-mono text-sm mt-2 opacity-60">You&apos;re all set for this session.</p>
+                  <div className={`text-2xl ${typography.display.heading}`}>Booking confirmed!</div>
+                  <p className={`${typography.mono.caption} mt-2 opacity-60`}>You&apos;re all set for this session.</p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="mt-4 w-full border-2 border-black px-4 py-3 font-display uppercase text-lg hover:bg-black hover:text-white transition-colors cursor-pointer"
+                className={`mt-4 w-full ${buttons.panel} ${buttons.panelInvert}`}
               >
                 Close
               </button>
@@ -156,22 +157,22 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
           {/* === CANCEL VIEW === */}
           {view === 'cancel' && (
             <>
-              <div className="border-t-2 border-black mt-5 pt-4">
-                <p className="font-mono text-sm mb-3">Are you sure you want to cancel this booking?</p>
+              <div className={`border-t-2 ${colors.borderPrimary} mt-5 pt-4`}>
+                <p className={`${typography.mono.caption} mb-3`}>Are you sure you want to cancel this booking?</p>
                 <label className="block">
-                  <span className="font-mono text-xs uppercase tracking-wider opacity-60">Reason (optional)</span>
+                  <span className={`${typography.mono.label} opacity-60`}>Reason (optional)</span>
                   <textarea
                     value={cancelReason}
                     onChange={(e) => setCancelReason(e.target.value)}
-                    className="mt-1 w-full border-2 border-black p-3 font-mono text-sm resize-none h-20 focus:outline-none"
+                    className={`mt-1 w-full border-2 ${colors.borderPrimary} p-3 ${typography.mono.caption} resize-none h-20 focus:outline-none`}
                     placeholder="Why are you cancelling?"
                   />
                 </label>
               </div>
 
               {error && (
-                <div className="mt-3 border-2 border-red-600 bg-red-50 px-4 py-2">
-                  <span className="font-mono text-sm text-red-600">{error}</span>
+                <div className={`mt-3 ${feedback.errorBox}`}>
+                  <span className={feedback.errorText}>{error}</span>
                 </div>
               )}
 
@@ -179,14 +180,14 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                 <button
                   onClick={() => { setView('details'); setError(null); }}
                   disabled={loading}
-                  className="flex-1 border-2 border-black px-4 py-3 font-display uppercase text-lg hover:bg-gray-100 transition-colors cursor-pointer disabled:opacity-50"
+                  className={`flex-1 ${buttons.panel} ${buttons.panelSecondary} ${buttons.panelDisabled}`}
                 >
                   Go back
                 </button>
                 <button
                   onClick={handleCancelConfirm}
                   disabled={loading}
-                  className="flex-1 border-2 border-black bg-black text-white px-4 py-3 font-display uppercase text-lg hover:bg-gray-800 transition-colors cursor-pointer disabled:opacity-50"
+                  className={`flex-1 ${buttons.panel} ${buttons.panelPrimary} ${buttons.panelDisabled}`}
                 >
                   {loading ? 'Cancelling...' : 'Confirm cancel'}
                 </button>
@@ -205,22 +206,22 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
               )}
 
               {/* Divider */}
-              <div className="border-t-2 border-black mt-5 pt-4">
+              <div className={`border-t-2 ${colors.borderPrimary} mt-5 pt-4`}>
                 {/* Status badges */}
                 {status === 'cancelled' && (
-                  <div className="font-mono uppercase text-sm line-through text-gray-400">
+                  <div className={`${typography.mono.caption} uppercase line-through ${colors.textDisabled}`}>
                     Cancelled
                   </div>
                 )}
 
                 {status === 'past' && (
-                  <div className="font-mono uppercase text-sm text-gray-400">
+                  <div className={`${typography.mono.caption} uppercase ${colors.textDisabled}`}>
                     Past
                   </div>
                 )}
 
                 {status === 'full' && !isBooked && (
-                  <div className="font-mono uppercase text-sm font-bold">
+                  <div className={`${typography.mono.caption} uppercase font-bold`}>
                     Full
                   </div>
                 )}
@@ -228,7 +229,7 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                 {status === 'available' && (
                   <div className="flex items-center gap-3">
                     <CapacityMeter booked={slot.bookedCount} capacity={slot.capacity} size="lg" />
-                    <span className="font-mono text-sm">
+                    <span className={typography.mono.caption}>
                       {spotsLeft} of {slot.capacity} left
                     </span>
                   </div>
@@ -238,28 +239,28 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                 {status === 'full' && isBooked && (
                   <div className="flex items-center gap-3">
                     <CapacityMeter booked={slot.bookedCount} capacity={slot.capacity} size="lg" />
-                    <span className="font-mono text-sm">Full</span>
+                    <span className={typography.mono.caption}>Full</span>
                   </div>
                 )}
               </div>
 
               {/* Error message */}
               {error && (
-                <div className="mt-3 border-2 border-red-600 bg-red-50 px-4 py-2">
-                  <span className="font-mono text-sm text-red-600">{error}</span>
+                <div className={`mt-3 ${feedback.errorBox}`}>
+                  <span className={feedback.errorText}>{error}</span>
                 </div>
               )}
 
               {/* Booked indicator + cancel button */}
               {isBooked && (
                 <>
-                  <div className="mt-4 border-2 border-black bg-black text-white px-4 py-3 text-center">
-                    <span className="font-display uppercase text-lg">Booked &#10003;</span>
+                  <div className={`mt-4 border-2 ${colors.borderPrimary} ${colors.bgPrimary} ${colors.textInverse} px-4 py-3 text-center`}>
+                    <span className={`${typography.display.heading} text-lg`}>Booked &#10003;</span>
                   </div>
                   {status !== 'past' && (
                     <button
                       onClick={() => setView('cancel')}
-                      className="mt-2 w-full border-2 border-black px-4 py-3 font-display uppercase text-lg hover:bg-black hover:text-white transition-colors cursor-pointer"
+                      className={`mt-2 w-full ${buttons.panel} ${buttons.panelInvert}`}
                     >
                       Cancel booking
                     </button>
@@ -272,10 +273,10 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                 <button
                   onClick={handleBookClick}
                   disabled={!canBook || loading}
-                  className={`mt-4 w-full border-2 px-4 py-3 font-display uppercase text-lg transition-colors ${
+                  className={`mt-4 w-full border-2 px-4 py-3 ${typography.display.heading} text-lg ${interactive.transition} ${
                     canBook && !loading
-                      ? 'border-black hover:bg-black hover:text-white cursor-pointer'
-                      : 'border-gray-300 text-gray-300 cursor-not-allowed'
+                      ? `${colors.borderPrimary} ${interactive.hoverInvert} ${interactive.cursorPointer}`
+                      : `${colors.borderDisabled} ${colors.textDisabled} ${interactive.cursorDisabled}`
                   }`}
                 >
                   {loading ? 'Booking...' : 'Book now'}

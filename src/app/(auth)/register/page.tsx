@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Formik, Form, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import { FormInput, PasswordInput, Button } from '@/components/ui';
+import { colors, inputs, feedback, interactive } from '@/lib/design-tokens';
 
 const accountSchema = Yup.object({
   email: Yup.string()
@@ -171,7 +172,7 @@ export default function RegisterPage() {
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-3xl font-display uppercase">Register</h1>
             <span className="text-lg font-mono">
-              {steps[step].number} <span className="text-gray-400">→</span> {steps[steps.length - 1].number}
+              {steps[step].number} <span className={colors.textDisabled}>→</span> {steps[steps.length - 1].number}
             </span>
           </div>
 
@@ -200,7 +201,7 @@ export default function RegisterPage() {
               <ScrollToError />
 
               {serverError && (
-                <div className="border-2 border-red-600 bg-red-50 p-4 text-red-600 mb-6" role="alert">
+                <div className={`${feedback.alertError} mb-6`} role="alert">
                   {serverError}
                 </div>
               )}
@@ -210,7 +211,7 @@ export default function RegisterPage() {
                   <>
                     <p className="">
                       Already have an account?{' '}
-                      <Link href="/login" className="underline font-medium hover:no-underline">
+                      <Link href="/login" className={`font-medium ${interactive.link}`}>
                         Login
                       </Link>
                     </p>
@@ -285,7 +286,7 @@ export default function RegisterPage() {
                     />
 
                     <div>
-                      <label htmlFor="gender" className="block font-medium mb-1">
+                      <label htmlFor="gender" className={inputs.label}>
                         Gender
                         <span className="text-gray-500 font-normal ml-2">Optional</span>
                       </label>
@@ -295,7 +296,7 @@ export default function RegisterPage() {
                         value={values.gender}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className="w-full border-2 border-black p-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 bg-white"
+                        className={`${inputs.base} ${colors.borderPrimary} bg-white`}
                       >
                         <option value="">Prefer not to say</option>
                         <option value="female">Female</option>
@@ -309,7 +310,7 @@ export default function RegisterPage() {
 
                 {step === 2 && (
                   <>
-                    <p className="text-gray-600 mb-4">
+                    <p className={`${colors.textSubtle} mb-4`}>
                       Optional but recommended. This person will be contacted in case of emergency during a sauna session.
                     </p>
 
@@ -343,7 +344,7 @@ export default function RegisterPage() {
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="flex-1 p-3 font-medium border-2 border-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1"
+                      className={`flex-1 p-3 font-medium border-2 ${colors.borderPrimary} hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
                     >
                       ← Back
                     </button>
@@ -361,7 +362,7 @@ export default function RegisterPage() {
                 {step === 2 && (
                   <button
                     type="submit"
-                    className="w-full p-3 text-gray-600 hover:text-black underline"
+                    className={`w-full p-3 ${colors.textSubtle} hover:text-black underline`}
                   >
                     Skip, I&apos;ll add this later
                   </button>

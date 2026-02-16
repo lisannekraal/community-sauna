@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
 import { getMainNavItems, getSecondaryNavItems, isActiveRoute } from '@/lib/navigation';
+import { nav, icons, colors, interactive, animation } from '@/lib/design-tokens';
 import { AdminModeToggle } from './admin-mode-toggle';
 import { Xmark, Menu, LogOut } from 'iconoir-react';
 
@@ -32,12 +33,12 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
         className="fixed top-4 right-4 z-50 p-2"
         aria-label="Open menu"
       >
-        <Menu width={22} height={22} strokeWidth={2} />
+        <Menu width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.strokeActive} />
       </button>
 
       {/* Overlay menu */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-white flex flex-col animate-[fadeIn_150ms_ease-out]">
+        <div className={`fixed inset-0 z-50 ${colors.bgSecondary} flex flex-col ${animation.fadeIn}`}>
           <div className={`flex items-center px-6 py-4 ${isAdmin ? 'justify-between' : 'justify-end'}`}>
             {isAdmin && <AdminModeToggle />}
             <button
@@ -45,7 +46,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
               className="p-2"
               aria-label="Close menu"
             >
-              <Xmark width={22} height={22} strokeWidth={2} />
+              <Xmark width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.strokeActive} />
             </button>
           </div>
 
@@ -57,17 +58,17 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
                 const Icon = item.icon;
 
                 return (
-                  <li key={item.href} className="border-b border-black/10">
+                  <li key={item.href} className={`border-b ${colors.borderSubtle}`}>
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center gap-4 py-4 -mx-3 px-3 ${
                         active
-                          ? 'bg-black text-white'
+                          ? nav.activeState
                           : ''
                       }`}
                     >
-                      <Icon width={22} height={22} strokeWidth={1.5} />
+                      <Icon width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.navMobile.strokeWidth} />
                       <span className="text-xl font-display">
                         {item.label}
                       </span>
@@ -90,12 +91,12 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center gap-4 py-2.5 -mx-3 px-4 ${
                         active
-                          ? 'bg-black text-white'
+                          ? nav.activeState
                           : ''
                       }`}
                     >
-                      <Icon width={18} height={18} strokeWidth={1.5} />
-                      <span className="text-[15px]">{item.label}</span>
+                      <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={icons.navSmall.strokeWidth} />
+                      <span className={nav.text.main}>{item.label}</span>
                     </Link>
                   </li>
                 );
@@ -105,13 +106,13 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
           </nav>
 
           {/* Overlay footer */}
-          <div className="px-6 py-5 border-t border-black/10 flex items-center justify-between">
+          <div className={`px-6 py-5 border-t ${colors.borderSubtle} flex items-center justify-between`}>
             <span className="text-sm">{userName}</span>
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
-              className="flex items-center gap-2 text-sm cursor-pointer"
+              className={`flex items-center gap-2 text-sm ${interactive.cursorPointer}`}
             >
-              <LogOut width={16} height={16} strokeWidth={1.5} />
+              <LogOut width={icons.action.size} height={icons.action.size} strokeWidth={icons.action.strokeWidth} />
               Log out
             </button>
           </div>

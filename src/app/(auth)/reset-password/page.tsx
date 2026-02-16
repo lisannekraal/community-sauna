@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { PasswordInput, Button } from '@/components/ui';
+import { colors, feedback, interactive } from '@/lib/design-tokens';
 
 const resetPasswordSchema = Yup.object({
   password: Yup.string()
@@ -84,13 +85,13 @@ function ResetPasswordForm() {
   if (!isValidToken) {
     return (
       <div className="space-y-6">
-        <div className="border-2 border-red-600 bg-red-50 p-4 text-red-600" role="alert">
+        <div className={feedback.alertError} role="alert">
           This password reset link is invalid or has expired.
           Please request a new one.
         </div>
         <Link
           href="/forgot-password"
-          className="block text-center underline hover:no-underline"
+          className={`block text-center ${interactive.link}`}
         >
           Request new reset link
         </Link>
@@ -101,7 +102,7 @@ function ResetPasswordForm() {
   if (success) {
     return (
       <div className="space-y-6">
-        <div className="border-2 border-green-600 bg-green-50 p-4 text-green-800" role="status">
+        <div className={feedback.alertSuccess} role="status">
           Your password has been reset successfully.
         </div>
         <Link
@@ -123,7 +124,7 @@ function ResetPasswordForm() {
       {({ values, errors, touched, handleChange, handleBlur, isSubmitting }) => (
         <Form className="space-y-6" noValidate>
           {serverError && (
-            <div className="border-2 border-red-600 bg-red-50 p-4 text-red-600" role="alert">
+            <div className={feedback.alertError} role="alert">
               {serverError}
             </div>
           )}
@@ -164,7 +165,7 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <h1 className="text-3xl font-display uppercase mb-4">Set New Password</h1>
-        <p className="text-gray-600 mb-8">
+        <p className={`${colors.textSubtle} mb-8`}>
           Enter your new password below.
         </p>
 

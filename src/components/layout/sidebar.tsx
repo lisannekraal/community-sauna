@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
 import { getMainNavItems, getSecondaryNavItems, isActiveRoute } from '@/lib/navigation';
+import { nav, icons, colors, interactive } from '@/lib/design-tokens';
 import { AdminModeToggle } from './admin-mode-toggle';
 import { LogOut } from 'iconoir-react';
 
@@ -23,7 +24,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
   const secondaryItems = getSecondaryNavItems(userRole, isAdminMode);
 
   return (
-    <aside className="fixed left-0 top-0 w-60 h-screen border-r border-black/10 flex flex-col bg-white z-40">
+    <aside className={`fixed left-0 top-0 w-60 h-screen border-r ${colors.borderSubtle} flex flex-col ${colors.bgSecondary} z-40`}>
       {/* Branding */}
       <div className="px-5 py-5">
         <Link href="/" className="text-lg font-display">
@@ -42,14 +43,14 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2.5 transition-colors ${
+                  className={`${nav.item.main} ${
                     active
-                      ? 'bg-black text-white'
-                      : 'hover:bg-black hover:text-white'
+                      ? nav.activeState
+                      : interactive.hoverInvert
                   }`}
                 >
-                  <Icon width={20} height={20} strokeWidth={1.5} />
-                  <span className="text-[15px]">{item.label}</span>
+                  <Icon width={icons.nav.size} height={icons.nav.size} strokeWidth={icons.nav.strokeWidth} />
+                  <span className={nav.text.main}>{item.label}</span>
                 </Link>
               </li>
             );
@@ -57,7 +58,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
         </ul>
 
         {/* Divider */}
-        <div className="border-t border-black/10 my-3 mx-2" />
+        <div className={`border-t ${colors.borderSubtle} my-3 mx-2`} />
 
         {/* Secondary nav */}
         <ul>
@@ -69,14 +70,14 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2 transition-colors ${
+                  className={`${nav.item.secondary} ${
                     active
-                      ? 'bg-black text-white'
-                      : 'hover:bg-black hover:text-white'
+                      ? nav.activeState
+                      : interactive.hoverInvert
                   }`}
                 >
-                  <Icon width={18} height={18} strokeWidth={1.5} />
-                  <span className="text-[13px]">{item.label}</span>
+                  <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={icons.navSmall.strokeWidth} />
+                  <span className={nav.text.secondary}>{item.label}</span>
                 </Link>
               </li>
             );
@@ -92,13 +93,13 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
       )}
 
       {/* Footer */}
-      <div className="px-5 py-4 border-t border-black/10 flex items-center justify-between">
+      <div className={`px-5 py-4 border-t ${colors.borderSubtle} flex items-center justify-between`}>
         <span className="text-sm truncate">{userName}</span>
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
-          className="flex items-center gap-1.5 text-sm shrink-0 cursor-pointer"
+          className={`flex items-center gap-1.5 text-sm shrink-0 ${interactive.cursorPointer}`}
         >
-          <LogOut width={16} height={16} strokeWidth={1.5} />
+          <LogOut width={icons.action.size} height={icons.action.size} strokeWidth={icons.action.strokeWidth} />
           Log out
         </button>
       </div>
