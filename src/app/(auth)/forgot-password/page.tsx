@@ -83,7 +83,7 @@ export default function ForgotPasswordPage() {
             )}
 
             <Link
-              href="/app/login"
+              href="/login"
               className="block text-center underline hover:no-underline"
             >
               Back to login
@@ -125,7 +125,7 @@ export default function ForgotPasswordPage() {
         {!success && (
           <p className="mt-8 text-center">
             Remember your password?{' '}
-            <Link href="/app/login" className="underline font-medium hover:no-underline">
+            <Link href="/login" className="underline font-medium hover:no-underline">
               Login
             </Link>
           </p>

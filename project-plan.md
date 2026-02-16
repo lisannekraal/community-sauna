@@ -56,6 +56,7 @@ See './database-design.md'
 - Outstanding payment failures block new bookings until resolved
 - Cancellation reason is optional (text field)
 - When admin cancels a slot with existing bookings: auto-cancel all bookings, restore credits, and send email notification
+- The public part of the website also shows the sauna schedule in which you can view a sauna slot and have a CTA to "book this session" - this sends you to `/register`, remembering what sauna slot the user wanted to book. In the registration steps, the user goes directly to the process of creating an account and doing a booking, before returning to the home of the internal website.
 
 ## Role Permissions
 
@@ -106,7 +107,7 @@ Roles stack: Admin inherits Host permissions, Host inherits Member permissions.
 
 ### Signup
 
-#### From public schedule
+#### By doing a first booking
 
 Guest clicks "Book timeslot" on schedule on public site
     ↓
@@ -114,15 +115,15 @@ Guest clicks "Book timeslot" on schedule on public site
     ↓
 [Register form] ←→ [Login form] (toggle)
     ↓
-Account created → booking confirmed → /app/dashboard
+Account created → booking confirmed → / (internal home)
 
-#### 
+#### Simple registering
 
 Guest clicks "Sign up"
     ↓
 [Register form] ←→ [Login form] (toggles to Register)
     ↓
-Account created → /app/dashboard (empty state: "Book your first session")
+Account created → / (empty state: "Book your first session")
 
 ## Features
 
@@ -130,8 +131,8 @@ Account created → /app/dashboard (empty state: "Book your first session")
 
 ✓ Viewable sauna schedule (week view calendar with navigation between weeks)
 ✓ For each sauna slot, show spots remaining (e.g., "3 of 5 spots left")
-- Community members can log in to make a reservation for a time slot
-- Reservations can also be cancelled (with optional reason)
+✓ Community members can log in to make a reservation for a time slot
+✓ Reservations can also be cancelled (with optional reason)
 ✓ Role/permission system (distinguish between regular members, hosts and admins)
 - Admins, hosts (when they are hosting) can see all bookings for each time slot
 - Admins can see all member profiles and view their memberships
@@ -181,30 +182,120 @@ Account created → /app/dashboard (empty state: "Book your first session")
 - Multi language: add Dutch or other languages. We will start with English.
 - Keyboard navigation (arrow keys) on mobile day picker for WCAG accessibility
 
-## UX
+## Navigation and site structure
 
-### Requirements
+- When an existing user logs in, they are redirected to the internal home and can view community notifications, news, active bookings, the current sauna schedule to make new bookings, manage their subscription, find resources like Q&A, and any other features in a clear, non-cluttered UX.
+- The internal home page (`/`) shows different content based on role: members see their bookings and membership info, admins additionally see management features and this week's overview.
+- In the menu, there will be a toggle for admins to activate member or admin mode. When they have member mode on, they can do anything a member and host can do, they see the navigation and the content of the pages as if they would be a host role. They can book sessions for themselves.
+- If they have admin mode on, the navigation and the contents of the pages looks different for them. This is the default option.
+
+**Primary nav items and the contents**:
+
+1. Home (`/`)
+
+For regular users (members):
+- Announcements (if any)
+- Next booking block (if any, otherwise link "book your next session")
+- Membership status
+
+For hosts:
+- All of the above
+- Next hosting block (priority over next booking block)
+
+For admin mode:
+- Overview of the week
+- Stats
+- Activity: new accounts, new bookings, new memberships
+
+2. Bookings
+
+For regular users (members):
+- Current bookings (opens up slot detail panel)
+- Past bookings
+
+For hosts:
+- Toggle between host sessions and bookings (host sessions first)
+- Same as above
+
+For admin mode:
+- Toggle between all bookings and all payments
+- Filtering
+
+3. Schedule (most important)
+
+For regular users (members):
+- Schedule and booking functionality like we already have
+
+For hosts:
+- On slot detail panel they can tick off visitors if they are the host
+
+For admin mode:
+- Same schedule as above
+- Add hosts
+- Add single slots to the schedule
+- Add slots for empty weeks in the future: (apply templates), and a link to a different page to edit templates
+- Cancel slots
+- Edit slots
+
+4. Plans
+
+For regular users (members):
+- Membership status
+- Current payments
+- Change or cancel current plan
+- Available plans and buy a new plan
+
+For hosts:
+- Same as above
+
+For admin mode:
+- Manage plans
+
+5. Help / Members
+
+The fifth primary nav item will be a different item for different roles. Sends to different pages.
+
+For regular users (members):
+- "Help" page
+- Q&A
+- Contact
+
+For hosts:
+- Same as above
+- Hosting Q&A
+
+For admins:
+- "Members" page
+- Overview of all members
+- Member detail panel
+- View member/host bookings
+- Manage roles
+- Manage plans
+- Suspend/reactivate
+- Edit individual user memberships (special conditions, comps)
+- View payment history and statuses
+
+**Secondary navigation items**:
+
+__For regular users and hosts__:
+- Profile
+- Account (change password, remove account)
+- Log out
+
+__For admins__:
+- Admin/member toggle (see User Roles above)
+- Settings (capacity for new slots)
+- Manage announcements
+- Manage Q&A
+- Manage schedule templates
+
+## UX Requirements
 
 - According to accessibility guidelines
 - Perfect UX journey but minimal styling
 - Mobile-first
-
-### Schedule Display
-
-- Week view calendar with navigation between weeks
-- Public pages show spots remaining (e.g., "3 of 5 spots left")
-- Location details only shown after booking is confirmed
-- Availability re-fetched when user clicks on a slot (not real-time push updates)
-
-### Screen Guidance
-
-- The public section of the website has a clear "log in" button in the navbar. This sends you to `/app` which shows a login page.
-- On the login page it is possible to create an account as well, as well as forget password functionality.
-- The public part of the website also shows the sauna schedule in which you can view a sauna slot and have a CTA to "book this session" - this sends you to `/app/register`, remembering what sauna slot the user wanted to book.
-- In the registration steps, the user goes directly to the process of creating an account and doing a booking, before returning to the home of the internal website.
-- When an existing user logs in, they are redirected to `/app` (the internal home) and can view community notifications, news, active bookings, the current sauna schedule to make new bookings, manage their subscription, find resources like Q&A, and any other features in a clear, non-cluttered UX.
-- The internal home page (`/app`) shows different content based on role: members see their bookings and membership info, admins additionally see management features and this week's overview.
+- Icon library: Iconoir
 
 ## Design
 
-The styling is very brutalist, non-design, DIY culture, but with a modern UX in mind, so that users feel comfortable and the platform is attractive.
+The styling is very brutalist, non-design, DIY culture, but with a modern UX in mind, so that users feel comfortable and the platform is attractive. The non-design on the one hand and the UX best practices on the other hand need to be balanced out.

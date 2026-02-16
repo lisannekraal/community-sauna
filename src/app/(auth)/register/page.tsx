@@ -28,7 +28,7 @@ const personalSchema = Yup.object({
     .trim()
     .required('Phone number is required')
     .matches(/^[+\d\s\-()]+$/, 'Invalid phone number')
-    .test('min-digits', 'Phone number too short', val => 
+    .test('min-digits', 'Phone number too short', val =>
       (val?.replace(/\D/g, '').length || 0) >= 10
     ),
   gender: Yup.string(),
@@ -38,7 +38,7 @@ const emergencySchema = Yup.object({
   emergencyContactName: Yup.string(),
   emergencyContactPhone: Yup.string()
     .matches(/^[+\d\s\-()]*$/, 'Invalid phone number')
-    .test('min-digits', 'Phone number too short', val => 
+    .test('min-digits', 'Phone number too short', val =>
       !val || (val.replace(/\D/g, '').length >= 10)
     ),
 });
@@ -150,7 +150,7 @@ export default function RegisterPage() {
         return;
       }
 
-      router.push('/app');
+      router.push('/');
       router.refresh();
     } catch {
       setServerError('Something went wrong. Please try again.');
@@ -210,7 +210,7 @@ export default function RegisterPage() {
                   <>
                     <p className="">
                       Already have an account?{' '}
-                      <Link href="/app/login" className="underline font-medium hover:no-underline">
+                      <Link href="/login" className="underline font-medium hover:no-underline">
                         Login
                       </Link>
                     </p>

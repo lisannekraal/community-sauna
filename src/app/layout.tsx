@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from '@/components/layout/providers';
-import { Header } from '@/components/layout/header';
 
 // Font imports (self-hosted via Fontsource - no big tech CDNs)
 import '@fontsource/space-mono/400.css';
@@ -26,8 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <Providers>
-          <Header />
-          <main>{children}</main>
+          {children}
         </Providers>
       </body>
     </html>
