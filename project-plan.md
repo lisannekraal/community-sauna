@@ -299,3 +299,7 @@ __For admins__:
 ## Design
 
 The styling is very brutalist, non-design, DIY culture, but with a modern UX in mind, so that users feel comfortable and the platform is attractive. The non-design on the one hand and the UX best practices on the other hand need to be balanced out.
+
+### Design tokens
+
+`src/lib/design-tokens.ts` exports reusable Tailwind class constants for the UI system

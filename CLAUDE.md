@@ -27,6 +27,7 @@ The Next.js app serves both the public pages and the member area (no separate pu
 - **Styling:** Tailwind CSS (minimal usage for brutalist design)
 - **Database ORM:** Prisma with MySQL provider (MariaDB compatible)
 - **Form Handling:** Formik with Yup schema validation
+- **Icons:** iconoir-react
 - **Testing:** TBD
 
 ## Build Commands
@@ -46,6 +47,39 @@ npm run db:seed     # Seed membership plans + superadmin
 npm run db:studio   # Open Prisma Studio GUI
 npx prisma generate # Regenerate Prisma client after schema changes
 ```
+
+## App Architecture
+
+### Route Groups & Layouts
+
+The app uses two Next.js route groups with different layout shells:
+
+- **`(auth)`** — Login, register, forgot/reset password. Minimal layout with `Header` only. All pages are `'use client'` with Formik forms.
+- **`(main)`** — All authenticated pages. Server component layout that conditionally wraps in `AppShell` (authenticated) or renders bare (guest homepage).
+
+### Responsive Navigation (AppShell)
+
+`AppShell` renders three navigation components simultaneously, toggled by breakpoint:
+- **Desktop (`lg:`)**: `Sidebar` — fixed left sidebar (w-60)
+- **Mobile**: `HamburgerMenu` — full-screen overlay + `BottomTabBar` — fixed bottom tab bar with 5 items (center item is elevated circle)
+
+Navigation items are defined centrally in `src/lib/navigation.ts`. The 5th tab and secondary nav items change based on admin mode (toggled via `AdminModeProvider` context).
+
+### Server vs Client Boundary
+
+Layouts fetch session data server-side via `getServerSession(authOptions)` and pass role/name as props to client components. The `AdminModeProvider` context is client-side only.
+
+## Design Tokens
+
+`src/lib/design-tokens.ts` exports reusable Tailwind class constants for the brutalist UI system. All components and pages should import from here instead of repeating raw values.
+
+Tokens cover: `colors`, `icons`, `interactive`, `nav`, `typography`, `buttons`, `inputs`, `feedback`, `animation`.
+
+**When to use tokens:** Colors, border styles, icon sizes, button/input patterns, error/success alerts, link hover states, nav active states.
+
+**What stays as raw Tailwind:** Layout positioning, component-specific spacing, responsive breakpoints, one-off values.
+
+**When adding new UI:** Check design-tokens.ts first for existing patterns. Only add new tokens for patterns that repeat across 2+ files.
 
 ## Domain Model
 
@@ -75,23 +109,24 @@ Roles stack: admin has all host permissions, host has all member permissions.
 
 ## Routing Structure
 
-- **Public pages** (`/`): Homepage, schedule - accessible without login
-- **Internal app** (`/app`): Member area - requires authentication
-  - `/app` - Internal home (shows role-appropriate content)
-  - `/app/login` - Login page
-  - `/app/register` - Registration page
+- **`/`** — Homepage (public for guests, dashboard for authenticated)
+- **`/login`, `/register`, `/forgot-password`, `/reset-password`** — Auth flow (route group `(auth)`)
+- **`/schedule`** — Week view calendar with booking
+- **`/bookings`, `/plans`, `/profile`, `/account`, `/help`** — Member pages
+- **`/members`** — Admin-only member list
+- **`/admin/settings`, `/admin/announcements`, `/admin/qa`, `/admin/templates`** — Admin pages
 
 ## Security Architecture
 
-- **Route protection**: `src/proxy.ts` handles redirects for `/app/*` routes (Next.js 16 proxy convention)
+- **Route protection**: `src/proxy.ts` handles redirects (Next.js 16 proxy convention)
 - **Auth verification**: Pages use `getServerSession(authOptions)` for actual authorization
 - **Defense in depth**: Proxy for redirects + page-level session checks
 - **Role checking**: Use `hasRole(userRole, requiredRole)` from `@/types` for permission checks
 
 ## Booking Flow
 
-1. User clicks "book" on public schedule page
-2. Redirects to `/app` for login/registration
+1. User clicks "book" on schedule page
+2. Redirects to login/registration if not authenticated
 3. After auth, completes payment (if needed)
 4. Booking confirmed, location details revealed
 
@@ -101,12 +136,6 @@ Roles stack: admin has all host permissions, host has all member permissions.
 - **One booking per account per slot** - cannot book for others
 - **Payment issues block new bookings** until resolved
 - **Availability updates on interaction** - re-fetch when user clicks a slot
-
-## Schedule Display
-
-- **Week view calendar** with navigation between weeks
-- **Public shows spots remaining** (e.g., "3 of 5 spots left")
-- **Location only shown after booking confirmed**
 
 ## Business Rules
 
@@ -146,39 +175,9 @@ When admin cancels a time slot with existing bookings:
 - Restore credits to members
 - Send email notification automatically
 
-## Admin Features
-
-- **Dashboard focus**: This week overview (7-day bookings and capacity)
-- **Host assignment**: Admin manually assigns hosts to time slots
-- **Renewal notices**: Email sent 7 days before membership expiry/renewal
-
-## Communication
-
-- **Contact host/organizer**: Simple mailto: email link
-- **Email format**: Plain text only
-- **Booking reminders**: 24 hours before slot (email)
-
-## Key Integration Points
-
-### NextAuth
-- Email/password authentication only
-- Role-based session with `member`, `host`, `admin`, `superadmin`
-- Magic link password reset flow
-
-### Mollie Payments
-- One-time payments for punch cards and walk-ins
-- Recurring payments for subscriptions (auto-renew)
-- Refund handling for cancelled walk-in bookings
-
-### Scheduled Jobs
-- Daily membership expiry check
-- 24-hour booking reminders (email)
-- Auto-renewal payment attempts
-- 7-day renewal notice emails
-
 ## Design Principles
 
-- **Brutalist UI**: Minimal styling, DIY culture aesthetic (design references to be shared)
+- **Brutalist UI**: Black/white binary, `border-2`, no shadows, no border-radius (except `rounded-full` for specific elements like admin toggle dot, bottom tab center button)
 - **Mobile-first**: Responsive design
 - **WCAG accessible**: Clear, logical UX
 - **Reusable**: All content admin-configurable for other communities
@@ -189,9 +188,11 @@ Fonts are self-hosted via Fontsource (no external CDNs):
 - **Space Mono** (`font-mono`) - Step numbers, technical elements
 - **Space Grotesk** (`font-sans`) - Body text, default
 
-## Legal Requirements
+## Prisma Date/Time Handling
 
-- Privacy policy page needed (GDPR compliance for storing member data)
+Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` fields return JS Dates like `1970-01-01THH:MM:00.000Z`. When formatting:
+- **Dates**: Use `formatDateISO()` from `src/lib/schedule.ts` (local time methods work in CET)
+- **Times**: Use `formatTimeUTC()` from `src/lib/schedule.ts` (must use UTC methods since time is stored as UTC)
 
 ## API Routes
 
@@ -201,20 +202,17 @@ Fonts are self-hosted via Fontsource (no external CDNs):
 - `POST /api/auth/forgot-password` - Request password reset
 - `POST /api/auth/reset-password` - Complete password reset
 
-## Prisma Date/Time Handling
-
-Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` fields return JS Dates like `1970-01-01THH:MM:00.000Z`. When formatting:
-- **Dates**: Use `formatDateISO()` from `src/lib/schedule.ts` (local time methods work in CET)
-- **Times**: Use `formatTimeUTC()` from `src/lib/schedule.ts` (must use UTC methods since time is stored as UTC)
-
 ## Key Files
 
-- `src/proxy.ts` - Route protection for /app/* (redirects only)
+- `src/proxy.ts` - Route protection (redirects only)
 - `src/lib/auth.ts` - NextAuth configuration with JWT strategy
 - `src/lib/db.ts` - Prisma client singleton (query logging controlled here)
 - `src/lib/bookings.ts` - Credit check and booking validation logic
 - `src/lib/schedule.ts` - Date/time formatters, slot status logic
+- `src/lib/navigation.ts` - Centralized nav items (main + secondary, role-aware)
+- `src/lib/design-tokens.ts` - UI design tokens (colors, typography, buttons, etc.)
 - `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities
+- `src/contexts/admin-mode.tsx` - Admin/member view toggle context
 - `prisma/schema.prisma` - Database schema with all entities
 - `prisma/seed.ts` - Seeds membership plans, superadmin
 
