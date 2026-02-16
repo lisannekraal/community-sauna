@@ -15,22 +15,22 @@ export function AppShell({ userName, userRole, children }: AppShellProps) {
   return (
     <>
       {/* Desktop */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <Sidebar userName={userName} userRole={userRole} />
       </div>
 
       {/* Mobile */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <HamburgerMenu userName={userName} userRole={userRole} />
       </div>
 
       {/* Main content */}
-      <main className="md:ml-60 pb-20 md:pb-0">
+      <main className="lg:ml-60 pb-20 lg:pb-0">
         {children}
       </main>
 
       {/* Mobile */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <BottomTabBar userRole={userRole} />
       </div>
     </>
