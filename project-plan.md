@@ -278,7 +278,7 @@ For admins:
 **Secondary navigation items**:
 
 __For regular users and hosts__:
-- Profile
+- Profile (name, phone number, gender, emergency contact)
 - Account (change password, remove account)
 - Log out
 
@@ -303,3 +303,8 @@ The styling is very brutalist, non-design, DIY culture, but with a modern UX in 
 ### Design tokens
 
 `src/lib/design-tokens.ts` exports reusable Tailwind class constants for the UI system
+
+## Typography
+- **Archivo Black** (`font-display`) - Headings, uppercase
+- **Space Mono** (`font-mono`) - Step numbers, technical elements
+- **Space Grotesk** (`font-sans`) - Body text, default
