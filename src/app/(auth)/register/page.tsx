@@ -8,6 +8,7 @@ import { Formik, Form, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import { FormInput, PasswordInput, Button } from '@/components/ui';
 import { colors, inputs, feedback, interactive } from '@/lib/design-tokens';
+import { GENDER_OPTIONS } from '@/lib/member';
 
 const accountSchema = Yup.object({
   email: Yup.string()
@@ -298,11 +299,9 @@ export default function RegisterPage() {
                         onBlur={handleBlur}
                         className={`${inputs.base} ${colors.borderPrimary} bg-white`}
                       >
-                        <option value="">Prefer not to say</option>
-                        <option value="female">Female</option>
-                        <option value="non_binary">Non-binary</option>
-                        <option value="male">Male</option>
-                        <option value="other">Other</option>
+                        {GENDER_OPTIONS.map((opt) => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
                       </select>
                     </div>
                   </>

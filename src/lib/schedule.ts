@@ -18,9 +18,18 @@ export function formatTimeUTC(date: Date): string {
   return `${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}`;
 }
 
-/** Format a YYYY-MM-DD string for display, e.g. "TUESDAY 11 FEB" */
+/** Format a YYYY-MM-DD string as "15 Apr 2026". Accepts full ISO timestamps — only the date part is used. */
+export function formatDateHuman(dateStr: string): string {
+  const [y, m, d] = dateStr.slice(0, 10).split('-').map(Number);
+  const date = new Date(y, m - 1, d);
+  const day = date.getDate();
+  const month = date.toLocaleDateString('en-GB', { month: 'short' });
+  return `${day} ${month} ${y}`;
+}
+
+/** Format a YYYY-MM-DD string for display, e.g. "TUESDAY 11 FEB". Accepts full ISO timestamps — only the date part is used. */
 export function formatDisplayDate(dateStr: string): string {
-  const [y, m, d] = dateStr.split('-').map(Number);
+  const [y, m, d] = dateStr.slice(0, 10).split('-').map(Number);
   const date = new Date(y, m - 1, d);
   const weekday = date.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
   const day = date.getDate();

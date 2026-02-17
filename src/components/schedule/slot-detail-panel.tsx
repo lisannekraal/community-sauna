@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { type TimeSlotData } from '@/types';
 import { getSlotStatus, formatDisplayDate } from '@/lib/schedule';
-import { colors, typography, buttons, interactive, animation, feedback } from '@/lib/design-tokens';
+import { colors, typography, interactive, feedback } from '@/lib/design-tokens';
+import { Button } from '@/components/ui/button';
+import { Panel } from '@/components/ui/panel';
 import { CapacityMeter } from './capacity-meter';
 
 type PanelView = 'details' | 'confirmed' | 'cancel';
@@ -31,21 +33,6 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
     setCancelReason('');
   }, [slot?.id]);
 
-  useEffect(() => {
-    if (!slot) return;
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-
-    document.addEventListener('keydown', handleEscape);
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = '';
-    };
-  }, [slot, onClose]);
 
   if (!slot) return null;
 
@@ -78,47 +65,10 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
     }
   }
 
+  const panelTitle = view === 'confirmed' ? 'Booking confirmed' : view === 'cancel' ? 'Cancel booking' : 'Session details';
+
   return (
-    <div className="fixed inset-0 z-50">
-      {/* Backdrop */}
-      <div
-        className={`absolute inset-0 ${colors.bgOverlay} ${animation.fadeIn}`}
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Panel — bottom sheet on mobile, centered modal on desktop */}
-      <div
-        className={`
-          absolute bottom-0 left-0 right-0
-          md:bottom-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2
-          md:max-w-md md:w-full
-          ${colors.bgSecondary} border-t-4 ${colors.borderPrimary}
-          md:border-4
-          ${animation.slideUp} md:${animation.scaleIn}
-        `}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Time slot details"
-      >
-        {/* Header bar */}
-        <div className={`flex items-center justify-between border-b-2 ${colors.borderPrimary}`}>
-          <div className="px-4 py-3">
-            <span className={typography.mono.label}>
-              {view === 'confirmed' ? 'Booking confirmed' : view === 'cancel' ? 'Cancel booking' : 'Session details'}
-            </span>
-          </div>
-          <button
-            onClick={onClose}
-            className={`border-l-2 ${colors.borderPrimary} px-4 py-3 ${typography.mono.caption} ${interactive.hoverInvert} ${interactive.transition} ${interactive.cursorPointer}`}
-            aria-label="Close"
-          >
-            &times;
-          </button>
-        </div>
-
-        {/* Content */}
-        <div className="p-5 md:p-6">
+    <Panel title={panelTitle} onClose={onClose}>
           {/* Date */}
           <div className={`${typography.mono.label} opacity-60`}>
             {formatDisplayDate(slot.date)}
@@ -145,12 +95,9 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                   <p className={`${typography.mono.caption} mt-2 opacity-60`}>You&apos;re all set for this session.</p>
                 </div>
               </div>
-              <button
-                onClick={onClose}
-                className={`mt-4 w-full ${buttons.panel} ${buttons.panelInvert}`}
-              >
+              <Button variant="panel-secondary" onClick={onClose} className="mt-4 w-full">
                 Close
-              </button>
+              </Button>
             </>
           )}
 
@@ -177,20 +124,23 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
               )}
 
               <div className="mt-4 flex gap-3">
-                <button
+                <Button
+                  variant="panel-secondary"
                   onClick={() => { setView('details'); setError(null); }}
                   disabled={loading}
-                  className={`flex-1 ${buttons.panel} ${buttons.panelSecondary} ${buttons.panelDisabled}`}
+                  className="flex-1"
                 >
                   Go back
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="panel-primary"
                   onClick={handleCancelConfirm}
-                  disabled={loading}
-                  className={`flex-1 ${buttons.panel} ${buttons.panelPrimary} ${buttons.panelDisabled}`}
+                  loading={loading}
+                  loadingText="Cancelling..."
+                  className="flex-1"
                 >
-                  {loading ? 'Cancelling...' : 'Confirm cancel'}
-                </button>
+                  Confirm cancel
+                </Button>
               </div>
             </>
           )}
@@ -258,12 +208,9 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                     <span className={`${typography.display.heading} text-lg`}>Booked &#10003;</span>
                   </div>
                   {status !== 'past' && (
-                    <button
-                      onClick={() => setView('cancel')}
-                      className={`mt-2 w-full ${buttons.panel} ${buttons.panelInvert}`}
-                    >
+                    <Button variant="panel-secondary" onClick={() => setView('cancel')} className="mt-2 w-full">
                       Cancel booking
-                    </button>
+                    </Button>
                   )}
                 </>
               )}
@@ -284,8 +231,6 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
               )}
             </>
           )}
-        </div>
-      </div>
-    </div>
+    </Panel>
   );
 }
