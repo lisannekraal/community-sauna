@@ -1,23 +1,48 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Cyrene';
+  src: url('/fonts/Cyrene-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Font families */
+  /* Font families — internal platform */
   --font-mono: 'Space Mono', monospace;
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
   --font-display: 'Archivo Black', Impact, sans-serif;
+
+  /* Font families — Löyly public brand */
+  --font-logo: 'Cyrene', 'Playfair Display', Georgia, serif;
+  --font-heading-ly: 'Playfair Display', Georgia, serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Tailwind font family utilities */
+  /* Tailwind font family utilities — internal platform */
   --font-family-mono: var(--font-mono);
   --font-family-sans: var(--font-sans);
   --font-family-display: var(--font-display);
+
+  /* Tailwind font family utilities — Löyly public brand */
+  --font-family-logo: var(--font-logo);
+  --font-family-heading-ly: var(--font-heading-ly);
+
+  /* Löyly brand colors */
+  --color-ly-dark: #1A1208;
+  --color-ly-cream: #F4EDE4;
+  --color-ly-amber: #C87941;
+  --color-ly-amber-dark: #9B5C28;
+  --color-ly-stone: #847060;
+  --color-ly-steam: #EAE4DC;
+  --color-ly-forest: #3D5A4A;
 }
 
 body {
@@ -30,6 +55,8 @@ body {
 .font-mono { font-family: var(--font-mono); }
 .font-sans { font-family: var(--font-sans); }
 .font-display { font-family: var(--font-display); }
+.font-logo { font-family: var(--font-logo); }
+.font-heading-ly { font-family: var(--font-heading-ly); }
 
 *:focus-visible {
   outline: 2px solid black;
