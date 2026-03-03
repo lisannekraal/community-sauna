@@ -1,23 +1,64 @@
 @import "tailwindcss";
 
+/* Ragika — Buurtsauna Löyly logo font */
+@font-face {
+  font-family: 'Ragika';
+  src: url('/fonts/ragika.woff2') format('woff2'),
+       url('/fonts/ragika.woff') format('woff'),
+       url('/fonts/RagikaRegular-ZpjL8.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Font families */
+  /* Internal app font families */
   --font-mono: 'Space Mono', monospace;
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
   --font-display: 'Archivo Black', Impact, sans-serif;
+
+  /* Buurtsauna Löyly brand fonts (public landing page) */
+  --font-loly-logo: 'Ragika', 'Cinzel', Georgia, serif;
+  --font-loly-heading: 'Cinzel', Georgia, serif;
+  --font-loly-body: 'Lora', Georgia, serif;
+
+  /* Buurtsauna Löyly brand colors */
+  --loly-cream: #F4EDE2;
+  --loly-steam: #FDFAF6;
+  --loly-birch: #D9C4A8;
+  --loly-wood: #2C1A0E;
+  --loly-ember: #C4612A;
+  --loly-ember-dark: #A04E22;
+  --loly-stone: #7A6960;
+  --loly-moss: #3A5A37;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Tailwind font family utilities */
+  /* Internal app font family utilities */
   --font-family-mono: var(--font-mono);
   --font-family-sans: var(--font-sans);
   --font-family-display: var(--font-display);
+
+  /* Buurtsauna Löyly font utilities */
+  --font-family-loly-logo: var(--font-loly-logo);
+  --font-family-loly-heading: var(--font-loly-heading);
+  --font-family-loly-body: var(--font-loly-body);
+
+  /* Buurtsauna Löyly color utilities */
+  --color-loly-cream: var(--loly-cream);
+  --color-loly-steam: var(--loly-steam);
+  --color-loly-birch: var(--loly-birch);
+  --color-loly-wood: var(--loly-wood);
+  --color-loly-ember: var(--loly-ember);
+  --color-loly-ember-dark: var(--loly-ember-dark);
+  --color-loly-stone: var(--loly-stone);
+  --color-loly-moss: var(--loly-moss);
 }
 
 body {
@@ -26,10 +67,15 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Utility classes for fonts */
+/* Internal app font utility classes */
 .font-mono { font-family: var(--font-mono); }
 .font-sans { font-family: var(--font-sans); }
 .font-display { font-family: var(--font-display); }
+
+/* Buurtsauna Löyly font utility classes */
+.font-loly-logo { font-family: var(--font-loly-logo); }
+.font-loly-heading { font-family: var(--font-loly-heading); }
+.font-loly-body { font-family: var(--font-loly-body); }
 
 *:focus-visible {
   outline: 2px solid black;

@@ -10,6 +10,12 @@ import '@fontsource/space-grotesk/500.css';
 import '@fontsource/space-grotesk/600.css';
 import '@fontsource/space-grotesk/700.css';
 import '@fontsource/archivo-black';
+// Buurtsauna Löyly brand fonts (public landing page)
+import '@fontsource/cinzel/400.css';
+import '@fontsource/cinzel/700.css';
+import '@fontsource/lora/400.css';
+import '@fontsource/lora/400-italic.css';
+import '@fontsource/lora/700.css';
 
 export const metadata: Metadata = {
   title: 'Community Sauna',
