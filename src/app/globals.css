@@ -4,10 +4,32 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Font families */
+  /* Font families — internal app */
   --font-mono: 'Space Mono', monospace;
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
   --font-display: 'Archivo Black', Impact, sans-serif;
+
+  /* Font families — Löyly brand */
+  --font-loyly-logo: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-loyly-heading: 'Bogart', Georgia, serif;
+  --font-loyly-body: 'Satoshi', 'Space Grotesk', system-ui, sans-serif;
+
+  /* Löyly brand colors */
+  --loyly-bg: #0d0a07;
+  --loyly-bg-warm: #1c1409;
+  --loyly-bg-mid: #2a1f14;
+  --loyly-bg-light: #f5ede0;
+  --loyly-bg-lighter: #fdf8f0;
+  --loyly-text: #f0e4cc;
+  --loyly-text-muted: #9a7a5a;
+  --loyly-text-dark: #1c1409;
+  --loyly-text-mid: #5a4030;
+  --loyly-fire: #c84a18;
+  --loyly-fire-hover: #a83c12;
+  --loyly-steam: #8faa8c;
+  --loyly-gold: #c49040;
+  --loyly-border-dark: rgba(240, 228, 204, 0.12);
+  --loyly-border-light: rgba(28, 20, 9, 0.12);
 }
 
 @theme inline {
@@ -18,6 +40,9 @@
   --font-family-mono: var(--font-mono);
   --font-family-sans: var(--font-sans);
   --font-family-display: var(--font-display);
+  --font-family-loyly-logo: var(--font-loyly-logo);
+  --font-family-loyly-heading: var(--font-loyly-heading);
+  --font-family-loyly-body: var(--font-loyly-body);
 }
 
 body {
@@ -40,6 +65,11 @@ body {
   outline: none;
 }
 
+/* Löyly font utilities */
+.font-loyly-logo    { font-family: var(--font-loyly-logo); }
+.font-loyly-heading { font-family: var(--font-loyly-heading); }
+.font-loyly-body    { font-family: var(--font-loyly-body); }
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -54,3 +84,41 @@ body {
   from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
   to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
+
+@keyframes steamRise {
+  0%   { opacity: 0; transform: translateY(0) scaleX(1) rotate(0deg); }
+  25%  { opacity: 0.45; }
+  75%  { opacity: 0.15; transform: translateY(-110px) scaleX(1.7) rotate(4deg); }
+  100% { opacity: 0; transform: translateY(-160px) scaleX(2.2) rotate(-3deg); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUpSlow {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+.loyly-fade-up {
+  animation: fadeUp 0.7s ease-out both;
+}
+.loyly-fade-up-d1 { animation: fadeUp 0.7s 0.15s ease-out both; }
+.loyly-fade-up-d2 { animation: fadeUp 0.7s 0.30s ease-out both; }
+.loyly-fade-up-d3 { animation: fadeUp 0.7s 0.45s ease-out both; }
+.loyly-fade-up-d4 { animation: fadeUp 0.7s 0.60s ease-out both; }
+
+.loyly-steam-1 { animation: steamRise 5s 0.0s ease-in-out infinite; }
+.loyly-steam-2 { animation: steamRise 6s 1.2s ease-in-out infinite; }
+.loyly-steam-3 { animation: steamRise 5.5s 2.5s ease-in-out infinite; }
+.loyly-steam-4 { animation: steamRise 7s 0.8s ease-in-out infinite; }
+.loyly-steam-5 { animation: steamRise 5s 3.5s ease-in-out infinite; }
+
+.loyly-btn-fire:hover { background: var(--loyly-fire-hover) !important; }
