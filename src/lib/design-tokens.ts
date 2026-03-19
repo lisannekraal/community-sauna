@@ -71,7 +71,7 @@ export const typography = {
     tiny: 'font-mono text-[10px]',
   },
   display: {
-    heading: 'font-display uppercase',
+    heading: 'font-display',
   },
 } as const;
 

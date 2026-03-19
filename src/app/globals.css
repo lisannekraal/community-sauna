@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Devina Garden';
+  src:
+    url('/fonts/devina-garden.woff2') format('woff2'),
+    url('/fonts/devina-garden.woff') format('woff'),
+    url('/fonts/devina-garden.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -7,7 +18,7 @@
   /* Font families */
   --font-mono: 'Space Mono', monospace;
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
-  --font-display: 'Archivo Black', Impact, sans-serif;
+  --font-display: 'Devina Garden', serif;
 }
 
 @theme inline {
@@ -20,16 +31,16 @@
   --font-family-display: var(--font-display);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
 }
 
-/* Utility classes for fonts */
-.font-mono { font-family: var(--font-mono); }
-.font-sans { font-family: var(--font-sans); }
-.font-display { font-family: var(--font-display); }
 
 *:focus-visible {
   outline: 2px solid black;
