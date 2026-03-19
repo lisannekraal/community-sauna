@@ -183,10 +183,10 @@ When admin cancels a time slot with existing bookings:
 - **Reusable**: All content admin-configurable for other communities
 
 ### Typography
-Fonts are self-hosted via Fontsource (no external CDNs):
-- **Archivo Black** (`font-display`) - Headings, uppercase
-- **Space Mono** (`font-mono`) - Step numbers, technical elements
-- **Space Grotesk** (`font-sans`) - Body text, default
+Fonts are self-hosted (no external CDNs):
+- **Devina Garden** (`font-display`) - Display headings; loaded from `/public/fonts/devina-garden.ttf` via `globals.css`
+- **Space Mono** (`font-mono`) - Step numbers, technical elements; via Fontsource
+- **Space Grotesk** (`font-sans`) - Body text, default; via Fontsource
 
 ## Prisma Date/Time Handling
 
@@ -198,6 +198,7 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 
 - `POST /api/bookings` - Create a booking (validates slot, capacity, membership credits)
 - `DELETE /api/bookings/[id]` - Cancel a booking (with optional reason)
+- `GET /api/plans` - Fetch active membership plans (used on landing page)
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/forgot-password` - Request password reset
 - `POST /api/auth/reset-password` - Complete password reset
