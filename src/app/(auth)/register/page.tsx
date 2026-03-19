@@ -171,7 +171,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md mx-auto flex-1 flex flex-col">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-3xl font-display uppercase">Register</h1>
+            <h1 className="font-display text-[clamp(2rem,5vw,3rem)]">Register</h1>
             <span className="text-lg font-mono">
               {steps[step].number} <span className={colors.textDisabled}>→</span> {steps[steps.length - 1].number}
             </span>
@@ -188,7 +188,7 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-display uppercase mb-8">{steps[step].title}</h2>
+        <h2 className="font-display text-[clamp(1.5rem,4vw,2.25rem)] mb-8">{steps[step].title}</h2>
 
         <Formik
           initialValues={initialValues}

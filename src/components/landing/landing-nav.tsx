@@ -21,7 +21,7 @@ export function LandingNav() {
       <div className="flex items-stretch h-14">
         <Link
           href="/"
-          className="flex items-center px-5 border-r-2 border-black font-display text-[22px] shrink-0 hover:bg-black hover:text-white transition-colors"
+          className="flex items-center px-5 border-r-2 border-black font-display text-[25px] shrink-0 hover:bg-black hover:text-white transition-colors"
         >
           Löyly
         </Link>

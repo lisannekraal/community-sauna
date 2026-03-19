@@ -39,15 +39,20 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
       {/* Overlay menu */}
       {isOpen && (
         <div className={`fixed inset-0 z-50 ${colors.bgSecondary} flex flex-col ${animation.fadeIn}`}>
-          <div className={`flex items-center px-6 py-4 ${isAdmin ? 'justify-between' : 'justify-end'}`}>
-            {isAdmin && <AdminModeToggle />}
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2"
-              aria-label="Close menu"
-            >
-              <Xmark width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.strokeActive} />
-            </button>
+          <div className="flex items-center justify-between px-6 py-4">
+            <Link href="/" onClick={() => setIsOpen(false)} className="font-display text-[22px]">
+              Löyly
+            </Link>
+            <div className="flex items-center gap-3">
+              {isAdmin && <AdminModeToggle />}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2"
+                aria-label="Close menu"
+              >
+                <Xmark width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.strokeActive} />
+              </button>
+            </div>
           </div>
 
           <nav className="flex-1 overflow-y-auto px-6 pt-2">
@@ -69,7 +74,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
                       }`}
                     >
                       <Icon width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.navMobile.strokeWidth} />
-                      <span className="text-xl font-display">
+                      <span className="text-xl">
                         {item.label}
                       </span>
                     </Link>

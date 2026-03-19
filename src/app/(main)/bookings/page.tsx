@@ -8,7 +8,7 @@ export default async function BookingsPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-display uppercase mb-8">My Bookings</h1>
+      <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">My Bookings</h1>
       <p className="text-gray-600">Coming soon.</p>
     </div>
   );
