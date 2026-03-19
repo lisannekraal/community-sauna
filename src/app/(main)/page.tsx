@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import { formatDateISO, formatTimeUTC } from '@/lib/schedule';
 import { type TimeSlotData } from '@/types';
-import { interactive } from '@/lib/design-tokens';
+import { interactive, buttons } from '@/lib/design-tokens';
 import { LandingNav } from '@/components/landing/landing-nav';
 import { Schedule } from '@/components/schedule/schedule';
 
@@ -21,7 +21,7 @@ const HOW_STEPS = [
     number: '02',
     title: 'Choose a plan',
     description: 'When we reveal our start date, pick your membership or punch card.',
-    cta: { label: 'Preview plans →', href: '#plans'},
+    cta: { label: 'Preview plans →', href: '/#plans'},
   },
   {
     number: '03',
@@ -114,13 +114,13 @@ export default async function HomePage() {
             <div className="flex flex-wrap gap-3 mb-8">
               <Link
                 href="/register"
-                className="inline-flex items-center gap-2 border-2 border-black bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-wider hover:bg-gray-800 transition-colors"
+                className={`${buttons.cta} ${buttons.ctaPrimary}`}
               >
                 Become a member&nbsp;→
               </Link>
               <a
-                href="#schedule"
-                className="inline-flex items-center gap-2 border-2 border-black px-8 py-4 font-mono text-sm uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
+                href="/#schedule"
+                className={`${buttons.cta} ${buttons.ctaSecondary}`}
               >
                 See the schedule
               </a>
@@ -153,7 +153,7 @@ export default async function HomePage() {
                 </p>
                 <a
                   href="#"
-                  className="inline-flex items-center gap-2 border-2 border-white px-8 py-4 font-mono text-sm uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
+                  className={`${buttons.cta} ${buttons.ctaOnDark}`}
                 >
                   Support Löyly&nbsp;→
                 </a>
@@ -218,8 +218,8 @@ export default async function HomePage() {
                   We're now in the final stretch — flooring, tiling, and finishing touches. Want to be part of it?
                 </p>
                 <a
-                  href="#crowdfunding"
-                  className="self-start inline-flex items-center gap-2 border-2 border-black bg-black text-white px-8 py-4 font-mono text-sm uppercase tracking-wider hover:bg-gray-800 transition-colors"
+                  href="/#crowdfunding"
+                  className={`self-start ${buttons.cta} ${buttons.ctaPrimary}`}
                 >
                   Crowdfunding&nbsp;→
                 </a>
@@ -277,10 +277,7 @@ export default async function HomePage() {
                   Choose<br />your rhythm
                 </h2>
               </div>
-              <Link
-                href="/register"
-                className="border-2 border-black px-6 py-3 font-mono text-[11px] uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
-              >
+              <Link href="/register" className={buttons.ctaSmall}>
                 Pre-register&nbsp;→
               </Link>
             </div>

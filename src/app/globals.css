@@ -2,10 +2,7 @@
 
 @font-face {
   font-family: 'Devina Garden';
-  src:
-    url('/fonts/devina-garden.woff2') format('woff2'),
-    url('/fonts/devina-garden.woff') format('woff'),
-    url('/fonts/devina-garden.ttf') format('truetype');
+  src: url('/fonts/devina-garden.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -24,11 +21,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-
-  /* Tailwind font family utilities */
-  --font-family-mono: var(--font-mono);
-  --font-family-sans: var(--font-sans);
-  --font-family-display: var(--font-display);
+  --font-display: 'Devina Garden', serif;
 }
 
 html {

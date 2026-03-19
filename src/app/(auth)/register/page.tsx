@@ -343,7 +343,7 @@ export default function RegisterPage() {
                     <button
                       type="button"
                       onClick={handleBack}
-                      className={`flex-1 p-3 font-medium border-2 ${colors.borderPrimary} hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
+                      className={`flex-1 p-3 border-2 font-mono text-sm uppercase tracking-wider ${colors.borderPrimary} hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
                     >
                       ← Back
                     </button>

@@ -2,17 +2,19 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 
 const NAV_ITEMS = [
-  { label: 'About', href: '#about' },
-  { label: 'How it works', href: '#how' },
-  { label: 'Plans', href: '#plans' },
-  { label: 'Schedule', href: '#schedule' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'How it works', href: '/#how' },
+  { label: 'Plans', href: '/#plans' },
+  { label: 'Schedule', href: '/#schedule' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export function LandingNav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b-2 border-black">
@@ -40,21 +42,40 @@ export function LandingNav() {
         {/* Spacer */}
         <div className="flex-1" />
 
-        {/* Login */}
-        <Link
-          href="/login"
-          className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
-        >
-          Login
-        </Link>
+        {session ? (
+          <>
+            <Link
+              href="/"
+              className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
+            >
+              My account
+            </Link>
+            <button
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            {/* Login */}
+            <Link
+              href="/login"
+              className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
+            >
+              Login
+            </Link>
 
-        {/* CTA */}
-        <Link
-          href="/register"
-          className="hidden lg:flex items-center px-5 border-l-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors"
-        >
-          Become a member&nbsp;→
-        </Link>
+            {/* CTA */}
+            <Link
+              href="/register"
+              className="hidden lg:flex items-center px-5 border-l-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors"
+            >
+              Become a member&nbsp;→
+            </Link>
+          </>
+        )}
 
         {/* Mobile hamburger */}
         <button
@@ -80,22 +101,40 @@ export function LandingNav() {
               {item.label}
             </a>
           ))}
-          <div className="grid grid-cols-2">
-            <Link
-              href="/login"
-              className="block px-5 py-4 border-b-2 border-r-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
-              onClick={() => setMenuOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="block px-5 py-4 border-b-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors text-center"
-              onClick={() => setMenuOpen(false)}
-            >
-              Become a member
-            </Link>
-          </div>
+          {session ? (
+            <div className="grid grid-cols-2">
+              <Link
+                href="/"
+                className="block px-5 py-4 border-b-2 border-r-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                My account
+              </Link>
+              <button
+                onClick={() => { setMenuOpen(false); signOut({ callbackUrl: '/' }); }}
+                className="block w-full px-5 py-4 border-b-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2">
+              <Link
+                href="/login"
+                className="block px-5 py-4 border-b-2 border-r-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className="block px-5 py-4 border-b-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Become a member
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </header>

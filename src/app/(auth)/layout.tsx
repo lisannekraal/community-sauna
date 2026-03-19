@@ -1,4 +1,4 @@
-import { Header } from '@/components/layout/header';
+import { LandingNav } from '@/components/landing/landing-nav';
 
 export default function AuthLayout({
   children,
@@ -7,8 +7,8 @@ export default function AuthLayout({
 }) {
   return (
     <>
-      <Header />
-      <main>{children}</main>
+      <LandingNav />
+      <main className="pt-14">{children}</main>
     </>
   );
 }
