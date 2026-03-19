@@ -75,6 +75,8 @@ Layouts fetch session data server-side via `getServerSession(authOptions)` and p
 
 Tokens cover: `colors`, `icons`, `interactive`, `nav`, `typography`, `buttons`, `inputs`, `feedback`, `animation`.
 
+The `buttons` token includes two usage patterns: `buttons.base` + `buttons.primary/secondary` for `<Button>` component variants, and `buttons.cta` + `buttons.ctaPrimary/ctaSecondary/ctaOnDark/ctaSmall` for raw `<a>`/`<Link>` CTA elements on the landing page.
+
 **When to use tokens:** Colors, border styles, icon sizes, button/input patterns, error/success alerts, link hover states, nav active states.
 
 **What stays as raw Tailwind:** Layout positioning, component-specific spacing, responsive breakpoints, one-off values.
@@ -109,7 +111,7 @@ Roles stack: admin has all host permissions, host has all member permissions.
 
 ## Routing Structure
 
-- **`/`** — Homepage (public for guests, dashboard for authenticated)
+- **`/`** — Full multi-section landing page for guests (hero, crowdfunding, about, how-it-works, plans, schedule, contact); minimal dashboard for authenticated users
 - **`/login`, `/register`, `/forgot-password`, `/reset-password`** — Auth flow (route group `(auth)`)
 - **`/schedule`** — Week view calendar with booking
 - **`/bookings`, `/plans`, `/profile`, `/account`, `/help`** — Member pages
@@ -212,8 +214,11 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 - `src/lib/schedule.ts` - Date/time formatters, slot status logic
 - `src/lib/navigation.ts` - Centralized nav items (main + secondary, role-aware)
 - `src/lib/design-tokens.ts` - UI design tokens (colors, typography, buttons, etc.)
+- `src/lib/plans.ts` - Plan display helpers (`formatPrice`, `formatPeriod`, `formatSessions`, `formatDetail`)
+- `src/lib/member.ts` - Member utilities
 - `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities
 - `src/contexts/admin-mode.tsx` - Admin/member view toggle context
+- `src/components/ui/` - Shared UI components: `Button` (variants: `primary`, `secondary`, `panel-primary`, `panel-secondary`), `FormInput`, `PasswordInput`, `Badge`, `ListItem`, `Panel`, `Section`, `StatTile` — import from `@/components/ui`
 - `prisma/schema.prisma` - Database schema with all entities
 - `prisma/seed.ts` - Seeds membership plans, superadmin
 
