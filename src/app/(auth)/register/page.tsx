@@ -353,15 +353,18 @@ export default function RegisterPage() {
                     loading={isSubmitting}
                     loadingText={isLastStep ? 'Creating account...' : 'Loading...'}
                     className={step === 0 ? 'w-full' : 'flex-1'}
+                    disabled={isLastStep}
+                    title={isLastStep ? 'Registration is not yet open' : undefined}
                   >
-                    {isLastStep ? 'Create account' : 'Continue →'}
+                    {isLastStep ? 'Coming soon' : 'Continue →'}
                   </Button>
                 </div>
 
                 {step === 2 && (
                   <button
-                    type="submit"
-                    className={`w-full p-3 ${colors.textSubtle} hover:text-black underline`}
+                    type="button"
+                    disabled
+                    className={`w-full p-3 ${colors.textDisabled} cursor-not-allowed`}
                   >
                     Skip, I&apos;ll add this later
                   </button>
