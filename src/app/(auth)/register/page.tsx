@@ -171,7 +171,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md mx-auto flex-1 flex flex-col">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-3xl font-display uppercase">Register</h1>
+            <h1 className="font-display text-[clamp(2rem,5vw,3rem)]">Register</h1>
             <span className="text-lg font-mono">
               {steps[step].number} <span className={colors.textDisabled}>→</span> {steps[steps.length - 1].number}
             </span>
@@ -188,7 +188,7 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-display uppercase mb-8">{steps[step].title}</h2>
+        <h2 className="font-display text-[clamp(1.5rem,4vw,2.25rem)] mb-8">{steps[step].title}</h2>
 
         <Formik
           initialValues={initialValues}
@@ -343,7 +343,7 @@ export default function RegisterPage() {
                     <button
                       type="button"
                       onClick={handleBack}
-                      className={`flex-1 p-3 font-medium border-2 ${colors.borderPrimary} hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
+                      className={`flex-1 p-3 border-2 font-mono text-sm uppercase tracking-wider ${colors.borderPrimary} hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
                     >
                       ← Back
                     </button>
@@ -353,15 +353,18 @@ export default function RegisterPage() {
                     loading={isSubmitting}
                     loadingText={isLastStep ? 'Creating account...' : 'Loading...'}
                     className={step === 0 ? 'w-full' : 'flex-1'}
+                    disabled={isLastStep}
+                    title={isLastStep ? 'Registration is not yet open' : undefined}
                   >
-                    {isLastStep ? 'Create account' : 'Continue →'}
+                    {isLastStep ? 'Coming soon' : 'Continue →'}
                   </Button>
                 </div>
 
                 {step === 2 && (
                   <button
-                    type="submit"
-                    className={`w-full p-3 ${colors.textSubtle} hover:text-black underline`}
+                    type="button"
+                    disabled
+                    className={`w-full p-3 ${colors.textDisabled} cursor-not-allowed`}
                   >
                     Skip, I&apos;ll add this later
                   </button>

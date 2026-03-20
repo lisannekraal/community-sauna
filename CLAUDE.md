@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Community Sauna is an internal booking platform for a community sauna, designed to be reusable for any community-oriented booking platform. Members can log in, book time slots, manage memberships, and make payments. Admins manage schedules, memberships, and view activity.
 
-The Next.js app serves both the public pages and the member area (no separate public website).
+The app is split across two subdomains from a single Next.js deployment: `löyly.com` (public landing) and `app.löyly.com` (authenticated member area).
 
 ## Technical Stack
 
@@ -52,10 +52,19 @@ npx prisma generate # Regenerate Prisma client after schema changes
 
 ### Route Groups & Layouts
 
-The app uses two Next.js route groups with different layout shells:
+The app uses three Next.js route groups, each with a distinct layout:
 
-- **`(auth)`** — Login, register, forgot/reset password. Minimal layout with `Header` only. All pages are `'use client'` with Formik forms.
-- **`(main)`** — All authenticated pages. Server component layout that conditionally wraps in `AppShell` (authenticated) or renders bare (guest homepage).
+- **`(main)`** — Public landing page (`/`). Layout: `LandingNav` + `<main className="pt-14">`. Always public.
+- **`(auth)`** — Login, register, forgot/reset password. Minimal layout: logo-only header linking back to landing. All pages are `'use client'` with Formik forms.
+- **`(app)`** — All authenticated member pages. Layout: always wraps in `AppShell`. The proxy guarantees only authenticated users reach these pages.
+
+### Subdomain Routing
+
+`src/proxy.ts` detects the hostname and routes accordingly:
+- **Main domain** (`löyly.com`): only `/` is served; all other paths redirect to `app.löyly.com{pathname}`.
+- **App subdomain** (`app.löyly.com`): `/` checks auth and rewrites to `/home`; other paths go through standard auth/protected-route logic.
+
+**Local dev**: add `127.0.0.1 app.localhost` to `/etc/hosts`. Landing: `http://localhost:3000`, App: `http://app.localhost:3000`. Session cookie is not shared across subdomains in dev (Chrome rejects `.localhost` cookie domains) — this is accepted.
 
 ### Responsive Navigation (AppShell)
 
@@ -74,6 +83,8 @@ Layouts fetch session data server-side via `getServerSession(authOptions)` and p
 `src/lib/design-tokens.ts` exports reusable Tailwind class constants for the brutalist UI system. All components and pages should import from here instead of repeating raw values.
 
 Tokens cover: `colors`, `icons`, `interactive`, `nav`, `typography`, `buttons`, `inputs`, `feedback`, `animation`.
+
+The `buttons` token includes two usage patterns: `buttons.base` + `buttons.primary/secondary` for `<Button>` component variants, and `buttons.cta` + `buttons.ctaPrimary/ctaSecondary/ctaOnDark/ctaSmall` for raw `<a>`/`<Link>` CTA elements on the landing page.
 
 **When to use tokens:** Colors, border styles, icon sizes, button/input patterns, error/success alerts, link hover states, nav active states.
 
@@ -109,19 +120,25 @@ Roles stack: admin has all host permissions, host has all member permissions.
 
 ## Routing Structure
 
-- **`/`** — Homepage (public for guests, dashboard for authenticated)
+**`löyly.com` (main domain — landing only):**
+- **`/`** — Full multi-section landing page (hero, crowdfunding, about, how-it-works, plans, schedule, contact). Always public.
+
+**`app.löyly.com` (app subdomain — authenticated only):**
+- **`/`** → rewrites to `/home` — Dashboard (protected; proxy redirects to `/login` if unauthenticated)
 - **`/login`, `/register`, `/forgot-password`, `/reset-password`** — Auth flow (route group `(auth)`)
 - **`/schedule`** — Week view calendar with booking
 - **`/bookings`, `/plans`, `/profile`, `/account`, `/help`** — Member pages
 - **`/members`** — Admin-only member list
 - **`/admin/settings`, `/admin/announcements`, `/admin/qa`, `/admin/templates`** — Admin pages
+- **`/logout`** — Signs out via NextAuth (must run on app subdomain for CSRF to work)
 
 ## Security Architecture
 
-- **Route protection**: `src/proxy.ts` handles redirects (Next.js 16 proxy convention)
+- **Route protection**: `src/proxy.ts` handles subdomain detection + redirects (Next.js 16 proxy convention)
 - **Auth verification**: Pages use `getServerSession(authOptions)` for actual authorization
 - **Defense in depth**: Proxy for redirects + page-level session checks
 - **Role checking**: Use `hasRole(userRole, requiredRole)` from `@/types` for permission checks
+- **Session cookie domain**: `COOKIE_DOMAIN=.löyly.com` in production so the cookie is shared across subdomains. Omitted in dev (Chrome rejects `.localhost` domains).
 
 ## Booking Flow
 
@@ -183,10 +200,10 @@ When admin cancels a time slot with existing bookings:
 - **Reusable**: All content admin-configurable for other communities
 
 ### Typography
-Fonts are self-hosted via Fontsource (no external CDNs):
-- **Archivo Black** (`font-display`) - Headings, uppercase
-- **Space Mono** (`font-mono`) - Step numbers, technical elements
-- **Space Grotesk** (`font-sans`) - Body text, default
+Fonts are self-hosted (no external CDNs):
+- **Devina Garden** (`font-display`) - Display headings; loaded from `/public/fonts/devina-garden.ttf` via `globals.css`
+- **Space Mono** (`font-mono`) - Step numbers, technical elements; via Fontsource
+- **Space Grotesk** (`font-sans`) - Body text, default; via Fontsource
 
 ## Prisma Date/Time Handling
 
@@ -198,6 +215,7 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 
 - `POST /api/bookings` - Create a booking (validates slot, capacity, membership credits)
 - `DELETE /api/bookings/[id]` - Cancel a booking (with optional reason)
+- `GET /api/plans` - Fetch active membership plans (used on landing page)
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/forgot-password` - Request password reset
 - `POST /api/auth/reset-password` - Complete password reset
@@ -211,8 +229,11 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 - `src/lib/schedule.ts` - Date/time formatters, slot status logic
 - `src/lib/navigation.ts` - Centralized nav items (main + secondary, role-aware)
 - `src/lib/design-tokens.ts` - UI design tokens (colors, typography, buttons, etc.)
+- `src/lib/plans.ts` - Plan display helpers (`formatPrice`, `formatPeriod`, `formatSessions`, `formatDetail`)
+- `src/lib/member.ts` - Member utilities
 - `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities
 - `src/contexts/admin-mode.tsx` - Admin/member view toggle context
+- `src/components/ui/` - Shared UI components: `Button` (variants: `primary`, `secondary`, `panel-primary`, `panel-secondary`), `FormInput`, `PasswordInput`, `Badge`, `ListItem`, `Panel`, `Section`, `StatTile` — import from `@/components/ui`
 - `prisma/schema.prisma` - Database schema with all entities
 - `prisma/seed.ts` - Seeds membership plans, superadmin
 

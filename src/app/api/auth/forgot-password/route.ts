@@ -53,13 +53,8 @@ export async function POST(request: Request) {
     const resetUrl = `${baseUrl}/reset-password?token=${token}`;
 
     // TODO: Send email with resetUrl
-    // For now, we'll return the URL in development mode for testing
     if (process.env.NODE_ENV === 'development') {
-      return NextResponse.json({
-        message: 'If an account exists with this email, a password reset link has been sent.',
-        // DEV ONLY: Include reset URL for testing
-        _dev_resetUrl: resetUrl,
-      });
+      console.log('[DEV] Password reset URL:', resetUrl);
     }
 
     return successResponse;

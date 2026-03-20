@@ -26,9 +26,9 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
   return (
     <aside className={`fixed left-0 top-0 w-60 h-screen border-r ${colors.borderSubtle} flex flex-col ${colors.bgSecondary} z-40`}>
       {/* Branding */}
-      <div className="px-5 py-5">
-        <Link href="/" className="text-lg font-display">
-          Community Sauna
+      <div className="px-5 py-4 border-b border-black/10">
+        <Link href="/" className="font-display text-[25px] hover:opacity-70 transition-opacity">
+          Löyly
         </Link>
       </div>
 

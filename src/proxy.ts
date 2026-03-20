@@ -3,12 +3,33 @@ import { getToken } from 'next-auth/jwt';
 
 const authRoutes = ['/login', '/register', '/forgot-password', '/reset-password'];
 
-const protectedRoutes = ['/schedule', '/bookings', '/plans', '/profile', '/account', '/help', '/members', '/admin'];
+const protectedRoutes = ['/home', '/schedule', '/bookings', '/plans', '/profile', '/account', '/help', '/members', '/admin'];
 
 const adminRoutes = ['/members', '/admin'];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const hostname = request.headers.get('host') || '';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://app.localhost:3000';
+
+  const isAppSubdomain = hostname.startsWith('app.');
+
+  // On main domain: only '/' is public; redirect all other paths to app subdomain
+  if (!isAppSubdomain) {
+    if (pathname !== '/') {
+      return NextResponse.redirect(appUrl + pathname);
+    }
+    return NextResponse.next();
+  }
+
+  // On app subdomain: '/' is the dashboard — check auth and rewrite to /home
+  if (pathname === '/') {
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+    return NextResponse.rewrite(new URL('/home', request.url));
+  }
 
   const isAuthRoute = authRoutes.some((route) => pathname === route);
   const isProtectedRoute = protectedRoutes.some((route) => pathname === route || pathname.startsWith(route + '/'));
@@ -49,10 +70,12 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
+    '/',
     '/login',
     '/register',
     '/forgot-password',
     '/reset-password',
+    '/home',
     '/schedule/:path*',
     '/bookings/:path*',
     '/plans/:path*',

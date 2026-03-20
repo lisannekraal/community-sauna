@@ -140,10 +140,10 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
   }
 
   function getWeekLabel(): string {
-    if (weekOffset === 0) return 'THIS WEEK';
-    if (weekOffset === 1) return 'NEXT WEEK';
-    if (weekOffset === -1) return 'LAST WEEK';
-    return 'WEEK';
+    if (weekOffset === 0) return 'This week';
+    if (weekOffset === 1) return 'Next week';
+    if (weekOffset === -1) return 'Last week';
+    return 'Week';
   }
 
   // Mobile: selected day data
@@ -167,7 +167,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
           </button>
 
           <div className="flex-1 text-center py-3 px-2">
-            <h2 className="text-xl sm:text-2xl font-display uppercase leading-tight">
+            <h2 className="text-2xl sm:text-3xl font-display leading-tight">
               {getWeekLabel()}
             </h2>
             <p className="font-mono text-xs mt-1 opacity-60">{formatWeekRange()}</p>
@@ -222,7 +222,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                 >
                   <div className="flex flex-col items-center h-[48px] justify-start">
                     <div className="font-mono text-[10px] leading-none">{DAY_LABELS[i]}</div>
-                    <div className={`text-lg font-display leading-tight mt-1 ${isToday && !isSelected ? 'underline decoration-2 underline-offset-2' : ''}`}>
+                    <div className={`text-lg font-mono leading-tight mt-1 ${isToday && !isSelected ? 'underline decoration-2 underline-offset-2' : ''}`}>
                       {date.getDate()}
                     </div>
                     {hasSlots && (
@@ -240,8 +240,8 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
           <div className="p-4">
             {/* Day label */}
             <div className="flex items-center gap-3 my-4">
-              <span className="text-2xl font-display leading-none">
-                {selectedDate.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase()}
+              <span className="text-3xl font-display leading-none">
+                {selectedDate.toLocaleDateString('en-GB', { weekday: 'long' })}
               </span>
               {selectedIsToday && (
                 <span className="font-mono uppercase text-[10px] border-2 border-black px-2 py-0.5">
@@ -293,7 +293,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                 >
                   <div className="flex flex-col items-center h-[64px] justify-start">
                     <div className="font-mono text-[10px] uppercase tracking-wider">{DAY_LABELS[i]}</div>
-                    <div className="text-2xl font-display leading-tight mt-0.5">
+                    <div className="text-2xl font-mono leading-tight mt-0.5">
                       {String(date.getDate()).padStart(2, '0')}
                     </div>
                     {isToday && (

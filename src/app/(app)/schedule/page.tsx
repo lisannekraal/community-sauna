@@ -54,7 +54,7 @@ export default async function SchedulePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-display uppercase mb-8">Schedule</h1>
+      <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">Schedule</h1>
       <Schedule timeSlots={timeSlots} userBookings={userBookingsMap} />
     </div>
   );

@@ -71,16 +71,22 @@ export const typography = {
     tiny: 'font-mono text-[10px]',
   },
   display: {
-    heading: 'font-display uppercase',
+    heading: 'font-display',
   },
 } as const;
 
 // --- Button patterns ---
 
 export const buttons = {
-  base: 'w-full border-2 p-3 font-medium transition-colors cursor-pointer disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-1',
+  base: 'w-full border-2 p-3 font-mono text-sm uppercase tracking-wider transition-colors cursor-pointer disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-1',
   primary: 'bg-black text-white border-black hover:bg-gray-800 focus:ring-black disabled:bg-gray-400 disabled:border-gray-400',
   secondary: 'bg-white text-black border-black hover:bg-gray-100 focus:ring-black disabled:bg-gray-100 disabled:text-gray-400',
+  // Landing-style inline CTAs
+  cta: 'inline-flex items-center gap-2 border-2 px-8 py-4 font-mono text-sm uppercase tracking-wider transition-colors',
+  ctaPrimary: 'border-black bg-black text-white hover:bg-gray-800',
+  ctaSecondary: 'border-black hover:bg-black hover:text-white',
+  ctaOnDark: 'border-white hover:bg-white hover:text-black',
+  ctaSmall: 'inline-flex items-center gap-2 border-2 border-black px-6 py-3 font-mono text-[11px] uppercase tracking-wider hover:bg-black hover:text-white transition-colors',
   panel: 'border-2 border-black px-4 py-3 font-display uppercase text-lg transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
   panelPrimary: 'bg-black text-white hover:bg-gray-800',
   panelSecondary: 'hover:bg-black hover:text-white',
