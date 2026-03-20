@@ -1,21 +1,20 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import { formatDateISO, formatTimeUTC } from '@/lib/schedule';
 import { type TimeSlotData } from '@/types';
-import { interactive, buttons } from '@/lib/design-tokens';
-import { LandingNav } from '@/components/landing/landing-nav';
+import { buttons } from '@/lib/design-tokens';
 import { Schedule } from '@/components/schedule/schedule';
 
 import { formatPrice, formatPeriod, formatSessions, formatDetail } from '@/lib/plans';
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://app.localhost:3000';
 
 const HOW_STEPS = [
   {
     number: '01',
     title: 'Pre-register',
     description: 'Create an account to join our community.',
-    cta: { label: 'Pre-register now →', href: '/register' },
+    cta: { label: 'Pre-register now →', href: `${APP_URL}/register` },
   },
   {
     number: '02',
@@ -38,22 +37,6 @@ const HOW_STEPS = [
 ];
 
 export default async function HomePage() {
-  const session = await getServerSession(authOptions);
-
-  // Authenticated users: show a simple dashboard placeholder
-  if (session?.user) {
-    return (
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">Welcome, {session.user.name}</h1>
-        <p className="mb-4">
-          <Link href="/schedule" className={`font-medium ${interactive.link}`}>
-            View schedule →
-          </Link>
-        </p>
-      </div>
-    );
-  }
-
   const plans = await prisma.membershipPlan.findMany({
     where: { isActive: true },
     orderBy: [{ type: 'asc' }, { priceCents: 'asc' }],
@@ -97,9 +80,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <LandingNav />
-      <main className="pt-14">
-        <section className="min-h-[calc(100vh-3.5rem)] border-b-2 border-black flex flex-col">
+      <section className="min-h-[calc(100vh-3.5rem)] border-b-2 border-black flex flex-col">
           <div className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-20 py-20 max-w-7xl mx-auto w-full">
 
             <h1 className="font-display leading-none mb-8 text-[clamp(4rem,13vw,11rem)]">
@@ -112,12 +93,12 @@ export default async function HomePage() {
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
-              <Link
-                href="/register"
+              <a
+                href={`${APP_URL}/register`}
                 className={`${buttons.cta} ${buttons.ctaPrimary}`}
               >
                 Become a member&nbsp;→
-              </Link>
+              </a>
               <a
                 href="/#schedule"
                 className={`${buttons.cta} ${buttons.ctaSecondary}`}
@@ -277,9 +258,9 @@ export default async function HomePage() {
                   Choose<br />your rhythm
                 </h2>
               </div>
-              <Link href="/register" className={buttons.ctaSmall}>
+              <a href={`${APP_URL}/register`} className={buttons.ctaSmall}>
                 Pre-register&nbsp;→
-              </Link>
+              </a>
             </div>
 
             {subscriptionPlans.length > 0 && (
@@ -384,20 +365,18 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-6 flex flex-wrap items-center justify-between gap-6">
             <Link href="/" className="font-display text-[25px]">Löyly</Link>
             <div className="flex items-center gap-6">
-              <Link href="/login" className="font-mono text-[11px] uppercase tracking-widest hover:underline">
+              <a href={`${APP_URL}/login`} className="font-mono text-[11px] uppercase tracking-widest hover:underline">
                 Member login
-              </Link>
-              <Link href="/register" className="font-mono text-[11px] uppercase tracking-widest hover:underline">
+              </a>
+              <a href={`${APP_URL}/register`} className="font-mono text-[11px] uppercase tracking-widest hover:underline">
                 Pre-register
-              </Link>
+              </a>
             </div>
             <span className="font-mono text-[10px] uppercase tracking-widest text-black/30">
               © 2026 Löyly
             </span>
           </div>
         </footer>
-
-      </main>
     </>
   );
 }

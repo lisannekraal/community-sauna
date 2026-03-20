@@ -1,8 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://app.localhost:3000';
 
 const NAV_ITEMS = [
   { label: 'About', href: '/#about' },
@@ -44,36 +46,33 @@ export function LandingNav() {
 
         {session ? (
           <>
-            <Link
-              href="/"
+            <a
+              href={`${APP_URL}/`}
               className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
             >
               My account
-            </Link>
-            <button
-              onClick={() => signOut({ callbackUrl: '/' })}
-              className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors cursor-pointer"
+            </a>
+            <a
+              href={`${APP_URL}/logout`}
+              className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
             >
               Logout
-            </button>
+            </a>
           </>
         ) : (
           <>
-            {/* Login */}
-            <Link
-              href="/login"
+            <a
+              href={`${APP_URL}/login`}
               className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
             >
               Login
-            </Link>
-
-            {/* CTA */}
-            <Link
-              href="/register"
+            </a>
+            <a
+              href={`${APP_URL}/register`}
               className="hidden lg:flex items-center px-5 border-l-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors"
             >
-              Become a member&nbsp;→
-            </Link>
+              Pre-register&nbsp;→
+            </a>
           </>
         )}
 
@@ -103,36 +102,37 @@ export function LandingNav() {
           ))}
           {session ? (
             <div className="grid grid-cols-2">
-              <Link
-                href="/"
+              <a
+                href={`${APP_URL}/`}
                 className="block px-5 py-4 border-b-2 border-r-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
                 My account
-              </Link>
-              <button
-                onClick={() => { setMenuOpen(false); signOut({ callbackUrl: '/' }); }}
-                className="block w-full px-5 py-4 border-b-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center cursor-pointer"
+              </a>
+              <a
+                href={`${APP_URL}/logout`}
+                className="block px-5 py-4 border-b-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
+                onClick={() => setMenuOpen(false)}
               >
                 Logout
-              </button>
+              </a>
             </div>
           ) : (
             <div className="grid grid-cols-2">
-              <Link
-                href="/login"
+              <a
+                href={`${APP_URL}/login`}
                 className="block px-5 py-4 border-b-2 border-r-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
                 Login
-              </Link>
-              <Link
-                href="/register"
+              </a>
+              <a
+                href={`${APP_URL}/register`}
                 className="block px-5 py-4 border-b-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
-                Become a member
-              </Link>
+                Pre-register
+              </a>
             </div>
           )}
         </div>
