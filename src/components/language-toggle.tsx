@@ -12,7 +12,9 @@ export function LanguageToggle() {
   const [isPending, startTransition] = useTransition();
 
   function switchLocale(next: string) {
-    document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=31536000; SameSite=Lax`;
+    const domain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
+    const domainAttr = domain ? `; domain=${domain}` : '';
+    document.cookie = `NEXT_LOCALE=${next}; path=/${domainAttr}; max-age=31536000; SameSite=Lax`;
     startTransition(() => router.refresh());
   }
 

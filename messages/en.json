@@ -352,9 +352,7 @@
     },
     "legalBasis": {
       "heading": "Legal basis",
-      "body": "We process your data on the basis of {contract} \u2014 it is necessary to operate your membership and fulfil bookings. Emergency contact data is processed on the basis of your {consent}, which you can withdraw by removing it from your profile.",
-      "contract": "contract",
-      "consent": "consent"
+      "body": "We process your data on the basis of <contract>contract</contract> \u2014 it is necessary to operate your membership and fulfil bookings. Emergency contact data is processed on the basis of your <consent>consent</consent>, which you can withdraw by removing it from your profile."
     },
     "retention": {
       "heading": "How long we keep your data",
@@ -368,7 +366,7 @@
     },
     "cookies": {
       "heading": "Cookies",
-      "body": "This platform uses a single session cookie to keep you logged in. This cookie is strictly necessary for the service to function and does not require your consent. We do not use analytics, advertising, or any other third-party cookies."
+      "body": "This platform uses a session cookie to keep you logged in, and a preference cookie to remember your chosen language (EN/NL). Both cookies are strictly necessary for the service to function and do not require your consent. We do not use analytics, advertising, or any other third-party cookies."
     },
     "rights": {
       "heading": "Your rights",

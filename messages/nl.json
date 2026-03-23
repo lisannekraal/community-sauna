@@ -352,9 +352,7 @@
     },
     "legalBasis": {
       "heading": "Juridische grondslag",
-      "body": "We verwerken je gegevens op basis van {contract} \u2014 dit is nodig om je lidmaatschap te beheren en reserveringen uit te voeren. Noodcontactgegevens worden verwerkt op basis van je {consent}, die je kunt intrekken door ze uit je profiel te verwijderen.",
-      "contract": "overeenkomst",
-      "consent": "toestemming"
+      "body": "We verwerken je gegevens op basis van <contract>overeenkomst</contract> \u2014 dit is nodig om je lidmaatschap te beheren en reserveringen uit te voeren. Noodcontactgegevens worden verwerkt op basis van je <consent>toestemming</consent>, die je kunt intrekken door ze uit je profiel te verwijderen."
     },
     "retention": {
       "heading": "Hoe lang we je gegevens bewaren",
@@ -368,7 +366,7 @@
     },
     "cookies": {
       "heading": "Cookies",
-      "body": "Dit platform gebruikt \u00e9\u00e9n sessiecookie om je ingelogd te houden. Deze cookie is strikt noodzakelijk voor het functioneren van de service en vereist geen toestemming. We gebruiken geen analytics-, advertentie- of andere cookies van derden."
+      "body": "Dit platform gebruikt een sessiecookie om je ingelogd te houden en een voorkeurscookie om je gekozen taal (NL/EN) te onthouden. Beide cookies zijn strikt noodzakelijk voor het functioneren van de service en vereisen geen toestemming. We gebruiken geen analytics-, advertentie- of andere cookies van derden."
     },
     "rights": {
       "heading": "Jouw rechten",
