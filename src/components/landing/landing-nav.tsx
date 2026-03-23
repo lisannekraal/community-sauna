@@ -2,21 +2,24 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { LanguageToggle } from '@/components/language-toggle';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://app.localhost:3000';
-
-const NAV_ITEMS = [
-  { label: 'About', href: '/#about' },
-  { label: 'How it works', href: '/#how' },
-  { label: 'Plans', href: '/#plans' },
-  { label: 'Schedule', href: '/#schedule' },
-  { label: 'Contact', href: '/#contact' },
-];
 
 export function LandingNav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const t = useTranslations('LandingNav');
+
+  const NAV_ITEMS = [
+    { label: t('about'), href: '/#about' },
+    { label: t('howItWorks'), href: '/#how' },
+    { label: t('plans'), href: '/#plans' },
+    { label: t('schedule'), href: '/#schedule' },
+    { label: t('contact'), href: '/#contact' },
+  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b-2 border-black">
@@ -44,19 +47,24 @@ export function LandingNav() {
         {/* Spacer */}
         <div className="flex-1" />
 
+        {/* Language toggle — desktop */}
+        <div className="hidden lg:flex items-center px-4 border-l-2 border-black">
+          <LanguageToggle />
+        </div>
+
         {session ? (
           <>
             <a
               href={`${APP_URL}/`}
               className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
             >
-              My account
+              {t('myAccount')}
             </a>
             <a
               href={`${APP_URL}/logout`}
               className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
             >
-              Logout
+              {t('logout')}
             </a>
           </>
         ) : (
@@ -65,13 +73,13 @@ export function LandingNav() {
               href={`${APP_URL}/login`}
               className="hidden lg:flex items-center px-5 border-l-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
             >
-              Login
+              {t('login')}
             </a>
             <a
               href={`${APP_URL}/register`}
               className="hidden lg:flex items-center px-5 border-l-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors"
             >
-              Pre-register&nbsp;→
+              {t('preRegister')}
             </a>
           </>
         )}
@@ -107,14 +115,14 @@ export function LandingNav() {
                 className="block px-5 py-4 border-b-2 border-r-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
-                My account
+                {t('myAccount')}
               </a>
               <a
                 href={`${APP_URL}/logout`}
                 className="block px-5 py-4 border-b-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
-                Logout
+                {t('logout')}
               </a>
             </div>
           ) : (
@@ -124,17 +132,21 @@ export function LandingNav() {
                 className="block px-5 py-4 border-b-2 border-r-2 border-black font-mono text-[11px] uppercase tracking-widest hover:bg-black hover:text-white transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
-                Login
+                {t('login')}
               </a>
               <a
                 href={`${APP_URL}/register`}
                 className="block px-5 py-4 border-b-2 border-black bg-black text-white font-mono text-[11px] uppercase tracking-widest hover:bg-gray-800 transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
-                Pre-register
+                {t('preRegister')}
               </a>
             </div>
           )}
+          {/* Language toggle — mobile */}
+          <div className="px-5 py-4 border-b-2 border-black flex justify-end">
+            <LanguageToggle />
+          </div>
         </div>
       )}
     </header>

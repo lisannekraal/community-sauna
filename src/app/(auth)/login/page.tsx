@@ -6,25 +6,24 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { useTranslations } from 'next-intl';
 import { FormInput, PasswordInput, Button } from '@/components/ui';
 import { feedback, interactive } from '@/lib/design-tokens';
-
-const loginSchema = Yup.object({
-  email: Yup.string()
-    .email('Please enter a valid email address')
-    .matches(
-      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-      'Please enter a valid email address'
-    )
-    .required('Email is required'),
-  password: Yup.string()
-    .required('Password is required'),
-});
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const t = useTranslations('Auth');
+
+  const loginSchema = Yup.object({
+    email: Yup.string()
+      .email(t('validation.emailInvalid'))
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, t('validation.emailInvalid'))
+      .required(t('validation.emailRequired')),
+    password: Yup.string()
+      .required(t('validation.passwordRequired')),
+  });
 
   const [serverError, setServerError] = useState('');
 
@@ -38,7 +37,7 @@ function LoginForm() {
     });
 
     if (result?.error) {
-      setServerError('Invalid email or password. Please check your credentials and try again.');
+      setServerError(t('login.invalidCredentials'));
       return;
     }
 
@@ -61,7 +60,7 @@ function LoginForm() {
           )}
 
           <FormInput
-            label="Email"
+            label={t('fields.email')}
             type="email"
             name="email"
             value={values.email}
@@ -73,7 +72,7 @@ function LoginForm() {
 
           <div>
             <PasswordInput
-              label="Password"
+              label={t('fields.password')}
               name="password"
               value={values.password}
               onChange={handleChange}
@@ -83,13 +82,13 @@ function LoginForm() {
             />
             <div className="mt-2 text-right">
               <Link href="/forgot-password" className={`text-sm ${interactive.link}`}>
-                Forgot password?
+                {t('login.forgotPassword')}
               </Link>
             </div>
           </div>
 
-          <Button type="submit" loading={isSubmitting} loadingText="Logging in...">
-            Login
+          <Button type="submit" loading={isSubmitting} loadingText={t('login.loadingText')}>
+            {t('login.submitLabel')}
           </Button>
         </Form>
       )}
@@ -98,19 +97,21 @@ function LoginForm() {
 }
 
 export default function LoginPage() {
+  const t = useTranslations('Auth');
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">Login</h1>
+        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">{t('login.heading')}</h1>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={null}>
           <LoginForm />
         </Suspense>
 
         <p className="mt-8 text-center">
-          Don&apos;t have an account?{' '}
+          {t('login.noAccount')}{' '}
           <Link href="/register" className={`font-medium ${interactive.link}`}>
-            Register
+            {t('login.register')}
           </Link>
         </p>
       </div>

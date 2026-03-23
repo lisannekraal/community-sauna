@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import { type TimeSlotData } from '@/types';
 import { formatDateISO, formatNowTime } from '@/lib/schedule';
 import { SlotCard } from './slot-card';
@@ -24,13 +25,16 @@ function getWeekDates(reference: Date): Date[] {
   });
 }
 
-const DAY_LABELS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-
 export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUserBookings }: ScheduleProps) {
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState<TimeSlotData | null>(null);
   const [timeSlots, setTimeSlots] = useState(initialTimeSlots);
   const [userBookings, setUserBookings] = useState(initialUserBookings);
+  const t = useTranslations('Schedule');
+  const locale = useLocale();
+  const dateLocale = locale === 'nl' ? 'nl-NL' : 'en-GB';
+
+  const DAY_LABELS = [t('days.mon'), t('days.tue'), t('days.wed'), t('days.thu'), t('days.fri'), t('days.sat'), t('days.sun')];
 
   const now = new Date();
   const todayStr = formatDateISO(now);
@@ -130,8 +134,8 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
   const weekEnd = weekDates[6];
 
   function formatWeekRange(): string {
-    const startMonth = weekStart.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase();
-    const endMonth = weekEnd.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase();
+    const startMonth = weekStart.toLocaleDateString(dateLocale, { month: 'short' }).toUpperCase();
+    const endMonth = weekEnd.toLocaleDateString(dateLocale, { month: 'short' }).toUpperCase();
 
     if (startMonth === endMonth) {
       return `${weekStart.getDate()} – ${weekEnd.getDate()} ${startMonth} ${weekEnd.getFullYear()}`;
@@ -140,10 +144,10 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
   }
 
   function getWeekLabel(): string {
-    if (weekOffset === 0) return 'This week';
-    if (weekOffset === 1) return 'Next week';
-    if (weekOffset === -1) return 'Last week';
-    return 'Week';
+    if (weekOffset === 0) return t('thisWeek');
+    if (weekOffset === 1) return t('nextWeek');
+    if (weekOffset === -1) return t('lastWeek');
+    return t('week');
   }
 
   // Mobile: selected day data
@@ -161,7 +165,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
           <button
             onClick={() => handleWeekChange(weekOffset - 1)}
             className="border-r-2 border-black px-4 py-3 font-mono text-sm hover:bg-black hover:text-white transition-colors shrink-0 cursor-pointer"
-            aria-label="Previous week"
+            aria-label={t('previousWeek')}
           >
             &larr;
           </button>
@@ -176,7 +180,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
           <button
             onClick={() => handleWeekChange(weekOffset + 1)}
             className="border-l-2 border-black px-4 py-3 font-mono text-sm hover:bg-black hover:text-white transition-colors shrink-0 cursor-pointer"
-            aria-label="Next week"
+            aria-label={t('nextWeekAria')}
           >
             &rarr;
           </button>
@@ -188,7 +192,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
               onClick={() => handleWeekChange(0)}
               className="w-full h-full text-xs hover:bg-black hover:text-white transition-colors cursor-pointer"
             >
-              <span className="font-mono">&uarr; </span>Back to current week
+{t('backToCurrentWeek')}
             </button>
           )}
         </div>
@@ -241,23 +245,23 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
             {/* Day label */}
             <div className="flex items-center gap-3 my-4">
               <span className="text-3xl font-display leading-none">
-                {selectedDate.toLocaleDateString('en-GB', { weekday: 'long' })}
+                {selectedDate.toLocaleDateString(dateLocale, { weekday: 'long' })}
               </span>
               {selectedIsToday && (
                 <span className="font-mono uppercase text-[10px] border-2 border-black px-2 py-0.5">
-                  Today
+                  {t('today')}
                 </span>
               )}
               {selectedIsPast && (
                 <span className="font-mono uppercase text-[10px] border-2 border-gray-400 px-2 py-0.5 text-gray-400">
-                  Past
+                  {t('past')}
                 </span>
               )}
             </div>
 
             {selectedSlots.length === 0 ? (
               <div className="py-12 text-center border-2 border-dashed border-gray-200">
-                <span className="font-mono uppercase text-sm text-gray-300">No sessions</span>
+                <span className="font-mono uppercase text-sm text-gray-300">{t('noSessions')}</span>
               </div>
             ) : (
               <div className="space-y-3">
@@ -297,7 +301,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                       {String(date.getDate()).padStart(2, '0')}
                     </div>
                     {isToday && (
-                      <div className="font-mono uppercase text-[9px] mt-0.5 opacity-70">Today</div>
+                      <div className="font-mono uppercase text-[9px] mt-0.5 opacity-70">{t('today')}</div>
                     )}
                   </div>
                 </div>

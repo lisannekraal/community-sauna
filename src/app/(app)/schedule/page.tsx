@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
+import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/db';
 import { type TimeSlotData } from '@/types';
 import { formatDateISO, formatTimeUTC } from '@/lib/schedule';
@@ -13,6 +14,7 @@ export default async function SchedulePage() {
     redirect('/login');
   }
 
+  const t = await getTranslations('Pages');
   const userId = parseInt(session.user.id, 10);
 
   const slots = await prisma.timeSlot.findMany({
@@ -54,7 +56,7 @@ export default async function SchedulePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">Schedule</h1>
+      <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">{t('schedule.heading')}</h1>
       <Schedule timeSlots={timeSlots} userBookings={userBookingsMap} />
     </div>
   );

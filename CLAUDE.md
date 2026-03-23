@@ -16,7 +16,7 @@ The app is split across two subdomains from a single Next.js deployment: `löyly
 - **Payments:** Mollie (account to be set up)
 - **Email:** Infomaniak Mail Service (plain text transactional emails)
 - **Hosting:** Infomaniak Node.js Hosting
-- **Deployment:** GitHub Actions → Infomaniak (SSH/SFTP)
+- **Deployment:** Infomaniak Node.js Builder (manual trigger from dashboard)
 - **Timezone:** Europe/Amsterdam (CET) fixed
 - **Language:** English only for MVP
 

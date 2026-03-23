@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { inputs, colors } from '@/lib/design-tokens';
 
 export interface PasswordInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -10,8 +11,8 @@ export interface PasswordInputProps extends Omit<React.InputHTMLAttributes<HTMLI
   showStrength?: boolean;
 }
 
-function getPasswordStrength(password: string): { label: string; color: string } {
-  if (!password) return { label: '', color: '' };
+function getPasswordStrength(password: string): { level: 'weak' | 'medium' | 'strong'; color: string } | null {
+  if (!password) return null;
 
   let score = 0;
 
@@ -25,14 +26,15 @@ function getPasswordStrength(password: string): { label: string; color: string }
   if (/[0-9]/.test(password)) score++;
   if (/[^a-zA-Z0-9]/.test(password)) score++;
 
-  if (score <= 2) return { label: 'Weak', color: colors.textError };
-  if (score <= 4) return { label: 'Medium', color: 'text-yellow-600' };
-  return { label: 'Strong', color: 'text-green-600' };
+  if (score <= 2) return { level: 'weak', color: colors.textError };
+  if (score <= 4) return { level: 'medium', color: 'text-yellow-600' };
+  return { level: 'strong', color: 'text-green-600' };
 }
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
   ({ label, error, hint, required, showStrength = false, className = '', id, value, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
+    const t = useTranslations('Common');
     const inputId = id || props.name;
 
     const strength = showStrength && typeof value === 'string' ? getPasswordStrength(value) : null;
@@ -78,14 +80,14 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             )}
           </button>
         </div>
-        {hint && !error && !strength?.label && (
+        {hint && !error && !strength && (
           <p id={`${inputId}-hint`} className={inputs.hint}>
             {hint}
           </p>
         )}
-        {showStrength && strength?.label && (
+        {showStrength && strength && (
           <p className={`text-sm mt-1 ${strength.color}`}>
-            Strength: {strength.label}
+            {t('strengthLabel')}: {{ weak: t('strengthWeak'), medium: t('strengthMedium'), strong: t('strengthStrong') }[strength.level]}
             {hint && <span className={colors.textSubtle}> — {hint}</span>}
           </p>
         )}

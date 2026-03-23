@@ -8,9 +8,8 @@ export interface MemberSummary {
   lastName: string | null;
   role: UserRole;
   plan: string | null;
-  /** e.g. { weekday: 'Wed', date: '19 Feb' } */
-  nextBooking: { weekday: string; date: string } | null;
-  lastBooking: { weekday: string; date: string } | null;
+  nextBooking: { dateISO: string } | null;
+  lastBooking: { dateISO: string } | null;
 }
 
 export interface MemberDetail {
@@ -29,11 +28,11 @@ export interface MemberDetail {
     expiresAt: string | null;
   } | null;
   stats: {
-    memberSince: string;
+    memberSince: string; // 'YYYY-MM'
     confirmedBookings: number;
     cancelledBookings: number;
     noShows: number;
-    mostVisitedDay: string | null;
+    mostVisitedDay: number | null; // JS getDay(): 0=Sun, 1=Mon, …, 6=Sat
   };
   payments: {
     hasDue: boolean;
@@ -42,14 +41,14 @@ export interface MemberDetail {
   };
   upcomingBookings: {
     id: number;
-    date: string;
+    dateISO: string;
     startTime: string;
     endTime: string;
     type: string | null;
   }[];
   lastBooking: {
     id: number;
-    date: string;
+    dateISO: string;
     startTime: string;
     endTime: string;
     type: string | null;
@@ -57,114 +56,18 @@ export interface MemberDetail {
 }
 
 export const MOCK_MEMBERS: MemberSummary[] = [
-  {
-    id: 1,
-    firstName: 'Anna',
-    lastName: 'de Vries',
-    role: 'admin',
-    plan: 'Unlimited',
-    nextBooking: { weekday: 'Wed', date: '19 Feb' },
-    lastBooking: null,
-  },
-  {
-    id: 2,
-    firstName: 'Bram',
-    lastName: 'Jansen',
-    role: 'host',
-    plan: '8 credits/month',
-    nextBooking: { weekday: 'Thu', date: '20 Feb' },
-    lastBooking: null,
-  },
-  {
-    id: 3,
-    firstName: 'Carmen',
-    lastName: null,
-    role: 'member',
-    plan: 'Punch card (5)',
-    nextBooking: null,
-    lastBooking: { weekday: 'Sun', date: '9 Feb' },
-  },
-  {
-    id: 4,
-    firstName: 'Daan',
-    lastName: 'Bakker',
-    role: 'member',
-    plan: '4 credits/month',
-    nextBooking: { weekday: 'Fri', date: '21 Feb' },
-    lastBooking: null,
-  },
-  {
-    id: 5,
-    firstName: 'Eva',
-    lastName: 'Smit',
-    role: 'host',
-    plan: 'Unlimited',
-    nextBooking: { weekday: 'Wed', date: '19 Feb' },
-    lastBooking: null,
-  },
-  {
-    id: 6,
-    firstName: 'Floris Niks En Meer Enlangetussennaam',
-    lastName: 'van ofzo den Berg',
-    role: 'member',
-    plan: null,
-    nextBooking: null,
-    lastBooking: { weekday: 'Fri', date: '31 Jan' },
-  },
-  {
-    id: 7,
-    firstName: 'Greta',
-    lastName: 'Meijer',
-    role: 'member',
-    plan: '2 credits/month',
-    nextBooking: { weekday: 'Sat', date: '22 Feb' },
-    lastBooking: null,
-  },
-  {
-    id: 8,
-    firstName: 'Hugo',
-    lastName: 'de Boer',
-    role: 'member',
-    plan: 'Trial',
-    nextBooking: null,
-    lastBooking: { weekday: 'Mon', date: '10 Feb' },
-  },
-  {
-    id: 9,
-    firstName: 'Iris',
-    lastName: 'Visser',
-    role: 'admin',
-    plan: 'Unlimited',
-    nextBooking: { weekday: 'Wed', date: '19 Feb' },
-    lastBooking: null,
-  },
-  {
-    id: 10,
-    firstName: 'Jesse',
-    lastName: 'de Groot',
-    role: 'member',
-    plan: 'Punch card (10)',
-    nextBooking: { weekday: 'Sun', date: '23 Feb' },
-    lastBooking: null,
-  },
-  {
-    id: 11,
-    firstName: 'Katja',
-    lastName: null,
-    role: 'member',
-    plan: '4 credits/month',
-    nextBooking: null,
-    lastBooking: { weekday: 'Sat', date: '8 Feb' },
-  },
-  {
-    id: 12,
-    firstName: 'Luca',
-    lastName: 'Vermeer',
-    role: 'member',
-    plan: null,
-    nextBooking: null,
-    lastBooking: null,
-  },
+  { id: 1,  firstName: 'Anna',                          lastName: 'de Vries',              role: 'admin',  plan: 'Unlimited',        nextBooking: { dateISO: '2026-02-19' }, lastBooking: null },
+  { id: 2,  firstName: 'Bram',                          lastName: 'Jansen',                role: 'host',   plan: '8 credits/month',  nextBooking: { dateISO: '2026-02-20' }, lastBooking: null },
+  { id: 3,  firstName: 'Carmen',                        lastName: null,                    role: 'member', plan: 'Punch card (5)',   nextBooking: null,                       lastBooking: { dateISO: '2026-02-09' } },
+  { id: 4,  firstName: 'Daan',                          lastName: 'Bakker',                role: 'member', plan: '4 credits/month',  nextBooking: { dateISO: '2026-02-21' }, lastBooking: null },
+  { id: 5,  firstName: 'Eva',                           lastName: 'Smit',                  role: 'host',   plan: 'Unlimited',        nextBooking: { dateISO: '2026-02-19' }, lastBooking: null },
+  { id: 6,  firstName: 'Floris Niks En Meer Enlangetussennaam', lastName: 'van ofzo den Berg', role: 'member', plan: null,           nextBooking: null,                       lastBooking: { dateISO: '2026-01-31' } },
+  { id: 7,  firstName: 'Greta',                         lastName: 'Meijer',                role: 'member', plan: '2 credits/month',  nextBooking: { dateISO: '2026-02-22' }, lastBooking: null },
+  { id: 8,  firstName: 'Hugo',                          lastName: 'de Boer',               role: 'member', plan: 'Trial',            nextBooking: null,                       lastBooking: { dateISO: '2026-02-10' } },
+  { id: 9,  firstName: 'Iris',                          lastName: 'Visser',                role: 'admin',  plan: 'Unlimited',        nextBooking: { dateISO: '2026-02-19' }, lastBooking: null },
+  { id: 10, firstName: 'Jesse',                         lastName: 'de Groot',              role: 'member', plan: 'Punch card (10)',  nextBooking: { dateISO: '2026-02-23' }, lastBooking: null },
+  { id: 11, firstName: 'Katja',                         lastName: null,                    role: 'member', plan: '4 credits/month',  nextBooking: null,                       lastBooking: { dateISO: '2026-02-08' } },
+  { id: 12, firstName: 'Luca',                          lastName: 'Vermeer',               role: 'member', plan: null,               nextBooking: null,                       lastBooking: null },
 ];
 
 export function getMockMemberDetail(id: number): MemberDetail | null {
@@ -180,17 +83,17 @@ export function getMockMemberDetail(id: number): MemberDetail | null {
       emergencyContactPhone: '+31 6 9876 5432',
       plan: { name: 'Unlimited', status: 'active', expiresAt: '2026-06-01' },
       stats: {
-        memberSince: 'Oct 2024',
+        memberSince: '2024-10',
         confirmedBookings: 47,
         cancelledBookings: 2,
         noShows: 0,
-        mostVisitedDay: 'Wednesday',
+        mostVisitedDay: 3, // Wednesday
       },
       payments: { hasDue: false, pendingCount: 0, failedCount: 0 },
       upcomingBookings: [
-        { id: 101, date: 'Wed 19 Feb', startTime: '18:00', endTime: '20:00', type: 'Mixed session' },
-        { id: 102, date: 'Sat 22 Feb', startTime: '10:00', endTime: '12:00', type: 'Women only' },
-        { id: 103, date: 'Wed 26 Feb', startTime: '18:00', endTime: '20:00', type: 'Mixed session' },
+        { id: 101, dateISO: '2026-02-19', startTime: '18:00', endTime: '20:00', type: 'Mixed session' },
+        { id: 102, dateISO: '2026-02-22', startTime: '10:00', endTime: '12:00', type: 'Women only' },
+        { id: 103, dateISO: '2026-02-26', startTime: '18:00', endTime: '20:00', type: 'Mixed session' },
       ],
       lastBooking: null,
     },
@@ -202,15 +105,15 @@ export function getMockMemberDetail(id: number): MemberDetail | null {
       emergencyContactPhone: null,
       plan: { name: '8 credits/month', status: 'active', expiresAt: '2026-04-15' },
       stats: {
-        memberSince: 'Jan 2025',
+        memberSince: '2025-01',
         confirmedBookings: 12,
         cancelledBookings: 1,
         noShows: 1,
-        mostVisitedDay: 'Thursday',
+        mostVisitedDay: 4, // Thursday
       },
       payments: { hasDue: false, pendingCount: 0, failedCount: 0 },
       upcomingBookings: [
-        { id: 201, date: 'Thu 20 Feb', startTime: '10:00', endTime: '12:00', type: 'Mixed session' },
+        { id: 201, dateISO: '2026-02-20', startTime: '10:00', endTime: '12:00', type: 'Mixed session' },
       ],
       lastBooking: null,
     },
@@ -222,15 +125,15 @@ export function getMockMemberDetail(id: number): MemberDetail | null {
       emergencyContactPhone: '+31 6 1111 2222',
       plan: { name: 'Punch card (5)', status: 'active', expiresAt: '2026-04-30' },
       stats: {
-        memberSince: 'Dec 2025',
+        memberSince: '2025-12',
         confirmedBookings: 3,
         cancelledBookings: 0,
         noShows: 0,
-        mostVisitedDay: 'Sunday',
+        mostVisitedDay: 0, // Sunday
       },
       payments: { hasDue: false, pendingCount: 0, failedCount: 0 },
       upcomingBookings: [],
-      lastBooking: { id: 301, date: 'Sun 9 Feb', startTime: '14:00', endTime: '16:00', type: 'Mixed session' },
+      lastBooking: { id: 301, dateISO: '2026-02-09', startTime: '14:00', endTime: '16:00', type: 'Mixed session' },
     },
     6: {
       gender: 'male',
@@ -240,15 +143,15 @@ export function getMockMemberDetail(id: number): MemberDetail | null {
       emergencyContactPhone: null,
       plan: null,
       stats: {
-        memberSince: 'Nov 2025',
+        memberSince: '2025-11',
         confirmedBookings: 5,
         cancelledBookings: 3,
         noShows: 2,
-        mostVisitedDay: 'Friday',
+        mostVisitedDay: 5, // Friday
       },
       payments: { hasDue: true, pendingCount: 1, failedCount: 1 },
       upcomingBookings: [],
-      lastBooking: { id: 601, date: 'Fri 31 Jan', startTime: '18:00', endTime: '20:00', type: null },
+      lastBooking: { id: 601, dateISO: '2026-01-31', startTime: '18:00', endTime: '20:00', type: null },
     },
   };
 
@@ -262,18 +165,18 @@ export function getMockMemberDetail(id: number): MemberDetail | null {
       ? { name: member.plan, status: 'active' as const, expiresAt: '2026-05-01' }
       : null,
     stats: {
-      memberSince: 'Jan 2026',
+      memberSince: '2026-01',
       confirmedBookings: id * 3,
       cancelledBookings: id % 3,
       noShows: id % 5 === 0 ? 1 : 0,
-      mostVisitedDay: ['Monday', 'Wednesday', 'Friday', 'Saturday', 'Sunday'][id % 5],
+      mostVisitedDay: [1, 3, 5, 6, 0][id % 5], // Mon, Wed, Fri, Sat, Sun
     },
     payments: { hasDue: false, pendingCount: 0, failedCount: 0 },
     upcomingBookings: member.nextBooking
-      ? [{ id: id * 100, date: `${member.nextBooking.weekday} ${member.nextBooking.date}`, startTime: '18:00', endTime: '20:00', type: 'Mixed session' }]
+      ? [{ id: id * 100, dateISO: member.nextBooking.dateISO, startTime: '18:00', endTime: '20:00', type: 'Mixed session' }]
       : [],
     lastBooking: member.lastBooking
-      ? { id: id * 100 + 1, date: `${member.lastBooking.weekday} ${member.lastBooking.date}`, startTime: '18:00', endTime: '20:00', type: null }
+      ? { id: id * 100 + 1, dateISO: member.lastBooking.dateISO, startTime: '18:00', endTime: '20:00', type: null }
       : null,
   };
 

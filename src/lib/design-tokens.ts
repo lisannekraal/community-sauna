@@ -87,7 +87,7 @@ export const buttons = {
   ctaSecondary: 'border-black hover:bg-black hover:text-white',
   ctaOnDark: 'border-white hover:bg-white hover:text-black',
   ctaSmall: 'inline-flex items-center gap-2 border-2 border-black px-6 py-3 font-mono text-[11px] uppercase tracking-wider hover:bg-black hover:text-white transition-colors',
-  panel: 'border-2 border-black px-4 py-3 font-display uppercase text-lg transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
+  panel: 'border-2 border-black px-4 py-3 font-display text-lg transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
   panelPrimary: 'bg-black text-white hover:bg-gray-800',
   panelSecondary: 'hover:bg-black hover:text-white',
   textAction: 'text-[12px] tracking-wide cursor-pointer',

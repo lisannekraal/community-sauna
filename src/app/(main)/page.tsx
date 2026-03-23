@@ -4,39 +4,41 @@ import { formatDateISO, formatTimeUTC } from '@/lib/schedule';
 import { type TimeSlotData } from '@/types';
 import { buttons } from '@/lib/design-tokens';
 import { Schedule } from '@/components/schedule/schedule';
-
+import { getTranslations } from 'next-intl/server';
 import { formatPrice, formatPeriod, formatSessions, formatDetail } from '@/lib/plans';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://app.localhost:3000';
 
-const HOW_STEPS = [
-  {
-    number: '01',
-    title: 'Pre-register',
-    description: 'Create an account to join our community.',
-    cta: { label: 'Pre-register now →', href: `${APP_URL}/register` },
-  },
-  {
-    number: '02',
-    title: 'Choose a plan',
-    description: 'When we reveal our start date, pick your membership or punch card.',
-    cta: { label: 'Preview plans →', href: '/#plans'},
-  },
-  {
-    number: '03',
-    title: 'Book a slot',
-    description: 'Browse the schedule and book your spot. The address is shared upon confirmation.',
-    cta: null,
-  },
-  {
-    number: '04',
-    title: 'Get involved',
-    description: 'Become a host or contribute in other ways.',
-    cta: null,
-  },
-];
-
 export default async function HomePage() {
+  const t = await getTranslations('Landing');
+
+  const HOW_STEPS = [
+    {
+      number: '01',
+      title: t('how.step1Title'),
+      description: t('how.step1Desc'),
+      cta: { label: t('how.step1Cta'), href: `${APP_URL}/register` },
+    },
+    {
+      number: '02',
+      title: t('how.step2Title'),
+      description: t('how.step2Desc'),
+      cta: { label: t('how.step2Cta'), href: '/#plans' },
+    },
+    {
+      number: '03',
+      title: t('how.step3Title'),
+      description: t('how.step3Desc'),
+      cta: null,
+    },
+    {
+      number: '04',
+      title: t('how.step4Title'),
+      description: t('how.step4Desc'),
+      cta: null,
+    },
+  ];
+
   const plans = await prisma.membershipPlan.findMany({
     where: { isActive: true },
     orderBy: [{ type: 'asc' }, { priceCents: 'asc' }],
@@ -88,8 +90,9 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-xl md:text-2xl text-black/55 max-w-xl mb-10 leading-relaxed">
-              A community-run sauna<br />
-              in Amsterdam Noord
+              {t('hero.subtitle').split('\n').map((line, i) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))}
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -97,13 +100,13 @@ export default async function HomePage() {
                 href={`${APP_URL}/register`}
                 className={`${buttons.cta} ${buttons.ctaPrimary}`}
               >
-                Become a member&nbsp;→
+                {t('hero.ctaBecomeMember')}
               </a>
               <a
                 href="/#schedule"
                 className={`${buttons.cta} ${buttons.ctaSecondary}`}
               >
-                See the schedule
+                {t('hero.ctaSeeSchedule')}
               </a>
             </div>
 
@@ -111,10 +114,10 @@ export default async function HomePage() {
               *
               <span className="font-mono text-xs text-black/35 italic">löy·ly</span>
               <span className="font-mono text-xs text-black/25">|ˈløy.ly|</span>
-              <span className="font-mono text-xs text-black/25 uppercase tracking-wider">noun</span>
+              <span className="font-mono text-xs text-black/25 uppercase tracking-wider">{t('hero.noun')}</span>
               <span className="font-mono text-xs text-black/25">·</span>
-              <span className="font-mono text-xs text-black/25 italic">Finnish</span>
-              <span className="font-mono text-xs text-black/50">— the steam of the sauna</span>
+              <span className="font-mono text-xs text-black/25 italic">{t('hero.origin')}</span>
+              <span className="font-mono text-xs text-black/50">— {t('hero.definition')}</span>
             </div>
           </div>
         </section>
@@ -124,19 +127,21 @@ export default async function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
                 <div className="inline-block border-2 border-white/40 px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-8">
-                  Crowdfunding
+                  {t('crowdfunding.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,5vw,4rem)] mb-8">
-                  A sauna for the neighborhood
+                  {t('crowdfunding.heading')}
                 </h2>
                 <p className="text-white/65 text-lg leading-relaxed mb-10 max-w-lg">
-                  We&apos;re raising funds to make this community sauna happen. You can pre-buy punch cards or become an early member right away.
+                  {t('crowdfunding.body')}
                 </p>
                 <a
-                  href="#"
+                  href="https://whydonate.com/fundraising/buurtsauna-loyly"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${buttons.cta} ${buttons.ctaOnDark}`}
                 >
-                  Support Löyly&nbsp;→
+                  {t('crowdfunding.cta')}
                 </a>
               </div>
 
@@ -150,10 +155,10 @@ export default async function HomePage() {
                       <polyline points="21 15 16 10 5 21" />
                     </svg>
                   </div>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">Photo</span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">{t('crowdfunding.imagePlaceholder')}</span>
                 </div>
                 <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-widest text-white/20">
-                  Crowdfunding campaign image
+                  {t('crowdfunding.imageCaption')}
                 </span>
               </div>
             </div>
@@ -174,35 +179,33 @@ export default async function HomePage() {
                       <polyline points="21 15 16 10 5 21" />
                     </svg>
                   </div>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-gray-400">Photo</span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-gray-400">{t('about.imagePlaceholder')}</span>
                 </div>
                 <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-widest text-gray-300">
-                  Community sauna interior
+                  {t('about.imageCaption')}
                 </span>
               </div>
 
               <div className="px-8 md:px-12 py-14 flex flex-col justify-center">
                 <div className="inline-block border-2 border-black px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-8 self-start">
-                  About us
+                  {t('about.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,5vw,4rem)] mb-8">
-                  Building<br />our dream
+                  {t('about.heading').split('\n').map((line, i) => (
+                    <span key={i}>{line}{i === 0 && <br />}</span>
+                  ))}
                 </h2>
                 <p className="text-gray-600 leading-relaxed mb-5">
-                  Löyly is a member-run sauna. 
-                  We believe sauna should be accessible to everyone — a place to unwind, connect with neighbors, and care for your body and mind. 
-                  That's why we're building an affordable, community-run sauna in Amsterdam Noord, hosted by volunteers.
+                  {t('about.para1')}
                 </p>
                 <p className="text-gray-600 leading-relaxed mb-10">
-                  We're converting a container at 't Keerwater on the Buiksloterweg into a full sauna, shower, and changing room.
-                  The structure is up, insulation is in, and our second-hand sauna is custom-fitted and ready. 
-                  We're now in the final stretch — flooring, tiling, and finishing touches. Want to be part of it?
+                  {t('about.para2')}
                 </p>
                 <a
                   href="/#crowdfunding"
                   className={`self-start ${buttons.cta} ${buttons.ctaPrimary}`}
                 >
-                  Crowdfunding&nbsp;→
+                  {t('about.cta')}
                 </a>
               </div>
             </div>
@@ -213,10 +216,12 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-24">
             <div className="mb-12">
               <div className="inline-block border-2 border-black px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6">
-                How it works
+                {t('how.badge')}
               </div>
               <h2 className="font-display leading-none text-[clamp(2rem,6vw,4.5rem)]">
-                When Löyly<br />opens
+                {t('how.heading').split('\n').map((line, i) => (
+                  <span key={i}>{line}{i === 0 && <br />}</span>
+                ))}
               </h2>
             </div>
 
@@ -252,20 +257,22 @@ export default async function HomePage() {
             <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
               <div>
                 <div className="inline-block border-2 border-black px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6">
-                  Memberships
+                  {t('plans.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,6vw,4.5rem)]">
-                  Choose<br />your rhythm
+                  {t('plans.heading').split('\n').map((line, i) => (
+                    <span key={i}>{line}{i === 0 && <br />}</span>
+                  ))}
                 </h2>
               </div>
               <a href={`${APP_URL}/register`} className={buttons.ctaSmall}>
-                Pre-register&nbsp;→
+                {t('plans.cta')}
               </a>
             </div>
 
             {subscriptionPlans.length > 0 && (
               <>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-black/35 mb-4">Subscriptions</p>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-black/35 mb-4">{t('plans.subscriptions')}</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-12">
                   {subscriptionPlans.map((plan) => (
                     <div key={plan.id} className="border-2 border-black p-5 flex flex-col bg-white">
@@ -286,7 +293,7 @@ export default async function HomePage() {
 
             {punchCardPlans.length > 0 && (
               <>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-black/35 mb-4">Punch cards</p>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-black/35 mb-4">{t('plans.punchCards')}</p>
                 <div className="grid sm:grid-cols-3 gap-3">
                   {punchCardPlans.map((plan) => (
                     <div key={plan.id} className="border-2 border-black p-5 bg-white flex items-center justify-between gap-4">
@@ -311,10 +318,10 @@ export default async function HomePage() {
             <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
               <div>
                 <div className="inline-block border-2 border-black px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6">
-                  Bookings
+                  {t('schedule.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,6vw,4.5rem)]">
-                  Löyly schedule
+                  {t('schedule.heading')}
                 </h2>
               </div>
               {/* <Link
@@ -333,28 +340,28 @@ export default async function HomePage() {
             <div className="grid md:grid-cols-3 divide-y-2 md:divide-y-0 md:divide-x-2 divide-black">
 
               <div className="px-8 md:px-10 pt-12 pb-20">
-                <div className="font-mono text-[10px] uppercase tracking-widest text-black/40 mb-5">Location</div>
-                <h3 className="font-display text-3xl mb-5">Amsterdam Noord</h3>
+                <div className="font-mono text-[10px] uppercase tracking-widest text-black/40 mb-5">{t('contact.locationLabel')}</div>
+                <h3 className="font-display text-3xl mb-5">{t('contact.locationHeading')}</h3>
                 <p className="text-gray-400 text-xs mt-4 font-mono">
-                  Exact address shared upon booking confirmation.
+                  {t('contact.locationNote')}
                 </p>
               </div>
 
               <div className="px-8 md:px-10 pt-12 pb-20">
-                <div className="font-mono text-[10px] uppercase tracking-widest text-black/40 mb-5">Contact us</div>
-                <h3 className="font-display text-3xl mb-5">Camille en Barnaby</h3>
+                <div className="font-mono text-[10px] uppercase tracking-widest text-black/40 mb-5">{t('contact.contactLabel')}</div>
+                <h3 className="font-display text-3xl mb-5">{t('contact.contactHeading')}</h3>
                 <p className="text-sm text-gray-600 mb-2">
-                  <a href="mailto:hello@buurtsauna-loyly.nl" className="underline hover:no-underline">
-                    hello@buurtsauna-loyly.nl
+                  <a href="mailto:info@buurtsaunaloyly.nl" className="underline hover:no-underline">
+                    info@buurtsaunaloyly.nl
                   </a>
                 </p>
               </div>
 
               <div className="px-8 md:px-10 pt-12 pb-20">
-                <div className="font-mono text-[10px] uppercase tracking-widest text-black/40 mb-5">Hours</div>
-                <h3 className="font-display text-3xl mb-5">To be announced</h3>
+                <div className="font-mono text-[10px] uppercase tracking-widest text-black/40 mb-5">{t('contact.hoursLabel')}</div>
+                <h3 className="font-display text-3xl mb-5">{t('contact.hoursHeading')}</h3>
                 <p className="text-gray-400 text-xs mt-5 font-mono">
-                  Stay tuned for our schedule.
+                  {t('contact.hoursNote')}
                 </p>
               </div>
             </div>
@@ -366,14 +373,17 @@ export default async function HomePage() {
             <Link href="/" className="font-display text-[25px]">Löyly</Link>
             <div className="flex items-center gap-6">
               <a href={`${APP_URL}/login`} className="font-mono text-[11px] uppercase tracking-widest hover:underline">
-                Member login
+                {t('footer.memberLogin')}
               </a>
               <a href={`${APP_URL}/register`} className="font-mono text-[11px] uppercase tracking-widest hover:underline">
-                Pre-register
+                {t('footer.preRegister')}
+              </a>
+              <a href={`${APP_URL}/privacy`} className="font-mono text-[11px] uppercase tracking-widest hover:underline">
+                {t('footer.privacy')}
               </a>
             </div>
             <span className="font-mono text-[10px] uppercase tracking-widest text-black/30">
-              © 2026 Löyly
+              {t('footer.copyright')}
             </span>
           </div>
         </footer>

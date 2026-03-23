@@ -5,21 +5,24 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { useTranslations } from 'next-intl';
 import { PasswordInput, Button } from '@/components/ui';
 import { colors, feedback, interactive } from '@/lib/design-tokens';
-
-const resetPasswordSchema = Yup.object({
-  password: Yup.string()
-    .min(8, 'Password must be at least 8 characters')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords do not match')
-    .required('Please confirm your password'),
-});
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
+  const t = useTranslations('Auth');
+  const tCommon = useTranslations('Common');
+
+  const resetPasswordSchema = Yup.object({
+    password: Yup.string()
+      .min(8, t('validation.passwordMinLength'))
+      .required(t('validation.passwordRequired')),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password')], t('validation.passwordsDoNotMatch'))
+      .required(t('validation.confirmPasswordRequired')),
+  });
 
   const [serverError, setServerError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -64,20 +67,20 @@ function ResetPasswordForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        setServerError(data.error || 'Something went wrong. Please try again.');
+        setServerError(data.error || tCommon('somethingWentWrong'));
         return;
       }
 
       setSuccess(true);
     } catch {
-      setServerError('Something went wrong. Please try again.');
+      setServerError(tCommon('somethingWentWrong'));
     }
   }
 
   if (isLoading) {
     return (
       <div className="text-center">
-        <p>Verifying reset link...</p>
+        <p>{t('resetPassword.verifying')}</p>
       </div>
     );
   }
@@ -86,14 +89,13 @@ function ResetPasswordForm() {
     return (
       <div className="space-y-6">
         <div className={feedback.alertError} role="alert">
-          This password reset link is invalid or has expired.
-          Please request a new one.
+          {t('resetPassword.invalidToken')}
         </div>
         <Link
           href="/forgot-password"
           className={`block text-center ${interactive.link}`}
         >
-          Request new reset link
+          {t('resetPassword.requestNewLink')}
         </Link>
       </div>
     );
@@ -103,13 +105,13 @@ function ResetPasswordForm() {
     return (
       <div className="space-y-6">
         <div className={feedback.alertSuccess} role="status">
-          Your password has been reset successfully.
+          {t('resetPassword.successMessage')}
         </div>
         <Link
           href="/login"
           className="block w-full p-3 font-medium border-2 bg-black text-white border-black text-center hover:bg-gray-800"
         >
-          Go to login
+          {t('resetPassword.goToLogin')}
         </Link>
       </div>
     );
@@ -130,19 +132,19 @@ function ResetPasswordForm() {
           )}
 
           <PasswordInput
-            label="New password"
+            label={t('resetPassword.newPassword')}
             name="password"
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
             autoComplete="new-password"
             showStrength
-            hint="Minimum 8 characters"
+            hint={t('validation.passwordHint')}
             error={touched.password && errors.password ? errors.password : undefined}
           />
 
           <PasswordInput
-            label="Confirm new password"
+            label={t('resetPassword.confirmNewPassword')}
             name="confirmPassword"
             value={values.confirmPassword}
             onChange={handleChange}
@@ -151,8 +153,8 @@ function ResetPasswordForm() {
             error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
           />
 
-          <Button type="submit" loading={isSubmitting} loadingText="Resetting...">
-            Reset password
+          <Button type="submit" loading={isSubmitting} loadingText={t('resetPassword.loadingText')}>
+            {t('resetPassword.submitLabel')}
           </Button>
         </Form>
       )}
@@ -161,15 +163,17 @@ function ResetPasswordForm() {
 }
 
 export default function ResetPasswordPage() {
+  const t = useTranslations('Auth');
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] uppercase mb-4">Set New Password</h1>
+        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] uppercase mb-4">{t('resetPassword.heading')}</h1>
         <p className={`${colors.textSubtle} mb-8`}>
-          Enter your new password below.
+          {t('resetPassword.description')}
         </p>
 
-        <Suspense fallback={<div className="text-center">Loading...</div>}>
+        <Suspense fallback={null}>
           <ResetPasswordForm />
         </Suspense>
       </div>
