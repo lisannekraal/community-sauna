@@ -373,6 +373,9 @@ export default async function HomePage() {
               <a href={`${APP_URL}/register`} className="font-mono text-[11px] uppercase tracking-widest hover:underline">
                 Pre-register
               </a>
+              <a href={`${APP_URL}/privacy`} className="font-mono text-[11px] uppercase tracking-widest hover:underline">
+                Privacy
+              </a>
             </div>
             <span className="font-mono text-[10px] uppercase tracking-widest text-black/30">
               © 2026 Löyly

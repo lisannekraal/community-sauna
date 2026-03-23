@@ -248,6 +248,14 @@ export default function RegisterPage() {
                       autoComplete="new-password"
                       error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
                     />
+
+                    <p className="text-xs text-gray-500 pt-1">
+                      By registering you agree to our{' '}
+                      <Link href="/privacy" target="_blank" className="underline hover:no-underline">
+                        Privacy Policy
+                      </Link>
+                      .
+                    </p>
                   </>
                 )}
 
