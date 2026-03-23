@@ -105,8 +105,12 @@ async function main() {
   console.log(`Created ${plans.length} membership plans`);
 
   // Create superadmin account
-  const superadminEmail = process.env.SUPERADMIN_EMAIL || 'admin@community-sauna.local';
-  const superadminPassword = process.env.SUPERADMIN_PASSWORD || 'changeme123';
+  const superadminEmail = process.env.SUPERADMIN_EMAIL;
+  const superadminPassword = process.env.SUPERADMIN_PASSWORD;
+
+  if (!superadminEmail || !superadminPassword) {
+    throw new Error('SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD must be set in environment variables');
+  }
   const hashedPassword = await bcrypt.hash(superadminPassword, 12);
 
   const superadmin = await prisma.user.upsert({
