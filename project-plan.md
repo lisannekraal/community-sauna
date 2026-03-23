@@ -19,7 +19,7 @@ This is an internal booking platform, specifically built for a community sauna b
 - **Auth**: NextAuth (email/password only, no social login)
 - **Payments**: Mollie
 - **Email service**: Infomaniak Mail Service (plain text transactional emails)
-- **Deployment:** GitHub Actions → Infomaniak (SSH/SFTP)
+- **Deployment:** GitHub Actions (wip) → Infomaniak (SSH/SFTP)
 - **Timezone:** Europe/Amsterdam (CET) fixed
 - **Language:** English only for MVP
 
@@ -32,15 +32,7 @@ See './database-design.md'
 ### Memberships
 
 - What defines different membership is defined by the admins and can be configured (e.g. price, duration)
-- We start off with:
-    - Trial (one month, unlimited credits)
-    - 2 credits a month, 25 euros a month, minimum 3 month duration
-    - 4 credits a month, 40 euros, minimum 2 months duration
-    - 8 credits a month, 64 euros, minimum 1 month duration
-    - Unlimited, 80 euros, minimum one month duration
-    - Walk-in, 16 euros
-    - Punch card with 5 credits, 75 euros, valid for 3 months
-    - Punch card with 10 credits, 140 euros, valid for 6 months
+- We start off with memberships defined in `/prisma/seed.ts`
 - Credits of a monthly membership are valid for one month (no rollover). Punch card credits are valid for the specified period.
 - After the minimum duration of a membership, cancellation can be done one month upfront
 - Suspended status is admin action only (manual suspension for rule violations, etc.)
@@ -56,7 +48,7 @@ See './database-design.md'
 - Outstanding payment failures block new bookings until resolved
 - Cancellation reason is optional (text field)
 - When admin cancels a slot with existing bookings: auto-cancel all bookings, restore credits, and send email notification
-- The public part of the website also shows the sauna schedule in which you can view a sauna slot and have a CTA to "book this session" - this sends you to `/register`, remembering what sauna slot the user wanted to book. In the registration steps, the user goes directly to the process of creating an account and doing a booking, before returning to the home of the internal website.
+- **Public schedule flow**: The public part of the website (`buurtsaunaloyly.nl`) also shows the sauna schedule in which you can view a sauna slot and have a CTA to "book this session" - this sends you to `/login` (or register), remembering what sauna slot the user wanted to book. In the registration steps, the user goes directly to the process of creating an account and doing a booking, before returning to the home of the internal website `app.buurtsaunaloyly.nl`.
 
 ## Role Permissions
 
@@ -113,13 +105,13 @@ Guest clicks "Book timeslot" on schedule on public site
     ↓
 "Log in or create account to confirm"
     ↓
-[Register form] ←→ [Login form] (toggle)
+[Register form]
     ↓
 Account created → booking confirmed → / (internal home)
 
 #### Simple registering
 
-Guest clicks "Sign up"
+Guest clicks "Pre-register" or "Register"
     ↓
 [Register form] ←→ [Login form] (toggles to Register)
     ↓
@@ -135,13 +127,13 @@ Account created → / (empty state: "Book your first session")
 ✓ Reservations can also be cancelled (with optional reason)
 ✓ Role/permission system (distinguish between regular members, hosts and admins)
 - Admins, hosts (when they are hosting) can see all bookings for each time slot
-- Admins can see all member profiles and view their memberships
+✓ Admins can see all member profiles and view their memberships
 ✓ Member registration/account creation with the following fields:
     - Required: email, password, first name, phone
     - Optional: last name, gender (Male, Female, Non-binary, Other, Prefer not to say), emergency contact
 - No email verification required; booking confirmation email serves as implicit verification
 - Contact the host/organizer (mailto: email link)
-- For each community member, we keep membership status states (active, expired, payment pending, suspended)
+✓ For each community member, we keep membership status states (active, expired, payment pending, suspended)
 - For each community member, we keep track of past sauna bookings
 - System validation to determine if a slot reservation can be made (no double bookings, slot has capacity, membership active, no outstanding payment failures)
 ✓ Password forget/reset functionality (magic link via email)
@@ -149,7 +141,7 @@ Account created → / (empty state: "Book your first session")
 
 ### Should have
 
-- Member profile page where members can view their booking history, membership details, and upcoming reservations
+- Member can view their booking history, membership details, and upcoming reservations
 - Admins can manage the membership (length, price, conditions, expiry date)
 - Admins can edit the individual user's memberships (e.g. for volunteering/exchange free memberships)
 - Community members can subscribe to memberships by making one payment (the first month?)
@@ -305,6 +297,6 @@ The styling is very brutalist, non-design, DIY culture, but with a modern UX in 
 `src/lib/design-tokens.ts` exports reusable Tailwind class constants for the UI system
 
 ## Typography
-- **Archivo Black** (`font-display`) - Headings, uppercase
+- **Devina Garden** (`font-display`) - Display headings; loaded from `/public/fonts/devina-garden.ttf` via `globals.css`
 - **Space Mono** (`font-mono`) - Step numbers, technical elements
 - **Space Grotesk** (`font-sans`) - Body text, default

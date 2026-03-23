@@ -133,7 +133,9 @@ export default async function HomePage() {
                   We&apos;re raising funds to make this community sauna happen. You can pre-buy punch cards or become an early member right away.
                 </p>
                 <a
-                  href="#"
+                  href="https://whydonate.com/fundraising/buurtsauna-loyly"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${buttons.cta} ${buttons.ctaOnDark}`}
                 >
                   Support Löyly&nbsp;→
@@ -344,8 +346,8 @@ export default async function HomePage() {
                 <div className="font-mono text-[10px] uppercase tracking-widest text-black/40 mb-5">Contact us</div>
                 <h3 className="font-display text-3xl mb-5">Camille en Barnaby</h3>
                 <p className="text-sm text-gray-600 mb-2">
-                  <a href="mailto:hello@buurtsauna-loyly.nl" className="underline hover:no-underline">
-                    hello@buurtsauna-loyly.nl
+                  <a href="mailto:info@buurtsaunaloyly.nl" className="underline hover:no-underline">
+                    info@buurtsaunaloyly.nl
                   </a>
                 </p>
               </div>
