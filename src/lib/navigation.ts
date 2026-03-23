@@ -29,30 +29,30 @@ export function isActiveRoute(pathname: string, href: string): boolean {
 export function getMainNavItems(role: UserRole, isAdminMode: boolean): NavItem[] {
   const fifthItem: NavItem =
     isAdminMode && hasRole(role, 'admin')
-      ? { label: 'Members', href: '/members', icon: Community }
-      : { label: 'Help', href: '/help', icon: HelpCircle };
+      ? { label: 'members', href: '/members', icon: Community }
+      : { label: 'help', href: '/help', icon: HelpCircle };
 
   return [
-    { label: 'Home', href: '/', icon: Sandals },
-    { label: 'Bookings', href: '/bookings', icon: ClipboardCheck },
-    { label: 'Schedule', href: '/schedule', icon: Calendar },
-    { label: 'Plans', href: '/plans', icon: MultiplePages },
+    { label: 'home', href: '/', icon: Sandals },
+    { label: 'bookings', href: '/bookings', icon: ClipboardCheck },
+    { label: 'schedule', href: '/schedule', icon: Calendar },
+    { label: 'plans', href: '/plans', icon: MultiplePages },
     fifthItem,
   ];
 }
 
 export function getSecondaryNavItems(role: UserRole, isAdminMode: boolean): NavItem[] {
   const items: NavItem[] = [
-    { label: 'My Profile', href: '/profile', icon: ProfileCircle },
-    { label: 'My Account', href: '/account', icon: Lock },
+    { label: 'profile', href: '/profile', icon: ProfileCircle },
+    { label: 'account', href: '/account', icon: Lock },
   ];
 
   if (isAdminMode && hasRole(role, 'admin')) {
     items.push(
-      { label: 'Admin Settings', href: '/admin/settings', icon: Settings },
-      { label: 'Manage Announcements', href: '/admin/announcements', icon: Megaphone },
-      { label: 'Manage Q&A', href: '/admin/qa', icon: HelpCircle },
-      { label: 'Edit Schedule Templates', href: '/admin/templates', icon: Table },
+      { label: 'adminSettings', href: '/admin/settings', icon: Settings },
+      { label: 'manageAnnouncements', href: '/admin/announcements', icon: Megaphone },
+      { label: 'manageQA', href: '/admin/qa', icon: HelpCircle },
+      { label: 'editScheduleTemplates', href: '/admin/templates', icon: Table },
     );
   }
 

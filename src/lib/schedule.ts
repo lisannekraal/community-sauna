@@ -19,22 +19,45 @@ export function formatTimeUTC(date: Date): string {
 }
 
 /** Format a YYYY-MM-DD string as "15 Apr 2026". Accepts full ISO timestamps — only the date part is used. */
-export function formatDateHuman(dateStr: string): string {
+export function formatDateHuman(dateStr: string, locale = 'en-GB'): string {
   const [y, m, d] = dateStr.slice(0, 10).split('-').map(Number);
   const date = new Date(y, m - 1, d);
   const day = date.getDate();
-  const month = date.toLocaleDateString('en-GB', { month: 'short' });
+  const month = date.toLocaleDateString(locale, { month: 'short' });
   return `${day} ${month} ${y}`;
 }
 
 /** Format a YYYY-MM-DD string for display, e.g. "TUESDAY 11 FEB". Accepts full ISO timestamps — only the date part is used. */
-export function formatDisplayDate(dateStr: string): string {
+export function formatDisplayDate(dateStr: string, locale = 'en-GB'): string {
   const [y, m, d] = dateStr.slice(0, 10).split('-').map(Number);
   const date = new Date(y, m - 1, d);
-  const weekday = date.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
+  const weekday = date.toLocaleDateString(locale, { weekday: 'long' }).toUpperCase();
   const day = date.getDate();
-  const month = date.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase();
+  const month = date.toLocaleDateString(locale, { month: 'short' }).toUpperCase();
   return `${weekday} ${day} ${month}`;
+}
+
+/** Format a YYYY-MM-DD string into separate weekday and date parts for list display.
+ *  Returns e.g. { weekday: 'Wed', date: '19 Feb' } or Dutch equivalents. */
+export function formatBookingDateParts(dateStr: string, locale = 'en-GB'): { weekday: string; date: string } {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const date = new Date(y, m - 1, d);
+  return {
+    weekday: date.toLocaleDateString(locale, { weekday: 'short' }),
+    date: date.toLocaleDateString(locale, { day: 'numeric', month: 'short' }),
+  };
+}
+
+/** Format a 'YYYY-MM' string as a localized month + year, e.g. "Oct 2024" or "okt. 2024". */
+export function formatMonthYear(yearMonth: string, locale = 'en-GB'): string {
+  const [y, m] = yearMonth.split('-').map(Number);
+  return new Date(y, m - 1, 1).toLocaleDateString(locale, { month: 'short', year: 'numeric' });
+}
+
+/** Format a JS getDay() weekday number (0=Sun … 6=Sat) as a localized day name. */
+export function formatWeekdayName(dayNum: number, locale = 'en-GB'): string {
+  // Jan 4 2026 is a Sunday (0), so adding dayNum yields the correct weekday
+  return new Date(2026, 0, 4 + dayNum).toLocaleDateString(locale, { weekday: 'long' });
 }
 
 /** Determine the status of a time slot.

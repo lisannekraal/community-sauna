@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import { type TimeSlotData } from '@/types';
 import { getSlotStatus, formatDisplayDate } from '@/lib/schedule';
 import { colors, typography, interactive, feedback } from '@/lib/design-tokens';
@@ -24,6 +25,9 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cancelReason, setCancelReason] = useState('');
+  const t = useTranslations('Schedule');
+  const locale = useLocale();
+  const dateLocale = locale === 'nl' ? 'nl-NL' : 'en-GB';
 
   // Reset state when slot changes
   useEffect(() => {
@@ -48,7 +52,7 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
     if (result.success) {
       setView('confirmed');
     } else {
-      setError(result.error || 'Failed to book');
+      setError(result.error || t('panel.failedToBook'));
     }
   }
 
@@ -61,17 +65,17 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
     if (result.success) {
       setView('details');
     } else {
-      setError(result.error || 'Failed to cancel');
+      setError(result.error || t('panel.failedToCancel'));
     }
   }
 
-  const panelTitle = view === 'confirmed' ? 'Booking confirmed' : view === 'cancel' ? 'Cancel booking' : 'Session details';
+  const panelTitle = view === 'confirmed' ? t('panel.bookingConfirmed') : view === 'cancel' ? t('panel.cancelBooking') : t('panel.sessionDetails');
 
   return (
     <Panel title={panelTitle} onClose={onClose}>
           {/* Date */}
           <div className={`${typography.mono.label} opacity-60`}>
-            {formatDisplayDate(slot.date)}
+            {formatDisplayDate(slot.date, dateLocale)}
           </div>
 
           {/* Time */}
@@ -91,12 +95,12 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
             <>
               <div className={`border-t-2 ${colors.borderPrimary} mt-5 pt-4`}>
                 <div className="text-center py-4">
-                  <div className={`text-2xl ${typography.display.heading}`}>Booking confirmed!</div>
-                  <p className={`${typography.mono.caption} mt-2 opacity-60`}>You&apos;re all set for this session.</p>
+                  <div className={`text-2xl ${typography.display.heading}`}>{t('panel.bookingConfirmed')}!</div>
+                  <p className={`${typography.mono.caption} mt-2 opacity-60`}>{t('panel.confirmedMessage')}</p>
                 </div>
               </div>
               <Button variant="panel-secondary" onClick={onClose} className="mt-4 w-full">
-                Close
+                {t('panel.close')}
               </Button>
             </>
           )}
@@ -105,14 +109,14 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
           {view === 'cancel' && (
             <>
               <div className={`border-t-2 ${colors.borderPrimary} mt-5 pt-4`}>
-                <p className={`${typography.mono.caption} mb-3`}>Are you sure you want to cancel this booking?</p>
+                <p className={`${typography.mono.caption} mb-3`}>{t('panel.cancelConfirmQuestion')}</p>
                 <label className="block">
-                  <span className={`${typography.mono.label} opacity-60`}>Reason (optional)</span>
+                  <span className={`${typography.mono.label} opacity-60`}>{t('panel.cancelReasonLabel')}</span>
                   <textarea
                     value={cancelReason}
                     onChange={(e) => setCancelReason(e.target.value)}
                     className={`mt-1 w-full border-2 ${colors.borderPrimary} p-3 ${typography.mono.caption} resize-none h-20 focus:outline-none`}
-                    placeholder="Why are you cancelling?"
+                    placeholder={t('panel.cancelReasonPlaceholder')}
                   />
                 </label>
               </div>
@@ -130,16 +134,16 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                   disabled={loading}
                   className="flex-1"
                 >
-                  Go back
+                  {t('panel.goBack')}
                 </Button>
                 <Button
                   variant="panel-primary"
                   onClick={handleCancelConfirm}
                   loading={loading}
-                  loadingText="Cancelling..."
+                  loadingText={t('panel.cancelling')}
                   className="flex-1"
                 >
-                  Confirm cancel
+                  {t('panel.confirmCancel')}
                 </Button>
               </div>
             </>
@@ -160,19 +164,19 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                 {/* Status badges */}
                 {status === 'cancelled' && (
                   <div className={`${typography.mono.caption} uppercase line-through ${colors.textDisabled}`}>
-                    Cancelled
+                    {t('slot.cancelled')}
                   </div>
                 )}
 
                 {status === 'past' && (
                   <div className={`${typography.mono.caption} uppercase ${colors.textDisabled}`}>
-                    Past
+                    {t('slot.past')}
                   </div>
                 )}
 
                 {status === 'full' && !isBooked && (
                   <div className={`${typography.mono.caption} uppercase font-bold`}>
-                    Full
+                    {t('slot.full')}
                   </div>
                 )}
 
@@ -180,7 +184,7 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                   <div className="flex items-center gap-3">
                     <CapacityMeter booked={slot.bookedCount} capacity={slot.capacity} size="lg" />
                     <span className={typography.mono.caption}>
-                      {spotsLeft} of {slot.capacity} left
+                      {t('panel.spotsLeft', { count: spotsLeft, total: slot.capacity })}
                     </span>
                   </div>
                 )}
@@ -189,7 +193,7 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                 {status === 'full' && isBooked && (
                   <div className="flex items-center gap-3">
                     <CapacityMeter booked={slot.bookedCount} capacity={slot.capacity} size="lg" />
-                    <span className={typography.mono.caption}>Full</span>
+                    <span className={typography.mono.caption}>{t('slot.full')}</span>
                   </div>
                 )}
               </div>
@@ -205,11 +209,11 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
               {isBooked && (
                 <>
                   <div className={`mt-4 border-2 ${colors.borderPrimary} ${colors.bgPrimary} ${colors.textInverse} px-4 py-3 text-center`}>
-                    <span className={`${typography.display.heading} text-lg`}>Booked &#10003;</span>
+                    <span className={`${typography.display.heading} text-lg`}>{t('panel.bookedCheck')}</span>
                   </div>
                   {status !== 'past' && (
                     <Button variant="panel-secondary" onClick={() => setView('cancel')} className="mt-2 w-full">
-                      Cancel booking
+                      {t('panel.cancelBooking')}
                     </Button>
                   )}
                 </>
@@ -226,7 +230,7 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                       : `${colors.borderDisabled} ${colors.textDisabled} ${interactive.cursorDisabled}`
                   }`}
                 >
-                  {loading ? 'Booking...' : 'Book now'}
+                  {loading ? t('slot.booking') : t('slot.bookNow')}
                 </button>
               )}
             </>

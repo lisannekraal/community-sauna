@@ -4,23 +4,23 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { useTranslations } from 'next-intl';
 import { FormInput, Button } from '@/components/ui';
 import { colors, feedback, interactive } from '@/lib/design-tokens';
-
-const forgotPasswordSchema = Yup.object({
-  email: Yup.string()
-    .email('Please enter a valid email address')
-    .matches(
-      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-      'Please enter a valid email address'
-    )
-    .required('Email is required'),
-});
 
 export default function ForgotPasswordPage() {
   const [serverError, setServerError] = useState('');
   const [success, setSuccess] = useState(false);
   const [devResetUrl, setDevResetUrl] = useState<string | null>(null);
+  const t = useTranslations('Auth');
+  const tCommon = useTranslations('Common');
+
+  const forgotPasswordSchema = Yup.object({
+    email: Yup.string()
+      .email(t('validation.emailInvalid'))
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, t('validation.emailInvalid'))
+      .required(t('validation.emailRequired')),
+  });
 
   async function handleSubmit(values: { email: string }) {
     setServerError('');
@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setServerError(data.error || 'Something went wrong. Please try again.');
+        setServerError(data.error || tCommon('somethingWentWrong'));
         return;
       }
 
@@ -48,46 +48,28 @@ export default function ForgotPasswordPage() {
         setDevResetUrl(data._dev_resetUrl);
       }
     } catch {
-      setServerError('Something went wrong. Please try again.');
+      setServerError(tCommon('somethingWentWrong'));
     }
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] uppercase mb-4">Reset Password</h1>
+        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-4">{t('forgotPassword.heading')}</h1>
         <p className={`${colors.textSubtle} mb-8`}>
-          Enter your email address and we&apos;ll send you a link to reset your password.
+          {t('forgotPassword.description')}
         </p>
 
         {success ? (
           <div className="space-y-6">
             <div className={feedback.alertSuccess} role="status">
-              If an account exists with this email, a password reset link has been sent.
-              Please check your inbox.
+              {t('forgotPassword.successMessage')}
             </div>
-
-            {/* DEV ONLY: Show reset link for testing */}
-            {devResetUrl && (
-              <div className="border-2 border-yellow-500 bg-yellow-50 p-4" role="alert">
-                <p className="font-bold text-yellow-800 mb-2">Development Mode</p>
-                <p className="text-sm text-yellow-700 mb-2">
-                  In production, this link would be sent via email:
-                </p>
-                <Link
-                  href={devResetUrl}
-                  className="text-sm text-blue-600 underline break-all"
-                >
-                  {devResetUrl}
-                </Link>
-              </div>
-            )}
-
             <Link
               href="/login"
               className={`block text-center ${interactive.link}`}
             >
-              Back to login
+              {t('forgotPassword.backToLogin')}
             </Link>
           </div>
         ) : (
@@ -105,7 +87,7 @@ export default function ForgotPasswordPage() {
                 )}
 
                 <FormInput
-                  label="Email"
+                  label={t('fields.email')}
                   type="email"
                   name="email"
                   value={values.email}
@@ -115,8 +97,8 @@ export default function ForgotPasswordPage() {
                   error={touched.email && errors.email ? errors.email : undefined}
                 />
 
-                <Button type="submit" loading={isSubmitting} loadingText="Sending...">
-                  Send reset link
+                <Button type="submit" loading={isSubmitting} loadingText={t('forgotPassword.loadingText')}>
+                  {t('forgotPassword.submitLabel')}
                 </Button>
               </Form>
             )}
@@ -125,9 +107,9 @@ export default function ForgotPasswordPage() {
 
         {!success && (
           <p className="mt-8 text-center">
-            Remember your password?{' '}
+            {t('forgotPassword.rememberPassword')}{' '}
             <Link href="/login" className={`font-medium ${interactive.link}`}>
-              Login
+              {t('forgotPassword.login')}
             </Link>
           </p>
         )}

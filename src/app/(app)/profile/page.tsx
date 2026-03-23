@@ -1,15 +1,19 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
+import { getTranslations } from 'next-intl/server';
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
   if (!session?.user) redirect('/login');
 
+  const t = await getTranslations('Pages');
+  const tCommon = await getTranslations('Common');
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">Profile</h1>
-      <p className="text-gray-600">Coming soon.</p>
+      <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-8">{t('profile.heading')}</h1>
+      <p className="text-gray-600">{tCommon('comingSoon')}</p>
     </div>
   );
 }

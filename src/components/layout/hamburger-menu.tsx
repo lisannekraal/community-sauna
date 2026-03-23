@@ -4,11 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
 import { getMainNavItems, getSecondaryNavItems, isActiveRoute } from '@/lib/navigation';
 import { nav, icons, colors, interactive, animation } from '@/lib/design-tokens';
 import { AdminModeToggle } from './admin-mode-toggle';
+import { LanguageToggle } from '@/components/language-toggle';
 import { Xmark, Menu, LogOut } from 'iconoir-react';
 
 interface HamburgerMenuProps {
@@ -21,6 +23,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
   const pathname = usePathname();
   const { isAdminMode } = useAdminMode();
   const isAdmin = hasRole(userRole, 'admin');
+  const t = useTranslations('Nav');
 
   const mainItems = getMainNavItems(userRole, isAdminMode);
   const secondaryItems = getSecondaryNavItems(userRole, isAdminMode);
@@ -31,7 +34,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
       <button
         onClick={() => setIsOpen(true)}
         className="fixed top-4 right-4 z-50 p-2"
-        aria-label="Open menu"
+        aria-label={t('openMenu')}
       >
         <Menu width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.strokeActive} />
       </button>
@@ -48,7 +51,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-2"
-                aria-label="Close menu"
+                aria-label={t('closeMenu')}
               >
                 <Xmark width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.strokeActive} />
               </button>
@@ -75,7 +78,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
                     >
                       <Icon width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.navMobile.strokeWidth} />
                       <span className="text-xl">
-                        {item.label}
+                        {t(item.label as Parameters<typeof t>[0])}
                       </span>
                     </Link>
                   </li>
@@ -101,7 +104,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
                       }`}
                     >
                       <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={icons.navSmall.strokeWidth} />
-                      <span className={nav.text.main}>{item.label}</span>
+                      <span className={nav.text.main}>{t(item.label as Parameters<typeof t>[0])}</span>
                     </Link>
                   </li>
                 );
@@ -111,15 +114,18 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
           </nav>
 
           {/* Overlay footer */}
-          <div className={`px-6 py-5 border-t ${colors.borderSubtle} flex items-center justify-between`}>
-            <span className="text-sm">{userName}</span>
-            <button
-              onClick={() => signOut({ callbackUrl: '/' })}
-              className={`flex items-center gap-2 text-sm ${interactive.cursorPointer}`}
-            >
-              <LogOut width={icons.action.size} height={icons.action.size} strokeWidth={icons.action.strokeWidth} />
-              Log out
-            </button>
+          <div className={`px-6 py-5 border-t ${colors.borderSubtle}`}>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-sm">{userName}</span>
+              <button
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className={`flex items-center gap-2 text-sm ${interactive.cursorPointer}`}
+              >
+                <LogOut width={icons.action.size} height={icons.action.size} strokeWidth={icons.action.strokeWidth} />
+                {t('logout')}
+              </button>
+            </div>
+            <LanguageToggle />
           </div>
         </div>
       )}

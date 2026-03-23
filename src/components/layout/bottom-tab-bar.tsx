@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { type UserRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
 import { getMainNavItems, isActiveRoute } from '@/lib/navigation';
@@ -15,6 +16,7 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
   const pathname = usePathname();
   const { isAdminMode } = useAdminMode();
   const items = getMainNavItems(userRole, isAdminMode);
+  const t = useTranslations('Nav');
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 pb-[env(safe-area-inset-bottom)]">
@@ -46,7 +48,7 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
                         active ? 'font-bold' : ''
                       }`}
                     >
-                      {item.label}
+                      {t(item.label as Parameters<typeof t>[0])}
                     </span>
                   </Link>
                 </li>
@@ -69,7 +71,7 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
                       active ? 'font-bold' : colors.textMuted
                     }`}
                   >
-                    {item.label}
+                    {t(item.label as Parameters<typeof t>[0])}
                   </span>
                 </Link>
               </li>

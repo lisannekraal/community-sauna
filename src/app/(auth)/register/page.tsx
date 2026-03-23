@@ -6,46 +6,10 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Formik, Form, useFormikContext } from 'formik';
 import * as Yup from 'yup';
+import { useTranslations } from 'next-intl';
 import { FormInput, PasswordInput, Button } from '@/components/ui';
 import { colors, inputs, feedback, interactive } from '@/lib/design-tokens';
 import { GENDER_OPTIONS } from '@/lib/member';
-
-const accountSchema = Yup.object({
-  email: Yup.string()
-    .email('Please enter a valid email address')
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, 'Please enter a valid email address')
-    .required('Email is required'),
-  password: Yup.string()
-    .min(8, 'Password must be at least 8 characters')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords do not match')
-    .required('Please confirm your password'),
-});
-
-const personalSchema = Yup.object({
-  firstName: Yup.string().trim().required('First name is required'),
-  lastName: Yup.string(),
-  phone: Yup.string()
-    .trim()
-    .required('Phone number is required')
-    .matches(/^[+\d\s\-()]+$/, 'Invalid phone number')
-    .test('min-digits', 'Phone number too short', val =>
-      (val?.replace(/\D/g, '').length || 0) >= 10
-    ),
-  gender: Yup.string(),
-});
-
-const emergencySchema = Yup.object({
-  emergencyContactName: Yup.string(),
-  emergencyContactPhone: Yup.string()
-    .matches(/^[+\d\s\-()]*$/, 'Invalid phone number')
-    .test('min-digits', 'Phone number too short', val =>
-      !val || (val.replace(/\D/g, '').length >= 10)
-    ),
-});
-
-const schemas = [accountSchema, personalSchema, emergencySchema];
 
 interface FormValues {
   email: string;
@@ -71,11 +35,7 @@ const initialValues: FormValues = {
   emergencyContactPhone: '',
 };
 
-const steps = [
-  { number: '01', title: 'Create your account' },
-  { number: '02', title: 'Tell us about you' },
-  { number: '03', title: 'Emergency contact' },
-];
+const STEP_NUMBERS = ['01', '02', '03'];
 
 // Scroll to first error
 function ScrollToError() {
@@ -101,6 +61,51 @@ export default function RegisterPage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [serverError, setServerError] = useState('');
+  const t = useTranslations('Auth');
+  const tCommon = useTranslations('Common');
+
+  const accountSchema = Yup.object({
+    email: Yup.string()
+      .email(t('validation.emailInvalid'))
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/, t('validation.emailInvalid'))
+      .required(t('validation.emailRequired')),
+    password: Yup.string()
+      .min(8, t('validation.passwordMinLength'))
+      .required(t('validation.passwordRequired')),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password')], t('validation.passwordsDoNotMatch'))
+      .required(t('validation.confirmPasswordRequired')),
+  });
+
+  const personalSchema = Yup.object({
+    firstName: Yup.string().trim().required(t('validation.firstNameRequired')),
+    lastName: Yup.string(),
+    phone: Yup.string()
+      .trim()
+      .required(t('validation.phoneRequired'))
+      .matches(/^[+\d\s\-()]+$/, t('validation.phoneInvalid'))
+      .test('min-digits', t('validation.phoneTooShort'), val =>
+        (val?.replace(/\D/g, '').length || 0) >= 10
+      ),
+    gender: Yup.string(),
+  });
+
+  const emergencySchema = Yup.object({
+    emergencyContactName: Yup.string(),
+    emergencyContactPhone: Yup.string()
+      .matches(/^[+\d\s\-()]*$/, t('validation.phoneInvalid'))
+      .test('min-digits', t('validation.phoneTooShort'), val =>
+        !val || (val.replace(/\D/g, '').length >= 10)
+      ),
+  });
+
+  const schemas = [accountSchema, personalSchema, emergencySchema];
+
+  const steps = [
+    { number: STEP_NUMBERS[0], title: t('register.step1Title') },
+    { number: STEP_NUMBERS[1], title: t('register.step2Title') },
+    { number: STEP_NUMBERS[2], title: t('register.step3Title') },
+  ];
 
   const isLastStep = step === steps.length - 1;
   const currentSchema = schemas[step];
@@ -133,10 +138,10 @@ export default function RegisterPage() {
 
       if (!res.ok) {
         if (data.error?.includes('email')) {
-          setServerError('This email is already registered');
+          setServerError(t('register.emailAlreadyRegistered'));
           setStep(0);
         } else {
-          setServerError(data.error || 'Registration failed. Please try again.');
+          setServerError(data.error || t('register.registrationFailed'));
         }
         return;
       }
@@ -148,14 +153,14 @@ export default function RegisterPage() {
       });
 
       if (result?.error) {
-        setServerError('Registration succeeded but login failed. Please try logging in.');
+        setServerError(t('register.registeredButLoginFailed'));
         return;
       }
 
       router.push('/');
       router.refresh();
     } catch {
-      setServerError('Something went wrong. Please try again.');
+      setServerError(tCommon('somethingWentWrong'));
     }
   }
 
@@ -171,7 +176,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md mx-auto flex-1 flex flex-col">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="font-display text-[clamp(2rem,5vw,3rem)]">Register</h1>
+            <h1 className="font-display text-[clamp(2rem,5vw,3rem)]">{t('register.heading')}</h1>
             <span className="text-lg font-mono">
               {steps[step].number} <span className={colors.textDisabled}>→</span> {steps[steps.length - 1].number}
             </span>
@@ -211,13 +216,13 @@ export default function RegisterPage() {
                 {step === 0 && (
                   <>
                     <p className="">
-                      Already have an account?{' '}
+                      {t('register.alreadyHaveAccount')}{' '}
                       <Link href="/login" className={`font-medium ${interactive.link}`}>
-                        Login
+                        {t('register.login')}
                       </Link>
                     </p>
                     <FormInput
-                      label="Email"
+                      label={t('fields.email')}
                       type="email"
                       name="email"
                       value={values.email}
@@ -228,19 +233,19 @@ export default function RegisterPage() {
                     />
 
                     <PasswordInput
-                      label="Password"
+                      label={t('fields.password')}
                       name="password"
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       autoComplete="new-password"
                       showStrength
-                      hint="Minimum 8 characters"
+                      hint={t('validation.passwordHint')}
                       error={touched.password && errors.password ? errors.password : undefined}
                     />
 
                     <PasswordInput
-                      label="Confirm password"
+                      label={t('fields.confirmPassword')}
                       name="confirmPassword"
                       value={values.confirmPassword}
                       onChange={handleChange}
@@ -250,9 +255,9 @@ export default function RegisterPage() {
                     />
 
                     <p className="text-xs text-gray-500 pt-1">
-                      By registering you agree to our{' '}
+                      {t('register.privacyNotice')}{' '}
                       <Link href="/privacy" target="_blank" className="underline hover:no-underline">
-                        Privacy Policy
+                        {t('register.privacyPolicy')}
                       </Link>
                       .
                     </p>
@@ -262,7 +267,7 @@ export default function RegisterPage() {
                 {step === 1 && (
                   <>
                     <FormInput
-                      label="First name"
+                      label={t('fields.firstName')}
                       type="text"
                       name="firstName"
                       value={values.firstName}
@@ -273,18 +278,18 @@ export default function RegisterPage() {
                     />
 
                     <FormInput
-                      label="Last name"
+                      label={t('fields.lastName')}
                       type="text"
                       name="lastName"
                       value={values.lastName}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       autoComplete="family-name"
-                      hint="Optional"
+                      hint={tCommon('optional')}
                     />
 
                     <FormInput
-                      label="Phone"
+                      label={t('fields.phone')}
                       type="tel"
                       name="phone"
                       value={values.phone}
@@ -296,8 +301,8 @@ export default function RegisterPage() {
 
                     <div>
                       <label htmlFor="gender" className={inputs.label}>
-                        Gender
-                        <span className="text-gray-500 font-normal ml-2">Optional</span>
+                        {t('fields.gender')}
+                        <span className="text-gray-500 font-normal ml-2">{tCommon('optional')}</span>
                       </label>
                       <select
                         id="gender"
@@ -318,11 +323,11 @@ export default function RegisterPage() {
                 {step === 2 && (
                   <>
                     <p className={`${colors.textSubtle} mb-4`}>
-                      Optional but recommended. This person will be contacted in case of emergency during a sauna session.
+                      {t('register.emergencyDesc')}
                     </p>
 
                     <FormInput
-                      label="Contact name"
+                      label={t('fields.emergencyContactName')}
                       type="text"
                       name="emergencyContactName"
                       value={values.emergencyContactName}
@@ -332,7 +337,7 @@ export default function RegisterPage() {
                     />
 
                     <FormInput
-                      label="Contact phone"
+                      label={t('fields.emergencyContactPhone')}
                       type="tel"
                       name="emergencyContactPhone"
                       value={values.emergencyContactPhone}
@@ -353,18 +358,18 @@ export default function RegisterPage() {
                       onClick={handleBack}
                       className={`flex-1 p-3 border-2 font-mono text-sm uppercase tracking-wider ${colors.borderPrimary} hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
                     >
-                      ← Back
+                      {t('register.backButton')}
                     </button>
                   )}
                   <Button
                     type="submit"
                     loading={isSubmitting}
-                    loadingText={isLastStep ? 'Creating account...' : 'Loading...'}
+                    loadingText={isLastStep ? t('register.createAccountLoading') : tCommon('loading')}
                     className={step === 0 ? 'w-full' : 'flex-1'}
                     disabled={isLastStep}
-                    title={isLastStep ? 'Registration is not yet open' : undefined}
+                    title={isLastStep ? tCommon('comingSoon') : undefined}
                   >
-                    {isLastStep ? 'Coming soon' : 'Continue →'}
+                    {isLastStep ? t('register.comingSoon') : t('register.continueButton')}
                   </Button>
                 </div>
 
@@ -374,7 +379,7 @@ export default function RegisterPage() {
                     disabled
                     className={`w-full p-3 ${colors.textDisabled} cursor-not-allowed`}
                   >
-                    Skip, I&apos;ll add this later
+                    {t('register.skipButton')}
                   </button>
                 )}
               </div>

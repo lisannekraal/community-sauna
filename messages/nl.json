@@ -1,0 +1,387 @@
+{
+  "Common": {
+    "loading": "Laden...",
+    "comingSoon": "Binnenkort beschikbaar.",
+    "optional": "Optioneel",
+    "somethingWentWrong": "Er is iets misgegaan. Probeer het opnieuw.",
+    "strengthLabel": "Sterkte",
+    "strengthWeak": "Zwak",
+    "strengthMedium": "Redelijk",
+    "strengthStrong": "Sterk"
+  },
+  "Nav": {
+    "home": "Home",
+    "bookings": "Reserveringen",
+    "schedule": "Rooster",
+    "plans": "Abonnementen",
+    "help": "Help",
+    "members": "Leden",
+    "profile": "Mijn profiel",
+    "account": "Mijn account",
+    "adminSettings": "Admin instellingen",
+    "manageAnnouncements": "Announcements beheren",
+    "manageQA": "Q&A beheren",
+    "editScheduleTemplates": "Rooster templates bewerken",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "logout": "Uitloggen",
+    "switchToMemberView": "Bekijk als member",
+    "switchToAdminView": "Bekijk als admin"
+  },
+  "LandingNav": {
+    "about": "Over ons",
+    "howItWorks": "Hoe het werkt",
+    "plans": "Abonnementen",
+    "schedule": "Rooster",
+    "contact": "Contact",
+    "myAccount": "Mijn account",
+    "logout": "Uitloggen",
+    "login": "Inloggen",
+    "preRegister": "Pre-registreren\u00a0\u2192"
+  },
+  "Landing": {
+    "hero": {
+      "subtitle": "Een buurtsauna\nin Amsterdam Noord",
+      "ctaBecomeMember": "Word lid\u00a0\u2192",
+      "ctaSeeSchedule": "Bekijk het rooster",
+      "definition": "de stoom van de sauna",
+      "noun": "zelfstandig naamwoord",
+      "origin": "Fins"
+    },
+    "crowdfunding": {
+      "badge": "Crowdfunding",
+      "heading": "Een sauna voor de buurt",
+      "body": "We halen fondsen op om deze buurtssauna mogelijk te maken. Je kunt alvast strippenkaarten kopen of direct vroeg lid worden.",
+      "cta": "Steun L\u00f6yly\u00a0\u2192",
+      "imagePlaceholder": "Foto",
+      "imageCaption": "Crowdfundingcampagne afbeelding"
+    },
+    "about": {
+      "badge": "Over ons",
+      "heading": "We bouwen\nonze droom",
+      "para1": "L\u00f6yly is een door leden gerunde sauna. Wij geloven dat sauna voor iedereen toegankelijk moet zijn \u2014 een plek om tot rust te komen, buurtgenoten te ontmoeten en voor je lichaam en geest te zorgen. Daarom bouwen we een betaalbare, door de gemeenschap gerunde sauna in Amsterdam Noord, geleid door vrijwilligers.",
+      "para2": "We verbouwen een container bij \u2019t Keerwater aan de Buiksloterweg tot een volwaardige sauna, douche en kleedruimte. De constructie staat, de isolatie zit er in, en onze tweedehands sauna is op maat geplaatst en klaar. We zitten nu in de laatste fase \u2014 vloeren, tegels en afwerking. Wil je meedoen?",
+      "cta": "Crowdfunding\u00a0\u2192",
+      "imagePlaceholder": "Foto",
+      "imageCaption": "Interieur buurtssauna"
+    },
+    "how": {
+      "badge": "Hoe het werkt",
+      "heading": "Als L\u00f6yly\nopent",
+      "step1Title": "Pre-registreren",
+      "step1Desc": "Maak een account aan om lid te worden van onze gemeenschap.",
+      "step1Cta": "Nu pre-registreren \u2192",
+      "step2Title": "Kies een abonnement",
+      "step2Desc": "Als we onze startdatum bekendmaken, kies je jouw lidmaatschap of strippenkaart.",
+      "step2Cta": "Abonnementen bekijken \u2192",
+      "step3Title": "Boek een sessie",
+      "step3Desc": "Bekijk het rooster en boek je plek. Het adres wordt gedeeld bij bevestiging.",
+      "step4Title": "Raak betrokken",
+      "step4Desc": "Word host of draag op een andere manier bij."
+    },
+    "plans": {
+      "badge": "Lidmaatschappen",
+      "heading": "Kies\njouw ritme",
+      "cta": "Pre-registreren\u00a0\u2192",
+      "subscriptions": "Abonnementen",
+      "punchCards": "Strippenkaarten"
+    },
+    "schedule": {
+      "badge": "Reserveren",
+      "heading": "L\u00f6yly rooster"
+    },
+    "contact": {
+      "locationLabel": "Locatie",
+      "locationHeading": "Amsterdam Noord",
+      "locationNote": "Exacte adres wordt gedeeld bij bevestiging van je reservering.",
+      "contactLabel": "Neem contact op",
+      "contactHeading": "Camille en Barnaby",
+      "hoursLabel": "Openingstijden",
+      "hoursHeading": "Wordt bekendgemaakt",
+      "hoursNote": "Houd ons rooster in de gaten."
+    },
+    "footer": {
+      "memberLogin": "Inloggen",
+      "preRegister": "Pre-registreren",
+      "privacy": "Privacy",
+      "copyright": "\u00a9 2026 L\u00f6yly"
+    }
+  },
+  "Auth": {
+    "fields": {
+      "email": "E-mailadres",
+      "password": "Wachtwoord",
+      "confirmPassword": "Wachtwoord bevestigen",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "phone": "Telefoonnummer",
+      "gender": "Geslacht",
+      "emergencyContactName": "Naam contactpersoon",
+      "emergencyContactPhone": "Telefoonnummer contactpersoon"
+    },
+    "validation": {
+      "emailRequired": "E-mailadres is verplicht",
+      "emailInvalid": "Voer een geldig e-mailadres in",
+      "passwordRequired": "Wachtwoord is verplicht",
+      "passwordMinLength": "Wachtwoord moet minimaal 8 tekens bevatten",
+      "passwordsDoNotMatch": "Wachtwoorden komen niet overeen",
+      "confirmPasswordRequired": "Bevestig je wachtwoord",
+      "firstNameRequired": "Voornaam is verplicht",
+      "phoneRequired": "Telefoonnummer is verplicht",
+      "phoneInvalid": "Ongeldig telefoonnummer",
+      "phoneTooShort": "Telefoonnummer te kort",
+      "passwordHint": "Minimaal 8 tekens"
+    },
+    "login": {
+      "heading": "Inloggen",
+      "noAccount": "Nog geen account?",
+      "register": "Registreren",
+      "forgotPassword": "Wachtwoord vergeten?",
+      "submitLabel": "Inloggen",
+      "loadingText": "Bezig met inloggen...",
+      "invalidCredentials": "Ongeldig e-mailadres of wachtwoord. Controleer je gegevens en probeer het opnieuw."
+    },
+    "register": {
+      "heading": "Registreren",
+      "step1Title": "Maak je account aan",
+      "step2Title": "Vertel ons over jezelf",
+      "step3Title": "Noodcontact",
+      "alreadyHaveAccount": "Heb je al een account?",
+      "login": "Inloggen",
+      "privacyNotice": "Door te registreren ga je akkoord met ons",
+      "privacyPolicy": "Privacybeleid",
+      "emergencyDesc": "Optioneel, maar we raden het aan. Deze persoon wordt gebenaderd bij een noodgeval.",
+      "continueButton": "Verder \u2192",
+      "backButton": "\u2190 Terug",
+      "skipButton": "Overslaan, ik voeg dit later toe",
+      "comingSoon": "Binnenkort",
+      "createAccountLoading": "Account aanmaken...",
+      "emailAlreadyRegistered": "Dit e-mailadres is al geregistreerd",
+      "registrationFailed": "Registratie mislukt. Probeer het opnieuw.",
+      "registeredButLoginFailed": "Registratie geslaagd maar inloggen mislukt. Probeer opnieuw in te loggen."
+    },
+    "forgotPassword": {
+      "heading": "Wachtwoord resetten",
+      "description": "Voer je e-mailadres in en we sturen je een link om je wachtwoord opnieuw in te stellen.",
+      "submitLabel": "Resetlink versturen",
+      "loadingText": "Versturen...",
+      "successMessage": "Als er een account bestaat met dit e-mailadres, is er een resetlink verstuurd. Check je inbox.",
+      "backToLogin": "Terug naar inloggen",
+      "rememberPassword": "Weet je je wachtwoord nog?",
+      "login": "Inloggen"
+    },
+    "resetPassword": {
+      "heading": "Nieuw wachtwoord instellen",
+      "description": "Voer hieronder je nieuwe wachtwoord in.",
+      "newPassword": "Nieuw wachtwoord",
+      "confirmNewPassword": "Nieuw wachtwoord bevestigen",
+      "submitLabel": "Wachtwoord opnieuw instellen",
+      "loadingText": "Bezig...",
+      "verifying": "Resetlink verifiëren...",
+      "invalidToken": "Deze resetlink is ongeldig of verlopen. Vraag een nieuwe aan.",
+      "requestNewLink": "Nieuwe resetlink aanvragen",
+      "successMessage": "Je wachtwoord is succesvol opnieuw ingesteld.",
+      "goToLogin": "Naar inloggen"
+    }
+  },
+  "Schedule": {
+    "heading": "Rooster",
+    "thisWeek": "Deze week",
+    "nextWeek": "Volgende week",
+    "lastWeek": "Vorige week",
+    "week": "Week",
+    "backToCurrentWeek": "\u2191 Terug naar deze week",
+    "today": "Vandaag",
+    "past": "Afgelopen",
+    "noSessions": "Geen sessies",
+    "previousWeek": "Vorige week",
+    "nextWeekAria": "Volgende week",
+    "days": {
+      "mon": "MA",
+      "tue": "DI",
+      "wed": "WO",
+      "thu": "DO",
+      "fri": "VR",
+      "sat": "ZA",
+      "sun": "ZO"
+    },
+    "slot": {
+      "cancelled": "Geannuleerd",
+      "booked": "Geboekt",
+      "full": "Vol",
+      "past": "Verleden",
+      "bookNow": "Boek nu",
+      "booking": "Bezig..."
+    },
+    "panel": {
+      "sessionDetails": "Sessiedetails",
+      "bookingConfirmed": "Reservering bevestigd",
+      "cancelBooking": "Reservering annuleren",
+      "confirmedMessage": "Je bent ingepland voor deze sessie.",
+      "cancelConfirmQuestion": "Weet je zeker dat je deze reservering wilt annuleren?",
+      "cancelReasonLabel": "Reden (optioneel)",
+      "cancelReasonPlaceholder": "Waarom annuleer je?",
+      "goBack": "Terug",
+      "confirmCancel": "Bevestig annulering",
+      "cancelling": "Annuleren...",
+      "close": "Sluiten",
+      "bookedCheck": "Geboekt \u2713",
+      "spotsLeft": "{count} van {total} plekken vrij",
+      "failedToBook": "Reserveren mislukt",
+      "failedToCancel": "Annuleren mislukt"
+    }
+  },
+  "Pages": {
+    "home": {
+      "heading": "Welkom, {name}",
+      "viewSchedule": "Bekijk rooster \u2192"
+    },
+    "bookings": {
+      "heading": "Mijn reserveringen"
+    },
+    "plans": {
+      "heading": "Abonnementen"
+    },
+    "profile": {
+      "heading": "Profiel"
+    },
+    "account": {
+      "heading": "Account"
+    },
+    "help": {
+      "heading": "Help"
+    },
+    "schedule": {
+      "heading": "Rooster"
+    },
+    "members": {
+      "heading": "Leden"
+    },
+    "adminSettings": {
+      "heading": "Instellingen"
+    },
+    "adminAnnouncements": {
+      "heading": "Aankondigingen"
+    },
+    "adminQA": {
+      "heading": "V&A"
+    },
+    "adminTemplates": {
+      "heading": "Roostersjablonen"
+    }
+  },
+  "Members": {
+    "count": "{count, plural, one {# lid} other {# leden}}",
+    "filterAria": "Filter leden",
+    "next": "Next",
+    "last": "Last",
+    "noBookings": "Geen reserveringen",
+    "noPlan": "Geen abonnement",
+    "backToMembers": "Terug naar leden",
+    "role": "Rol",
+    "roleMember": "Member",
+    "assignHost": "Aanwijzen als host",
+    "removeHost": "Host-rol verwijderen",
+    "contact": "Contact",
+    "contactInfo": "Contactgegevens",
+    "emergencyContact": "Noodcontact",
+    "currentPlan": "Huidig abonnement",
+    "expires": "Verloopt {date}",
+    "pastPlans": "Vorige abonnementen",
+    "addFreePlan": "Gratis abonnement toevoegen",
+    "statistics": "Statistieken",
+    "memberSince": "Lid sinds",
+    "confirmedBookings": "Bevestigde reserveringen",
+    "cancelled": "Geannuleerd",
+    "noShows": "No shows",
+    "mostVisited": "Meest bezocht",
+    "paymentsDue": "Openstaande betalingen",
+    "failed": "mislukt",
+    "pending": "in behandeling",
+    "paymentHistory": "Betalingsgeschiedenis",
+    "bookings": "Reserveringen",
+    "upcoming": "Aankomend ({count})",
+    "lastBooking": "Laatste reservering",
+    "allBookings": "Alle reserveringen",
+    "upcomingBadge": "Aankomend",
+    "pastBadge": "Afgelopen",
+    "noBookingsFound": "Geen reserveringen gevonden.",
+    "emailLabel": "E-mail",
+    "phoneLabel": "Telefoon",
+    "emergencyNameLabel": "Naam",
+    "noPastPlans": "Geen vorige abonnementen.",
+    "addFreePlanDescription": "Kies een abonnement om gratis toe te wijzen aan dit lid (bijv. voor vrijwilligerswerk of uitwisseling).",
+    "addFreePlanAfter": "Na het selecteren stel je een einddatum in.",
+    "paymentHistoryPending": "Betalingsgeschiedenis is beschikbaar zodra de Mollie-integratie is gekoppeld.",
+    "statusActive": "Actief",
+    "statusExpired": "Verlopen",
+    "statusPaymentPending": "Betaling in behandeling",
+    "statusSuspended": "Geblokkeerd",
+    "statusCancelled": "Geannuleerd"
+  },
+  "Privacy": {
+    "title": "Privacybeleid",
+    "lastUpdated": "Laatst bijgewerkt: maart 2026",
+    "backToLoyly": "\u2190 Terug naar L\u00f6yly",
+    "whoWeAre": {
+      "heading": "Wie wij zijn",
+      "body": "Buurtsauna L\u00f6yly is een buurtssauna in Amsterdam Noord. We beheren dit boekingsplatform om leden de mogelijkheid te geven tijdsloten te reserveren en hun lidmaatschap te beheren. Je kunt ons bereiken via"
+    },
+    "whatData": {
+      "heading": "Welke gegevens we verzamelen en waarom",
+      "account": {
+        "label": "Accountgegevens",
+        "body": "Bij registratie verzamelen we je e-mailadres, wachtwoord (opgeslagen als een eenrichtingshash), voornaam en telefoonnummer. Deze zijn nodig om je account aan te maken en je als lid te identificeren."
+      },
+      "optional": {
+        "label": "Optionele profielgegevens",
+        "body": "Achternaam, geslacht en noodcontactgegevens (naam en telefoonnummer) zijn optioneel. Noodcontactinformatie wordt alleen gebruikt bij een medische situatie tijdens een sessie."
+      },
+      "booking": {
+        "label": "Reserveringsgegevens",
+        "body": "We registreren welke tijdsloten je boekt en eventuele annuleringsredenen. Dit is nodig om de capaciteit en je lidmaatschapstegoed te beheren."
+      },
+      "payment": {
+        "label": "Betalingsgegevens",
+        "body": "Betalingen worden verwerkt door Mollie. We slaan de status en geschiedenis van je betalingen op (geslaagd, mislukt, in behandeling), maar bewaren geen kaart- of bankgegevens \u2014 dat regelt Mollie exclusief."
+      },
+      "email": {
+        "label": "Transactionele e-mails",
+        "body": "We sturen e-mails voor reserveringsbevestigingen, wachtwoordresets en herinneringen voor lidmaatschapsverlenging. We sturen geen marketinge-mails."
+      }
+    },
+    "legalBasis": {
+      "heading": "Juridische grondslag",
+      "body": "We verwerken je gegevens op basis van <contract>overeenkomst</contract> \u2014 dit is nodig om je lidmaatschap te beheren en reserveringen uit te voeren. Noodcontactgegevens worden verwerkt op basis van je <consent>toestemming</consent>, die je kunt intrekken door ze uit je profiel te verwijderen."
+    },
+    "retention": {
+      "heading": "Hoe lang we je gegevens bewaren",
+      "body": "We bewaren je account en reserveringsgeschiedenis zolang je lidmaatschap actief is. Als je je account verwijdert, worden je persoonsgegevens verwijderd. Betalingsgegevens kunnen tot 7 jaar worden bewaard om aan de Nederlandse boekhoudvereisten te voldoen."
+    },
+    "sharing": {
+      "heading": "Met wie we je gegevens delen",
+      "mollie": "onze betaalprovider. Mollie verwerkt betalingstransacties en valt onder hun eigen privacybeleid.",
+      "infomaniak": "onze hosting- en e-mailprovider, gevestigd in Zwitserland. Je gegevens worden opgeslagen op hun servers en e-mails worden verstuurd via hun mailservice.",
+      "noSale": "We verkopen je gegevens niet en delen ze niet met andere derden. Beheerders en hosts kunnen de ledeninformatie zien die nodig is om sessies te beheren (naam, contactgegevens voor hun sessies)."
+    },
+    "cookies": {
+      "heading": "Cookies",
+      "body": "Dit platform gebruikt een sessiecookie om je ingelogd te houden en een voorkeurscookie om je gekozen taal (NL/EN) te onthouden. Beide cookies zijn strikt noodzakelijk voor het functioneren van de service en vereisen geen toestemming. We gebruiken geen analytics-, advertentie- of andere cookies van derden."
+    },
+    "rights": {
+      "heading": "Jouw rechten",
+      "intro": "Onder de AVG (GDPR) heb je het recht om:",
+      "access": "De persoonsgegevens die we van je bewaren in te zien",
+      "correct": "Onjuiste gegevens te corrigeren",
+      "delete": "Verwijdering van je gegevens aan te vragen",
+      "portable": "Je gegevens in een overdraagbaar formaat te ontvangen",
+      "object": "Bezwaar te maken tegen verwerking op basis van gerechtvaardigd belang",
+      "contact": "Om een van deze rechten uit te oefenen, stuur een e-mail naar",
+      "authority": "Je hebt ook het recht om een klacht in te dienen bij de"
+    },
+    "questions": {
+      "heading": "Vragen",
+      "body": "Als je vragen hebt over dit privacybeleid, neem dan contact met ons op via"
+    }
+  }
+}

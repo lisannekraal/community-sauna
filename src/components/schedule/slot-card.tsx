@@ -1,3 +1,6 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { type TimeSlotData } from '@/types';
 import { colors, typography, interactive } from '@/lib/design-tokens';
 import { CapacityMeter } from './capacity-meter';
@@ -13,6 +16,7 @@ interface SlotCardProps {
 }
 
 export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotClick, compact }: SlotCardProps) {
+  const t = useTranslations('Schedule');
   // Status computed inline from parent-provided props to avoid creating a Date per card.
   // Keep in sync with getSlotStatus() in @/lib/schedule.
   const spotsLeft = slot.capacity - slot.bookedCount;
@@ -59,19 +63,19 @@ export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotCl
       <div className={`mt-1.5 ${compact ? '' : 'mt-2'}`}>
         {slot.isCancelled ? (
           <span className={`font-mono uppercase line-through ${compact ? 'text-[9px]' : 'text-xs'}`}>
-            Cancelled
+            {t('slot.cancelled')}
           </span>
         ) : isBooked ? (
           <span className={`font-mono uppercase font-bold ${compact ? 'text-[9px]' : 'text-xs'}`}>
-            &#10003; Booked
+            &#10003; {t('slot.booked')}
           </span>
         ) : isFull ? (
           <span className={`font-mono uppercase font-bold ${compact ? 'text-[9px]' : 'text-xs'}`}>
-            Full
+            {t('slot.full')}
           </span>
         ) : slotPast ? (
           <span className={`font-mono uppercase ${compact ? 'text-[9px]' : 'text-xs'}`}>
-            Past
+            {t('slot.past')}
           </span>
         ) : (
           <div className="flex items-center justify-between gap-2">
