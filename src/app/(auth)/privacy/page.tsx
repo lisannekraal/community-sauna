@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { colors, interactive } from '@/lib/design-tokens';
 
 const LANDING_URL = process.env.NEXT_PUBLIC_LANDING_URL || 'http://localhost:3000';
@@ -7,25 +8,25 @@ export const metadata = {
   title: 'Privacy Policy — Löyly',
 };
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const t = await getTranslations('Privacy');
+
   return (
     <div className="min-h-[calc(100dvh-3.5rem)] px-6 py-12 max-w-2xl mx-auto">
       <div className="mb-10">
         <h1 className="font-display text-[clamp(2.5rem,6vw,4rem)] leading-none mb-4">
-          Privacy Policy
+          {t('title')}
         </h1>
         <p className={`font-mono text-xs ${colors.textSubtle}`}>
-          Last updated: March 2026
+          {t('lastUpdated')}
         </p>
       </div>
 
       <div className="space-y-10 text-sm leading-relaxed">
         <section>
-          <h2 className="text-2xl mb-3">Who we are</h2>
+          <h2 className="text-2xl mb-3">{t('whoWeAre.heading')}</h2>
           <p className={colors.textSubtle}>
-            Buurtsauna Löyly is a community sauna located in Amsterdam Noord. We operate this
-            booking platform to allow members to reserve time slots and manage their membership.
-            You can reach us at{' '}
+            {t('whoWeAre.body')}{' '}
             <a href="mailto:info@buurtsaunaloyly.nl" className={interactive.link}>
               info@buurtsaunaloyly.nl
             </a>
@@ -34,115 +35,80 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl mb-3">What data we collect and why</h2>
+          <h2 className="text-2xl mb-3">{t('whatData.heading')}</h2>
           <div className={`space-y-4 ${colors.textSubtle}`}>
             <div>
-              <p className="font-medium text-black mb-1">Account information</p>
-              <p>
-                When you register, we collect your email address, password (stored as a
-                one-way hash), first name, and phone number. These are required to create
-                your account and identify you as a member.
-              </p>
+              <p className="font-medium text-black mb-1">{t('whatData.account.label')}</p>
+              <p>{t('whatData.account.body')}</p>
             </div>
             <div>
-              <p className="font-medium text-black mb-1">Optional profile data</p>
-              <p>
-                Last name, gender, and emergency contact details (name and phone number) are
-                optional. Emergency contact information is used only in the event of a medical
-                situation during a session.
-              </p>
+              <p className="font-medium text-black mb-1">{t('whatData.optional.label')}</p>
+              <p>{t('whatData.optional.body')}</p>
             </div>
             <div>
-              <p className="font-medium text-black mb-1">Booking data</p>
-              <p>
-                We record which time slots you book and any cancellation reasons you provide.
-                This is necessary to manage capacity and your membership credits.
-              </p>
+              <p className="font-medium text-black mb-1">{t('whatData.booking.label')}</p>
+              <p>{t('whatData.booking.body')}</p>
             </div>
             <div>
-              <p className="font-medium text-black mb-1">Payment data</p>
-              <p>
-                Payments are processed by Mollie. We store the status and history of your
-                payments (success, failure, pending) but do not store your card or bank
-                details — those are handled exclusively by Mollie.
-              </p>
+              <p className="font-medium text-black mb-1">{t('whatData.payment.label')}</p>
+              <p>{t('whatData.payment.body')}</p>
             </div>
             <div>
-              <p className="font-medium text-black mb-1">Transactional emails</p>
-              <p>
-                We send emails for booking confirmations, password resets, and membership
-                renewal reminders. We do not send marketing emails.
-              </p>
+              <p className="font-medium text-black mb-1">{t('whatData.email.label')}</p>
+              <p>{t('whatData.email.body')}</p>
             </div>
           </div>
         </section>
 
         <section>
-          <h2 className="text-2xl mb-3">Legal basis</h2>
+          <h2 className="text-2xl mb-3">{t('legalBasis.heading')}</h2>
           <p className={colors.textSubtle}>
-            We process your data on the basis of <strong className="text-black">contract</strong> —
-            it is necessary to operate your membership and fulfil bookings. Emergency contact
-            data is processed on the basis of your <strong className="text-black">consent</strong>,
-            which you can withdraw by removing it from your profile.
+            {t.rich('legalBasis.body', {
+              contract: (chunks) => <strong className="text-black">{chunks}</strong>,
+              consent: (chunks) => <strong className="text-black">{chunks}</strong>,
+            })}
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl mb-3">How long we keep your data</h2>
-          <p className={colors.textSubtle}>
-            We keep your account and booking history for as long as your membership is active.
-            If you delete your account, your personal data is removed. Payment records may be
-            retained for up to 7 years to meet Dutch bookkeeping requirements.
-          </p>
+          <h2 className="text-2xl mb-3">{t('retention.heading')}</h2>
+          <p className={colors.textSubtle}>{t('retention.body')}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl mb-3">Who we share your data with</h2>
+          <h2 className="text-2xl mb-3">{t('sharing.heading')}</h2>
           <div className={`space-y-3 ${colors.textSubtle}`}>
             <p>
-              <strong className="text-black">Mollie</strong> — our payment provider.
-              Mollie processes payment transactions and is subject to their own privacy policy.
+              <strong className="text-black">Mollie</strong> — {t('sharing.mollie')}
             </p>
             <p>
-              <strong className="text-black">Infomaniak</strong> — our hosting and email
-              provider, based in Switzerland. Your data is stored on their servers and
-              emails are sent through their mail service.
+              <strong className="text-black">Infomaniak</strong> — {t('sharing.infomaniak')}
             </p>
-            <p>
-              We do not sell your data or share it with any other third parties.
-              Admins and hosts can see the member information needed to manage sessions
-              (name, contact details for their sessions).
-            </p>
+            <p>{t('sharing.noSale')}</p>
           </div>
         </section>
 
         <section>
-          <h2 className="text-2xl mb-3">Cookies</h2>
-          <p className={colors.textSubtle}>
-            This platform uses a single session cookie to keep you logged in. This cookie is
-            strictly necessary for the service to function and does not require your consent.
-            We do not use analytics, advertising, or any other third-party cookies.
-          </p>
+          <h2 className="text-2xl mb-3">{t('cookies.heading')}</h2>
+          <p className={colors.textSubtle}>{t('cookies.body')}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl mb-3">Your rights</h2>
-          <p className={`mb-3 ${colors.textSubtle}`}>
-            Under the GDPR (AVG), you have the right to:
-          </p>
+          <h2 className="text-2xl mb-3">{t('rights.heading')}</h2>
+          <p className={`mb-3 ${colors.textSubtle}`}>{t('rights.intro')}</p>
           <ul className={`space-y-1 pl-4 ${colors.textSubtle}`}>
-            <li>— Access the personal data we hold about you</li>
-            <li>— Correct inaccurate data</li>
-            <li>— Request deletion of your data</li>
-            <li>— Receive your data in a portable format</li>
-            <li>— Object to processing based on legitimate interest</li>
+            <li>— {t('rights.access')}</li>
+            <li>— {t('rights.correct')}</li>
+            <li>— {t('rights.delete')}</li>
+            <li>— {t('rights.portable')}</li>
+            <li>— {t('rights.object')}</li>
           </ul>
           <p className={`mt-3 ${colors.textSubtle}`}>
-            To exercise any of these rights, email us at{' '}
+            {t('rights.contact')}{' '}
             <a href="mailto:info@buurtsaunaloyly.nl" className={interactive.link}>
               info@buurtsaunaloyly.nl
             </a>
-            . You also have the right to lodge a complaint with the{' '}
+            . {t('rights.authority')}{' '}
             <a
               href="https://www.autoriteitpersoonsgegevens.nl"
               target="_blank"
@@ -156,9 +122,9 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl mb-3">Questions</h2>
+          <h2 className="text-2xl mb-3">{t('questions.heading')}</h2>
           <p className={colors.textSubtle}>
-            If you have any questions about this privacy policy, contact us at{' '}
+            {t('questions.body')}{' '}
             <a href="mailto:info@buurtsaunaloyly.nl" className={interactive.link}>
               info@buurtsaunaloyly.nl
             </a>
@@ -166,9 +132,9 @@ export default function PrivacyPage() {
           </p>
         </section>
 
-        <div className={`border-t-2 border-black pt-6`}>
+        <div className="border-t-2 border-black pt-6">
           <Link href={LANDING_URL} className={`font-mono text-xs uppercase tracking-widest ${interactive.link}`}>
-            ← Back to Löyly
+            {t('backToLoyly')}
           </Link>
         </div>
       </div>

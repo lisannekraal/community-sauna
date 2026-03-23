@@ -1,0 +1,389 @@
+{
+  "Common": {
+    "loading": "Loading...",
+    "comingSoon": "Coming soon.",
+    "optional": "Optional",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "strengthLabel": "Strength",
+    "strengthWeak": "Weak",
+    "strengthMedium": "Medium",
+    "strengthStrong": "Strong"
+  },
+  "Nav": {
+    "home": "Home",
+    "bookings": "Bookings",
+    "schedule": "Schedule",
+    "plans": "Plans",
+    "help": "Help",
+    "members": "Members",
+    "profile": "My Profile",
+    "account": "My Account",
+    "adminSettings": "Admin Settings",
+    "manageAnnouncements": "Manage Announcements",
+    "manageQA": "Manage Q&A",
+    "editScheduleTemplates": "Edit Schedule Templates",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "logout": "Log out",
+    "switchToMemberView": "Switch to member view",
+    "switchToAdminView": "Switch to admin view"
+  },
+  "LandingNav": {
+    "about": "About",
+    "howItWorks": "How it works",
+    "plans": "Plans",
+    "schedule": "Schedule",
+    "contact": "Contact",
+    "myAccount": "My account",
+    "logout": "Logout",
+    "login": "Login",
+    "preRegister": "Pre-register\u00a0\u2192"
+  },
+  "Landing": {
+    "hero": {
+      "subtitle": "A community-run sauna\nin Amsterdam Noord",
+      "ctaBecomeMember": "Become a member\u00a0\u2192",
+      "ctaSeeSchedule": "See the schedule",
+      "definition": "the steam of the sauna",
+      "noun": "noun",
+      "origin": "Finnish"
+    },
+    "crowdfunding": {
+      "badge": "Crowdfunding",
+      "heading": "A sauna for the neighborhood",
+      "body": "We\u2019re raising funds to make this community sauna happen. You can pre-buy punch cards or become an early member right away.",
+      "cta": "Support L\u00f6yly\u00a0\u2192",
+      "imagePlaceholder": "Photo",
+      "imageCaption": "Crowdfunding campaign image"
+    },
+    "about": {
+      "badge": "About us",
+      "heading": "Building\nour dream",
+      "para1": "L\u00f6yly is a member-run sauna. We believe sauna should be accessible to everyone \u2014 a place to unwind, connect with neighbors, and care for your body and mind. That\u2019s why we\u2019re building an affordable, community-run sauna in Amsterdam Noord, hosted by volunteers.",
+      "para2": "We\u2019re converting a container at \u2019t Keerwater on the Buiksloterweg into a full sauna, shower, and changing room. The structure is up, insulation is in, and our second-hand sauna is custom-fitted and ready. We\u2019re now in the final stretch \u2014 flooring, tiling, and finishing touches. Want to be part of it?",
+      "cta": "Crowdfunding\u00a0\u2192",
+      "imagePlaceholder": "Photo",
+      "imageCaption": "Community sauna interior"
+    },
+    "how": {
+      "badge": "How it works",
+      "heading": "When L\u00f6yly\nopens",
+      "step1Title": "Pre-register",
+      "step1Desc": "Create an account to join our community.",
+      "step1Cta": "Pre-register now \u2192",
+      "step2Title": "Choose a plan",
+      "step2Desc": "When we reveal our start date, pick your membership or punch card.",
+      "step2Cta": "Preview plans \u2192",
+      "step3Title": "Book a slot",
+      "step3Desc": "Browse the schedule and book your spot. The address is shared upon confirmation.",
+      "step4Title": "Get involved",
+      "step4Desc": "Become a host or contribute in other ways."
+    },
+    "plans": {
+      "badge": "Memberships",
+      "heading": "Choose\nyour rhythm",
+      "cta": "Pre-register\u00a0\u2192",
+      "subscriptions": "Subscriptions",
+      "punchCards": "Punch cards"
+    },
+    "schedule": {
+      "badge": "Bookings",
+      "heading": "L\u00f6yly schedule"
+    },
+    "contact": {
+      "locationLabel": "Location",
+      "locationHeading": "Amsterdam Noord",
+      "locationNote": "Exact address shared upon booking confirmation.",
+      "contactLabel": "Contact us",
+      "contactHeading": "Camille en Barnaby",
+      "hoursLabel": "Hours",
+      "hoursHeading": "To be announced",
+      "hoursNote": "Stay tuned for our schedule."
+    },
+    "footer": {
+      "memberLogin": "Member login",
+      "preRegister": "Pre-register",
+      "privacy": "Privacy",
+      "copyright": "\u00a9 2026 L\u00f6yly"
+    }
+  },
+  "Auth": {
+    "fields": {
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phone": "Phone",
+      "gender": "Gender",
+      "emergencyContactName": "Contact name",
+      "emergencyContactPhone": "Contact phone"
+    },
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "confirmPasswordRequired": "Please confirm your password",
+      "firstNameRequired": "First name is required",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Invalid phone number",
+      "phoneTooShort": "Phone number too short",
+      "passwordHint": "Minimum 8 characters"
+    },
+    "login": {
+      "heading": "Login",
+      "noAccount": "Don\u2019t have an account?",
+      "register": "Register",
+      "forgotPassword": "Forgot password?",
+      "submitLabel": "Login",
+      "loadingText": "Logging in...",
+      "invalidCredentials": "Invalid email or password. Please check your credentials and try again."
+    },
+    "register": {
+      "heading": "Register",
+      "step1Title": "Create your account",
+      "step2Title": "Tell us about you",
+      "step3Title": "Emergency contact",
+      "alreadyHaveAccount": "Already have an account?",
+      "login": "Login",
+      "privacyNotice": "By registering you agree to our",
+      "privacyPolicy": "Privacy Policy",
+      "emergencyDesc": "Optional but recommended. This person will be contacted in case of emergency during a sauna session.",
+      "continueButton": "Continue \u2192",
+      "backButton": "\u2190 Back",
+      "skipButton": "Skip, I\u2019ll add this later",
+      "comingSoon": "Coming soon",
+      "createAccountLoading": "Creating account...",
+      "emailAlreadyRegistered": "This email is already registered",
+      "registrationFailed": "Registration failed. Please try again.",
+      "registeredButLoginFailed": "Registration succeeded but login failed. Please try logging in."
+    },
+    "forgotPassword": {
+      "heading": "Reset Password",
+      "description": "Enter your email address and we\u2019ll send you a link to reset your password.",
+      "submitLabel": "Send reset link",
+      "loadingText": "Sending...",
+      "successMessage": "If an account exists with this email, a password reset link has been sent. Please check your inbox.",
+      "backToLogin": "Back to login",
+      "rememberPassword": "Remember your password?",
+      "login": "Login"
+    },
+    "resetPassword": {
+      "heading": "Set New Password",
+      "description": "Enter your new password below.",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "submitLabel": "Reset password",
+      "loadingText": "Resetting...",
+      "verifying": "Verifying reset link...",
+      "invalidToken": "This password reset link is invalid or has expired. Please request a new one.",
+      "requestNewLink": "Request new reset link",
+      "successMessage": "Your password has been reset successfully.",
+      "goToLogin": "Go to login"
+    }
+  },
+  "Schedule": {
+    "heading": "Schedule",
+    "thisWeek": "This week",
+    "nextWeek": "Next week",
+    "lastWeek": "Last week",
+    "week": "Week",
+    "backToCurrentWeek": "\u2191 Back to current week",
+    "today": "Today",
+    "past": "Past",
+    "noSessions": "No sessions",
+    "previousWeek": "Previous week",
+    "nextWeekAria": "Next week",
+    "days": {
+      "mon": "MON",
+      "tue": "TUE",
+      "wed": "WED",
+      "thu": "THU",
+      "fri": "FRI",
+      "sat": "SAT",
+      "sun": "SUN"
+    },
+    "slot": {
+      "cancelled": "Cancelled",
+      "booked": "Booked",
+      "full": "Full",
+      "past": "Past",
+      "bookNow": "Book now",
+      "booking": "Booking..."
+    },
+    "panel": {
+      "sessionDetails": "Session details",
+      "bookingConfirmed": "Booking confirmed",
+      "cancelBooking": "Cancel booking",
+      "confirmedMessage": "You\u2019re all set for this session.",
+      "cancelConfirmQuestion": "Are you sure you want to cancel this booking?",
+      "cancelReasonLabel": "Reason (optional)",
+      "cancelReasonPlaceholder": "Why are you cancelling?",
+      "goBack": "Go back",
+      "confirmCancel": "Confirm cancel",
+      "cancelling": "Cancelling...",
+      "close": "Close",
+      "bookedCheck": "Booked \u2713",
+      "spotsLeft": "{count} of {total} left",
+      "failedToBook": "Failed to book",
+      "failedToCancel": "Failed to cancel"
+    }
+  },
+  "Pages": {
+    "home": {
+      "heading": "Welcome, {name}",
+      "viewSchedule": "View schedule \u2192"
+    },
+    "bookings": {
+      "heading": "My Bookings"
+    },
+    "plans": {
+      "heading": "Plans"
+    },
+    "profile": {
+      "heading": "Profile"
+    },
+    "account": {
+      "heading": "Account"
+    },
+    "help": {
+      "heading": "Help"
+    },
+    "schedule": {
+      "heading": "Schedule"
+    },
+    "members": {
+      "heading": "Members"
+    },
+    "adminSettings": {
+      "heading": "Settings"
+    },
+    "adminAnnouncements": {
+      "heading": "Announcements"
+    },
+    "adminQA": {
+      "heading": "Q&A"
+    },
+    "adminTemplates": {
+      "heading": "Schedule Templates"
+    }
+  },
+  "Members": {
+    "count": "{count, plural, one {# member} other {# members}}",
+    "filterAria": "Filter members",
+    "next": "Next",
+    "last": "Last",
+    "noBookings": "No bookings",
+    "noPlan": "No plan",
+    "backToMembers": "Back to members",
+    "role": "Role",
+    "roleMember": "Member",
+    "assignHost": "Assign host",
+    "removeHost": "Remove host",
+    "contact": "Contact",
+    "contactInfo": "Contact info",
+    "emergencyContact": "Emergency contact",
+    "currentPlan": "Current plan",
+    "expires": "Expires {date}",
+    "pastPlans": "Past plans",
+    "addFreePlan": "Add free plan",
+    "statistics": "Statistics",
+    "memberSince": "Member since",
+    "confirmedBookings": "Confirmed bookings",
+    "cancelled": "Cancelled",
+    "noShows": "No shows",
+    "mostVisited": "Most visited",
+    "paymentsDue": "Payments due",
+    "failed": "failed",
+    "pending": "pending",
+    "paymentHistory": "Payment history",
+    "bookings": "Bookings",
+    "upcoming": "Upcoming ({count})",
+    "lastBooking": "Last booking",
+    "allBookings": "All bookings",
+    "upcomingBadge": "Upcoming",
+    "pastBadge": "Past",
+    "noBookingsFound": "No bookings found.",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "emergencyNameLabel": "Name",
+    "noPastPlans": "No past plans to show.",
+    "addFreePlanDescription": "Choose a plan to assign to this member for free (e.g. for volunteering or exchange).",
+    "addFreePlanAfter": "After selecting, you will set an expiry date.",
+    "paymentHistoryPending": "Payment history will be available when Mollie integration is connected.",
+    "statusActive": "Active",
+    "statusExpired": "Expired",
+    "statusPaymentPending": "Payment pending",
+    "statusSuspended": "Suspended",
+    "statusCancelled": "Cancelled"
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 2026",
+    "backToLoyly": "\u2190 Back to L\u00f6yly",
+    "whoWeAre": {
+      "heading": "Who we are",
+      "body": "Buurtsauna L\u00f6yly is a community sauna located in Amsterdam Noord. We operate this booking platform to allow members to reserve time slots and manage their membership. You can reach us at"
+    },
+    "whatData": {
+      "heading": "What data we collect and why",
+      "account": {
+        "label": "Account information",
+        "body": "When you register, we collect your email address, password (stored as a one-way hash), first name, and phone number. These are required to create your account and identify you as a member."
+      },
+      "optional": {
+        "label": "Optional profile data",
+        "body": "Last name, gender, and emergency contact details (name and phone number) are optional. Emergency contact information is used only in the event of a medical situation during a session."
+      },
+      "booking": {
+        "label": "Booking data",
+        "body": "We record which time slots you book and any cancellation reasons you provide. This is necessary to manage capacity and your membership credits."
+      },
+      "payment": {
+        "label": "Payment data",
+        "body": "Payments are processed by Mollie. We store the status and history of your payments (success, failure, pending) but do not store your card or bank details \u2014 those are handled exclusively by Mollie."
+      },
+      "email": {
+        "label": "Transactional emails",
+        "body": "We send emails for booking confirmations, password resets, and membership renewal reminders. We do not send marketing emails."
+      }
+    },
+    "legalBasis": {
+      "heading": "Legal basis",
+      "body": "We process your data on the basis of {contract} \u2014 it is necessary to operate your membership and fulfil bookings. Emergency contact data is processed on the basis of your {consent}, which you can withdraw by removing it from your profile.",
+      "contract": "contract",
+      "consent": "consent"
+    },
+    "retention": {
+      "heading": "How long we keep your data",
+      "body": "We keep your account and booking history for as long as your membership is active. If you delete your account, your personal data is removed. Payment records may be retained for up to 7 years to meet Dutch bookkeeping requirements."
+    },
+    "sharing": {
+      "heading": "Who we share your data with",
+      "mollie": "our payment provider. Mollie processes payment transactions and is subject to their own privacy policy.",
+      "infomaniak": "our hosting and email provider, based in Switzerland. Your data is stored on their servers and emails are sent through their mail service.",
+      "noSale": "We do not sell your data or share it with any other third parties. Admins and hosts can see the member information needed to manage sessions (name, contact details for their sessions)."
+    },
+    "cookies": {
+      "heading": "Cookies",
+      "body": "This platform uses a single session cookie to keep you logged in. This cookie is strictly necessary for the service to function and does not require your consent. We do not use analytics, advertising, or any other third-party cookies."
+    },
+    "rights": {
+      "heading": "Your rights",
+      "intro": "Under the GDPR (AVG), you have the right to:",
+      "access": "Access the personal data we hold about you",
+      "correct": "Correct inaccurate data",
+      "delete": "Request deletion of your data",
+      "portable": "Receive your data in a portable format",
+      "object": "Object to processing based on legitimate interest",
+      "contact": "To exercise any of these rights, email us at",
+      "authority": "You also have the right to lodge a complaint with the"
+    },
+    "questions": {
+      "heading": "Questions",
+      "body": "If you have any questions about this privacy policy, contact us at"
+    }
+  }
+}

@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 import { type UserRole, hasRole } from '@/types';
 import { useAdminMode } from '@/contexts/admin-mode';
 import { getMainNavItems, getSecondaryNavItems, isActiveRoute } from '@/lib/navigation';
 import { nav, icons, colors, interactive } from '@/lib/design-tokens';
 import { AdminModeToggle } from './admin-mode-toggle';
+import { LanguageToggle } from '@/components/language-toggle';
 import { LogOut } from 'iconoir-react';
 
 interface SidebarProps {
@@ -19,6 +21,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
   const pathname = usePathname();
   const { isAdminMode } = useAdminMode();
   const isAdmin = hasRole(userRole, 'admin');
+  const t = useTranslations('Nav');
 
   const mainItems = getMainNavItems(userRole, isAdminMode);
   const secondaryItems = getSecondaryNavItems(userRole, isAdminMode);
@@ -50,7 +53,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
                   }`}
                 >
                   <Icon width={icons.nav.size} height={icons.nav.size} strokeWidth={icons.nav.strokeWidth} />
-                  <span className={nav.text.main}>{item.label}</span>
+                  <span className={nav.text.main}>{t(item.label as Parameters<typeof t>[0])}</span>
                 </Link>
               </li>
             );
@@ -77,7 +80,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
                   }`}
                 >
                   <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={icons.navSmall.strokeWidth} />
-                  <span className={nav.text.secondary}>{item.label}</span>
+                  <span className={nav.text.secondary}>{t(item.label as Parameters<typeof t>[0])}</span>
                 </Link>
               </li>
             );
@@ -93,15 +96,18 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
       )}
 
       {/* Footer */}
-      <div className={`px-5 py-4 border-t ${colors.borderSubtle} flex items-center justify-between`}>
-        <span className="text-sm truncate">{userName}</span>
-        <button
-          onClick={() => signOut({ callbackUrl: '/' })}
-          className={`flex items-center gap-1.5 text-sm shrink-0 ${interactive.cursorPointer}`}
-        >
-          <LogOut width={icons.action.size} height={icons.action.size} strokeWidth={icons.action.strokeWidth} />
-          Log out
-        </button>
+      <div className={`px-5 py-4 border-t ${colors.borderSubtle}`}>
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm truncate">{userName}</span>
+          <button
+            onClick={() => signOut({ callbackUrl: '/' })}
+            className={`flex items-center gap-1.5 text-sm shrink-0 ${interactive.cursorPointer}`}
+          >
+            <LogOut width={icons.action.size} height={icons.action.size} strokeWidth={icons.action.strokeWidth} />
+            {t('logout')}
+          </button>
+        </div>
+        <LanguageToggle />
       </div>
     </aside>
   );

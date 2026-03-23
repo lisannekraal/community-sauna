@@ -1,5 +1,9 @@
+'use client';
+
 import { Filter } from 'iconoir-react';
-import { colors, typography, icons, interactive } from '@/lib/design-tokens';
+import { useTranslations, useLocale } from 'next-intl';
+import { formatBookingDateParts } from '@/lib/schedule';
+import { colors, icons, interactive } from '@/lib/design-tokens';
 import { ListItem } from '@/components/ui/list-item';
 import { Badge } from '@/components/ui/badge';
 import type { MemberSummary } from '@/lib/mock-members';
@@ -14,18 +18,23 @@ function roleBadge(role: string) {
   return null;
 }
 
+
 export function MemberList({ members }: MemberListProps) {
+  const t = useTranslations('Members');
+  const locale = useLocale();
+  const dateLocale = locale === 'nl' ? 'nl-NL' : 'en-GB';
+
   return (
     <div>
       {/* Header bar: count + filter */}
       <div className="flex items-center justify-between pb-3">
         <span>
-          {members.length} member{members.length !== 1 ? 's' : ''}
+          {t('count', { count: members.length })}
         </span>
         <button
           type="button"
           className={`p-2 ${interactive.hoverInvert} ${interactive.transition} ${interactive.cursorPointer}`}
-          aria-label="Filter members"
+          aria-label={t('filterAria')}
           title="Filter (coming soon)"
         >
           <Filter
@@ -44,15 +53,18 @@ export function MemberList({ members }: MemberListProps) {
             : member.firstName;
 
           const bookingData = member.nextBooking || member.lastBooking;
-          const bookingPrefix = member.nextBooking ? 'Next' : member.lastBooking ? 'Last' : null;
+          const bookingPrefix = member.nextBooking ? t('next') : member.lastBooking ? t('last') : null;
 
-          const bookingLabel = bookingData ? (
-            <>
-              {bookingPrefix}:{' '}
-              <span className="hidden sm:inline">{bookingData.weekday} </span>
-              {bookingData.date}
-            </>
-          ) : 'No bookings';
+          const bookingLabel = bookingData ? (() => {
+            const { weekday, date } = formatBookingDateParts(bookingData.dateISO, dateLocale);
+            return (
+              <>
+                {bookingPrefix}:{' '}
+                <span className="hidden sm:inline">{weekday} </span>
+                {date}
+              </>
+            );
+          })() : t('noBookings');
 
           return (
             <ListItem
@@ -61,7 +73,7 @@ export function MemberList({ members }: MemberListProps) {
               label={name}
               badges={roleBadge(member.role)}
               secondaryLeft={bookingLabel}
-              secondaryRight={member.plan || 'No plan'}
+              secondaryRight={member.plan || t('noPlan')}
             />
           );
         })}
