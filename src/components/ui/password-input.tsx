@@ -27,8 +27,8 @@ function getPasswordStrength(password: string): { level: 'weak' | 'medium' | 'st
   if (/[^a-zA-Z0-9]/.test(password)) score++;
 
   if (score <= 2) return { level: 'weak', color: colors.textError };
-  if (score <= 4) return { level: 'medium', color: 'text-yellow-600' };
-  return { level: 'strong', color: 'text-green-600' };
+  if (score <= 4) return { level: 'medium', color: 'text-ember' };
+  return { level: 'strong', color: 'text-timber' };
 }
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
@@ -62,7 +62,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className={`absolute right-2 top-1/2 -translate-y-1/2 p-1 ${colors.textSubtle} hover:text-black focus:outline-none focus:ring-2 focus:ring-black`}
+            className={`absolute right-2 top-1/2 -translate-y-1/2 p-1 ${colors.textSubtle} hover:text-ink focus:outline-none focus:ring-2 focus:ring-ink`}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (

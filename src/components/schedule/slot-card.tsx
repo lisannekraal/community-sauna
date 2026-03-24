@@ -34,7 +34,7 @@ export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotCl
   } else if (isBooked) {
     stateClasses = `${colors.borderPrimary} ${colors.bgPrimary} ${colors.textInverse} ${interactive.cursorPointer}`;
   } else if (isFull) {
-    stateClasses = `${colors.borderPrimary} ${colors.bgDisabled} text-gray-500 ${interactive.cursorDisabled}`;
+    stateClasses = `${colors.borderPrimary} ${colors.bgDisabled} text-ash ${interactive.cursorDisabled}`;
   } else {
     stateClasses = `${colors.borderPrimary} ${interactive.hoverInvert} ${interactive.cursorPointer} group`;
   }
@@ -43,7 +43,7 @@ export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotCl
     <button
       onClick={() => onSlotClick?.(slot)}
       disabled={isDisabled}
-      className={`w-full text-left border-2 ${interactive.transition} ${stateClasses} ${
+      className={`w-full text-left border ${interactive.transition} ${stateClasses} ${
         compact ? 'p-1.5' : 'p-3'
       }`}
     >

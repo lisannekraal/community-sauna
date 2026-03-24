@@ -5,24 +5,24 @@
 
 export const colors = {
   // Backgrounds
-  bgPrimary: 'bg-black',
-  bgSecondary: 'bg-white',
-  bgSubtle: 'bg-gray-100',
-  bgDisabled: 'bg-gray-200',
-  bgOverlay: 'bg-black/60',
+  bgPrimary: 'bg-ink',
+  bgSecondary: 'bg-paper',
+  bgSubtle: 'bg-timber/10',
+  bgDisabled: 'bg-ash/30',
+  bgOverlay: 'bg-ink/60',
 
   // Text
-  textPrimary: 'text-black',
-  textInverse: 'text-white',
-  textMuted: 'text-black/50',
-  textSubtle: 'text-gray-600',
-  textDisabled: 'text-gray-400',
+  textPrimary: 'text-ink',
+  textInverse: 'text-paper',
+  textMuted: 'text-timber',
+  textSubtle: 'text-timber',
+  textDisabled: 'text-ash',
   textError: 'text-red-600',
 
   // Borders
-  borderPrimary: 'border-black',
-  borderSubtle: 'border-black/10',
-  borderDisabled: 'border-gray-300',
+  borderPrimary: 'border-ink',
+  borderSubtle: 'border-ink/10',
+  borderDisabled: 'border-ash/60',
   borderError: 'border-red-600',
 } as const;
 
@@ -40,7 +40,7 @@ export const icons = {
 
 export const interactive = {
   transition: 'transition-colors',
-  hoverInvert: 'hover:bg-black hover:text-white',
+  hoverInvert: 'hover:bg-ink hover:text-paper',
   link: 'underline hover:no-underline',
   cursorPointer: 'cursor-pointer',
   cursorDisabled: 'cursor-not-allowed',
@@ -49,7 +49,7 @@ export const interactive = {
 // --- Nav item styles ---
 
 export const nav = {
-  activeState: 'bg-black text-white',
+  activeState: 'bg-ink text-paper',
   item: {
     main: 'flex items-center gap-3 px-3 py-2.5 transition-colors',
     secondary: 'flex items-center gap-3 px-3 py-2 transition-colors',
@@ -78,27 +78,27 @@ export const typography = {
 // --- Button patterns ---
 
 export const buttons = {
-  base: 'w-full border-2 p-3 font-mono text-sm uppercase tracking-wider transition-colors cursor-pointer disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-1',
-  primary: 'bg-black text-white border-black hover:bg-gray-800 focus:ring-black disabled:bg-gray-400 disabled:border-gray-400',
-  secondary: 'bg-white text-black border-black hover:bg-gray-100 focus:ring-black disabled:bg-gray-100 disabled:text-gray-400',
-  // Landing-style inline CTAs
-  cta: 'inline-flex items-center gap-2 border-2 px-8 py-4 font-mono text-sm uppercase tracking-wider transition-colors',
-  ctaPrimary: 'border-black bg-black text-white hover:bg-gray-800',
-  ctaSecondary: 'border-black hover:bg-black hover:text-white',
-  ctaOnDark: 'border-white hover:bg-white hover:text-black',
-  ctaSmall: 'inline-flex items-center gap-2 border-2 border-black px-6 py-3 font-mono text-[11px] uppercase tracking-wider hover:bg-black hover:text-white transition-colors',
-  panel: 'border-2 border-black px-4 py-3 font-display text-lg transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
-  panelPrimary: 'bg-black text-white hover:bg-gray-800',
-  panelSecondary: 'hover:bg-black hover:text-white',
+  base: 'w-full border p-3 font-mono text-sm uppercase tracking-wider transition-colors cursor-pointer disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-1',
+  primary: 'bg-ember text-ink border-ember hover:bg-ember-dark focus:ring-ember disabled:bg-ash/50 disabled:border-ash/50 disabled:text-ash',
+  secondary: 'bg-ink text-paper border-ink hover:bg-ink-hover focus:ring-ink disabled:bg-ash/30 disabled:border-ash/30 disabled:text-ash',
+  // Landing-style inline CTAs — two types only, both solid-fill (no transparent/outline-only)
+  cta: 'inline-flex items-center gap-2 border px-8 py-4 font-mono text-sm uppercase tracking-wider transition-colors',
+  ctaPrimary: 'border-ember bg-ember text-ink hover:bg-ember-dark',
+  ctaSecondary: 'border-ink bg-ink text-paper hover:bg-ink-hover',
+  ctaOnDark: 'border-ember bg-ember text-ink hover:bg-ember-dark',
+  ctaSmall: 'inline-flex items-center gap-2 border border-ink bg-ink text-paper px-6 py-3 font-mono text-[11px] uppercase tracking-wider hover:bg-ink-hover transition-colors',
+  panel: 'border border-ink px-4 py-3 font-display text-lg transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
+  panelPrimary: 'bg-ember text-ink hover:bg-ember-dark',
+  panelSecondary: 'hover:bg-ink hover:text-paper',
   textAction: 'text-[12px] tracking-wide cursor-pointer',
 } as const;
 
 // --- Input patterns ---
 
 export const inputs = {
-  base: 'w-full border-2 p-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1',
+  base: 'w-full border p-2 focus:outline-none focus:ring-2 focus:ring-ink focus:ring-offset-1',
   label: 'block font-medium mb-1',
-  hint: 'text-sm text-gray-600 mt-1',
+  hint: 'text-sm text-timber mt-1',
   error: 'text-sm text-red-600 mt-1',
   requiredMark: 'text-red-600 ml-1',
 } as const;
@@ -106,10 +106,10 @@ export const inputs = {
 // --- Feedback patterns ---
 
 export const feedback = {
-  errorBox: 'border-2 border-red-600 bg-red-50 px-4 py-2',
+  errorBox: 'border border-red-600 bg-red-50 px-4 py-2',
   errorText: 'font-mono text-sm text-red-600',
-  alertError: 'border-2 border-red-600 bg-red-50 p-4 text-red-600',
-  alertSuccess: 'border-2 border-green-600 bg-green-50 p-4 text-green-800',
+  alertError: 'border border-red-600 bg-red-50 p-4 text-red-600',
+  alertSuccess: 'border border-timber/50 bg-timber/10 p-4 text-timber',
 } as const;
 
 // --- Section patterns ---

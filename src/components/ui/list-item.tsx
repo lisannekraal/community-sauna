@@ -25,9 +25,9 @@ export function ListItem({ label, badges, secondaryLeft, secondaryRight, onClick
     <>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className={`font-medium truncate ${isInteractive ? 'group-hover:text-white' : ''}`}>{label}</span>
+          <span className={`font-medium truncate ${isInteractive ? 'group-hover:text-paper' : ''}`}>{label}</span>
           {badges && (
-            <span className={`contents ${isInteractive ? '[&>span]:group-hover:!text-white [&>span]:group-hover:!bg-transparent [&>span]:group-hover:!border-2 [&>span]:group-hover:!border-white' : ''}`}>
+            <span className={`contents ${isInteractive ? '[&>span]:group-hover:!text-paper [&>span]:group-hover:!bg-transparent [&>span]:group-hover:!border [&>span]:group-hover:!border-paper' : ''}`}>
               {badges}
             </span>
           )}
@@ -35,12 +35,12 @@ export function ListItem({ label, badges, secondaryLeft, secondaryRight, onClick
         {(secondaryLeft || secondaryRight) && (
           <div className="flex items-center gap-3 mt-0.5">
             {secondaryLeft && (
-              <span className={`text-sm ${colors.textMuted} truncate ${isInteractive ? 'group-hover:text-white' : ''}`}>
+              <span className={`text-sm ${colors.textMuted} truncate ${isInteractive ? 'group-hover:text-paper' : ''}`}>
                 {secondaryLeft}
               </span>
             )}
             {secondaryRight && (
-              <span className={`${typography.mono.label} ${colors.textSubtle} truncate ${isInteractive ? 'group-hover:text-white' : ''}`}>
+              <span className={`${typography.mono.label} ${colors.textSubtle} truncate ${isInteractive ? 'group-hover:text-paper' : ''}`}>
                 {secondaryRight}
               </span>
             )}
@@ -52,7 +52,7 @@ export function ListItem({ label, badges, secondaryLeft, secondaryRight, onClick
           width={icons.action.size}
           height={icons.action.size}
           strokeWidth={icons.action.strokeWidth}
-          className={`flex-shrink-0 ${colors.textMuted} group-hover:text-white`}
+          className={`flex-shrink-0 ${colors.textMuted} group-hover:text-paper`}
         />
       )}
     </>
@@ -66,7 +66,7 @@ export function ListItem({ label, badges, secondaryLeft, secondaryRight, onClick
     );
   }
 
-  const className = `group flex items-center gap-3 w-full px-4 py-3 border-b ${colors.borderSubtle} hover:bg-black ${interactive.transition} ${interactive.cursorPointer} text-left`;
+  const className = `group flex items-center gap-3 w-full px-4 py-3 border-b ${colors.borderSubtle} hover:bg-ink ${interactive.transition} ${interactive.cursorPointer} text-left`;
 
   if (href) {
     return (
