@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import { formatDateISO, formatTimeUTC } from '@/lib/schedule';
@@ -125,6 +126,7 @@ export default async function HomePage() {
         <section id="crowdfunding" className="bg-ink text-paper border-b border-ink">
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-24">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              
               <div>
                 <div className="inline-block border border-ash/40 px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-8 text-ash">
                   {t('crowdfunding.badge')}
@@ -145,21 +147,13 @@ export default async function HomePage() {
                 </a>
               </div>
 
-              {/* Image — replace with <Image> when photo is available */}
-              <div className="border border-ash/30 min-h-[360px] flex items-center justify-center relative">
-                <div className="text-center">
-                  <div className="border border-ash/30 w-16 h-16 mx-auto flex items-center justify-center mb-3">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ash/40">
-                      <rect x="3" y="3" width="18" height="18" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg>
-                  </div>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-ash/40">{t('crowdfunding.imagePlaceholder')}</span>
-                </div>
-                <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-widest text-ash/30">
-                  {t('crowdfunding.imageCaption')}
-                </span>
+              <div className="min-h-[360px] relative overflow-hidden order-first lg:order-last">
+                <Image
+                  src="/images/crowdfunding.jpg"
+                  alt={t('crowdfunding.imageAlt')}
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
@@ -169,21 +163,13 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-2">
 
-              {/* Image — replace div with <Image> when photo is available */}
-              <div className="border-b lg:border-b-0 lg:border-r border-ink min-h-[360px] lg:min-h-[560px] bg-paper relative flex items-center justify-center">
-                <div className="text-center">
-                  <div className="border border-ash w-16 h-16 mx-auto flex items-center justify-center mb-3">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ash">
-                      <rect x="3" y="3" width="18" height="18" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg>
-                  </div>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-ash">{t('about.imagePlaceholder')}</span>
-                </div>
-                <span className="absolute bottom-4 left-4 font-mono text-[9px] uppercase tracking-widest text-ash/60">
-                  {t('about.imageCaption')}
-                </span>
+              <div className="lg:border-r border-ink min-h-[360px] lg:min-h-[560px] relative overflow-hidden">
+                <Image
+                  src="/images/about.avif"
+                  alt={t('about.imageAlt')}
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               <div className="px-8 md:px-12 py-14 flex flex-col justify-center">
