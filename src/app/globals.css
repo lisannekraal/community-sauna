@@ -18,7 +18,7 @@
   --font-display: 'Devina Garden', serif;
 
   /* Löyly palette */
-  --color-paper:      #F4EDD8;
+  --color-paper:      #F5F2EB; /* #F4EDD8 */
   --color-ink:        #0A0A0A;
   --color-ember:      #E8821A;
   --color-ember-dark: #C96E10;
@@ -32,7 +32,7 @@
   --color-foreground: var(--foreground);
   --font-display: 'Devina Garden', serif;
   /* Löyly palette — generates bg-paper, text-ink, border-ember, text-timber, text-ash, etc. */
-  --color-paper:      #F4EDD8;
+  --color-paper:      #F5F2EB; /* #F4EDD8 */
   --color-ink:        #0A0A0A;
   --color-ember:      #E8821A;
   --color-ember-dark: #C96E10;
