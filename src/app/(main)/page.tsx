@@ -124,10 +124,10 @@ export default async function HomePage() {
         </section>
 
         <section id="crowdfunding" className="bg-ink text-paper border-b border-ink">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-24">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              
-              <div>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2">
+
+              <div className="px-8 md:px-12 py-22">
                 <div className="inline-block border border-ash/40 px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-8 text-ash">
                   {t('crowdfunding.badge')}
                 </div>
@@ -147,7 +147,7 @@ export default async function HomePage() {
                 </a>
               </div>
 
-              <div className="min-h-[360px] relative overflow-hidden order-first lg:order-last">
+              <div className="lg:border-l border-ink min-h-[360px] relative overflow-hidden order-first lg:order-last">
                 <Image
                   src="/images/crowdfunding.jpg"
                   alt={t('crowdfunding.imageAlt')}
@@ -160,10 +160,10 @@ export default async function HomePage() {
         </section>
 
         <section id="about" className="border-b border-ink">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2">
+          <div className="max-w-7xl mx-auto px-8 md:px-12 py-22">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-              <div className="lg:border-r border-ink min-h-[360px] lg:min-h-[560px] relative overflow-hidden">
+              <div className="relative overflow-hidden min-h-[360px] h-full">
                 <Image
                   src="/images/about.avif"
                   alt={t('about.imageAlt')}
@@ -172,8 +172,8 @@ export default async function HomePage() {
                 />
               </div>
 
-              <div className="px-8 md:px-12 py-14 flex flex-col justify-center">
-                <div className="inline-block border border-ink px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-8 self-start text-ash">
+              <div className="flex flex-col justify-center">
+                <div className="inline-block border border-ink px-3 font-mono text-[10px] uppercase tracking-widest mb-8 self-start text-ash">
                   {t('about.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,5vw,4rem)] mb-8">
