@@ -63,6 +63,7 @@ export default function RegisterPage() {
   const [serverError, setServerError] = useState('');
   const t = useTranslations('Auth');
   const tCommon = useTranslations('Common');
+  const tGender = useTranslations('Gender');
 
   const accountSchema = Yup.object({
     email: Yup.string()
@@ -312,8 +313,9 @@ export default function RegisterPage() {
                         onBlur={handleBlur}
                         className={`${inputs.base} ${colors.borderPrimary} bg-paper`}
                       >
+                        <option value="">—</option>
                         {GENDER_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                          <option key={opt.value} value={opt.value}>{tGender(opt.key)}</option>
                         ))}
                       </select>
                     </div>

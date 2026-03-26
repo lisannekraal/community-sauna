@@ -7,9 +7,10 @@ interface PanelProps {
   title: string;
   onClose: () => void;
   children: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
-export function Panel({ title, onClose, children }: PanelProps) {
+export function Panel({ title, onClose, children, footer }: PanelProps) {
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -65,9 +66,16 @@ export function Panel({ title, onClose, children }: PanelProps) {
         </div>
 
         {/* Content */}
-        <div className="p-5 md:p-6 overflow-y-auto">
+        <div className="p-5 md:p-6 overflow-y-auto flex-1">
           {children}
         </div>
+
+        {/* Footer (sticky, outside scroll area) */}
+        {footer && (
+          <div className={`border-t ${colors.borderSubtle} p-5 md:p-6 flex-shrink-0`}>
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

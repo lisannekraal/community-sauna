@@ -1,4 +1,11 @@
 {
+  "Gender": {
+    "female": "Female",
+    "nonBinary": "Non-binary",
+    "male": "Male",
+    "other": "Other",
+    "preferNotToSay": "Prefer not to say"
+  },
   "Common": {
     "loading": "Loading...",
     "comingSoon": "Coming soon.",
@@ -315,7 +322,25 @@
     "statusExpired": "Expired",
     "statusPaymentPending": "Payment pending",
     "statusSuspended": "Suspended",
-    "statusCancelled": "Cancelled"
+    "statusCancelled": "Cancelled",
+    "filterTitle": "Filter",
+    "filterReset": "Reset",
+    "filterApply": "Apply",
+    "filterRoleLabel": "Role",
+    "filterRoleAdmin": "Admin",
+    "filterRoleHost": "Host",
+    "filterGenderLabel": "Gender",
+    "filterPlanLabel": "Plan",
+    "filterPlanLoading": "Loading...",
+    "filterPlanNone": "No plans configured",
+    "filterExtra": "Details",
+    "filterHasNoShows": "Has no shows",
+    "filterPaymentLabel": "Payment status",
+    "filterPaymentPending": "Payment pending",
+    "filterPaymentFailed": "Payment failed",
+    "emptyState": "No members found.",
+    "emptyStateFiltered": "No members match the active filters.",
+    "resetFilters": "Reset filters"
   },
   "Privacy": {
     "title": "Privacy Policy",

@@ -1,4 +1,11 @@
 {
+  "Gender": {
+    "female": "Vrouw",
+    "nonBinary": "Non-binair",
+    "male": "Man",
+    "other": "Anders",
+    "preferNotToSay": "Zeg ik liever niet"
+  },
   "Common": {
     "loading": "Laden...",
     "comingSoon": "Binnenkort beschikbaar.",
@@ -315,7 +322,25 @@
     "statusExpired": "Verlopen",
     "statusPaymentPending": "Betaling in behandeling",
     "statusSuspended": "Geblokkeerd",
-    "statusCancelled": "Geannuleerd"
+    "statusCancelled": "Geannuleerd",
+    "filterTitle": "Filter",
+    "filterReset": "Reset",
+    "filterApply": "Toepassen",
+    "filterRoleLabel": "Rol",
+    "filterRoleAdmin": "Admin",
+    "filterRoleHost": "Host",
+    "filterGenderLabel": "Gender",
+    "filterPlanLabel": "Abonnement",
+    "filterPlanLoading": "Laden...",
+    "filterPlanNone": "Geen abonnementen geconfigureerd",
+    "filterExtra": "Bijzonderheden",
+    "filterHasNoShows": "Heeft no-shows",
+    "filterPaymentLabel": "Betalingsstatus",
+    "filterPaymentPending": "Betaling in behandeling",
+    "filterPaymentFailed": "Betaling mislukt",
+    "emptyState": "Geen leden gevonden.",
+    "emptyStateFiltered": "Geen leden voldoen aan de actieve filters.",
+    "resetFilters": "Filters resetten"
   },
   "Privacy": {
     "title": "Privacybeleid",
