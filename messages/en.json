@@ -42,8 +42,8 @@
   "Landing": {
     "hero": {
       "subtitle": "A community-run sauna\nin Amsterdam Noord",
-      "ctaBecomeMember": "Become a member\u00a0\u2192",
-      "ctaSeeSchedule": "See the schedule",
+      "ctaPreRegister": "Pre-register\u00a0\u2192",
+      "ctaHowItWorks": "How does it work?",
       "definition": "the steam of the sauna",
       "noun": "noun",
       "origin": "Finnish"

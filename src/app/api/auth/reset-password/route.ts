@@ -2,8 +2,19 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { hashToken } from '@/lib/token';
 import { hashPassword } from '@/lib/password';
+import { rateLimit, getClientIp } from '@/lib/rate-limit';
+
+const HOUR = 60 * 60 * 1000;
 
 export async function POST(request: Request) {
+  const { allowed, retryAfter } = rateLimit(getClientIp(request), 'reset-password', 10, HOUR);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(retryAfter) } }
+    );
+  }
+
   try {
     const { token, password } = await request.json();
 

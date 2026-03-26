@@ -1,13 +1,25 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { hashPassword } from '@/lib/password';
+import { rateLimit, getClientIp } from '@/lib/rate-limit';
 import type { RegisterFormData } from '@/types';
 
+const HOUR = 60 * 60 * 1000;
+
 export async function POST(request: Request) {
+  const { allowed, retryAfter } = rateLimit(getClientIp(request), 'register', 5, HOUR);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: 'Too many registration attempts. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(retryAfter) } }
+    );
+  }
+
   try {
     const body: RegisterFormData = await request.json();
 
-    const { email, password, firstName, lastName, phone, gender, emergencyContactName, emergencyContactPhone } = body;
+    const { password, firstName, lastName, phone, gender, emergencyContactName, emergencyContactPhone } = body;
+    const email = body.email?.toLowerCase().trim();
 
     if (!email || !password || !firstName || !phone) {
       return NextResponse.json(
