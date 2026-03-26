@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { generateToken, hashToken } from '@/lib/token';
 import { rateLimit, getClientIp } from '@/lib/rate-limit';
+import { sendPasswordResetEmail } from '@/lib/email';
 
 const TOKEN_EXPIRY_HOURS = 1;
 const HOUR = 60 * 60 * 1000;
@@ -62,9 +63,10 @@ export async function POST(request: Request) {
     const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
     const resetUrl = `${baseUrl}/reset-password?token=${token}`;
 
-    // TODO: Send email with resetUrl
     if (process.env.NODE_ENV === 'development') {
       console.log('[DEV] Password reset URL:', resetUrl);
+    } else {
+      await sendPasswordResetEmail(user.email, resetUrl);
     }
 
     return successResponse;
