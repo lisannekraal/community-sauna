@@ -13,7 +13,7 @@ export function AdminModeToggle() {
       onClick={toggleAdminMode}
       className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-ink/20 text-[12px] tracking-wide cursor-pointer"
     >
-      <span className={`w-2 h-2 rounded-full ${isAdminMode ? colors.bgPrimary : 'bg-ink/20'}`} />
+      <span className={`w-2 h-2 rounded-full ${isAdminMode ? 'bg-ink' : 'bg-ink/20'}`} />
       {isAdminMode ? t('switchToMemberView') : t('switchToAdminView')}
     </button>
   );

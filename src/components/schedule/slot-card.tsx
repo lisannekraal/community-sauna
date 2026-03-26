@@ -32,11 +32,11 @@ export function SlotCard({ slot, isToday, isDayPast, nowTime, isBooked, onSlotCl
   } else if (slotPast) {
     stateClasses = `${colors.borderDisabled} ${colors.textDisabled} cursor-default`;
   } else if (isBooked) {
-    stateClasses = `${colors.borderPrimary} ${colors.bgPrimary} ${colors.textInverse} ${interactive.cursorPointer}`;
+    stateClasses = `border-mustard-gold bg-mustard-gold text-ink ${interactive.cursorPointer}`;
   } else if (isFull) {
-    stateClasses = `${colors.borderPrimary} ${colors.bgDisabled} text-ash ${interactive.cursorDisabled}`;
+    stateClasses = `border-mustard-gold ${colors.bgDisabled} text-ash ${interactive.cursorDisabled}`;
   } else {
-    stateClasses = `${colors.borderPrimary} ${interactive.hoverInvert} ${interactive.cursorPointer} group`;
+    stateClasses = `border-mustard-gold hover:bg-mustard-gold hover:text-ink ${interactive.cursorPointer} group`;
   }
 
   return (

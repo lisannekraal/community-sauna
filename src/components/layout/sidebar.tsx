@@ -27,7 +27,7 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
   const secondaryItems = getSecondaryNavItems(userRole, isAdminMode);
 
   return (
-    <aside className={`fixed left-0 top-0 w-60 h-screen border-r ${colors.borderSubtle} flex flex-col ${colors.bgSecondary} z-40`}>
+    <aside className={`fixed left-0 top-0 w-60 h-screen border-r ${colors.borderSubtle} flex flex-col ${colors.bgPrimary} z-40`}>
       {/* Branding */}
       <div className="px-5 py-4 border-b border-ink/10">
         <Link href="/" className="font-display text-[25px] hover:opacity-70 transition-opacity">
@@ -48,11 +48,11 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
                   href={item.href}
                   className={`${nav.item.main} ${
                     active
-                      ? nav.activeState
+                      ? 'border-l-2 border-forest-green text-forest-green pl-[10px]'
                       : interactive.hoverInvert
                   }`}
                 >
-                  <Icon width={icons.nav.size} height={icons.nav.size} strokeWidth={icons.nav.strokeWidth} />
+                  <Icon width={icons.nav.size} height={icons.nav.size} strokeWidth={active ? icons.strokeActive : icons.nav.strokeWidth} />
                   <span className={nav.text.main}>{t(item.label as Parameters<typeof t>[0])}</span>
                 </Link>
               </li>
@@ -75,11 +75,11 @@ export function Sidebar({ userName, userRole }: SidebarProps) {
                   href={item.href}
                   className={`${nav.item.secondary} ${
                     active
-                      ? nav.activeState
+                      ? 'border-l-2 border-forest-green text-forest-green pl-[10px]'
                       : interactive.hoverInvert
                   }`}
                 >
-                  <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={icons.navSmall.strokeWidth} />
+                  <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={active ? icons.strokeActive : icons.navSmall.strokeWidth} />
                   <span className={nav.text.secondary}>{t(item.label as Parameters<typeof t>[0])}</span>
                 </Link>
               </li>

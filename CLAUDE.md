@@ -18,7 +18,7 @@ The app is split across two subdomains from a single Next.js deployment: `löyly
 - **Hosting:** Infomaniak Node.js Hosting
 - **Deployment:** Infomaniak Node.js Builder (manual trigger from dashboard)
 - **Timezone:** Europe/Amsterdam (CET) fixed
-- **Language:** English only for MVP
+- **i18n:** Dutch (`nl`, default) and English (`en`) via `next-intl`; locale stored in `NEXT_LOCALE` cookie
 
 ## Architecture Decisions
 
@@ -84,7 +84,7 @@ Layouts fetch session data server-side via `getServerSession(authOptions)` and p
 
 Tokens cover: `colors`, `icons`, `interactive`, `nav`, `typography`, `buttons`, `inputs`, `feedback`, `animation`.
 
-The `buttons` token includes two usage patterns: `buttons.base` + `buttons.primary/secondary` for `<Button>` component variants, and `buttons.cta` + `buttons.ctaPrimary/ctaSecondary/ctaOnDark/ctaSmall` for raw `<a>`/`<Link>` CTA elements on the landing page.
+The `buttons` token includes two usage patterns: `buttons.base` + `buttons.primary/secondary` for `<Button>` component variants (`primary` = mustard-gold fill, `secondary` = deep-crimson fill, inverts to paper on hover), and `buttons.cta` + `buttons.ctaPrimary/ctaSecondary/ctaOnDark/ctaSmall` for raw `<a>`/`<Link>` CTA elements on the landing page.
 
 **When to use tokens:** Colors, border styles, icon sizes, button/input patterns, error/success alerts, link hover states, nav active states.
 
@@ -194,7 +194,8 @@ When admin cancels a time slot with existing bookings:
 
 ## Design Principles
 
-- **Brutalist UI**: Black/white binary, `border-2`, no shadows, no border-radius (except `rounded-full` for specific elements like admin toggle dot, bottom tab center button)
+- **Brutalist UI**: Black/white base with accent colors, single-pixel `border` (not `border-2`), no shadows, no border-radius (except `rounded-full` for specific elements like admin toggle dot, bottom tab center button)
+- **Color palette**: `mustard-gold` (primary actions, active states, borders), `deep-crimson` (secondary/destructive actions, errors), `forest-green` (nav active states, progress indicators), `ink`/`paper`/`timber`/`ash` for neutrals
 - **Mobile-first**: Responsive design
 - **WCAG accessible**: Clear, logical UX
 - **Reusable**: All content admin-configurable for other communities
@@ -204,6 +205,16 @@ Fonts are self-hosted (no external CDNs):
 - **Devina Garden** (`font-display`) - Display headings; loaded from `/public/fonts/devina-garden.ttf` via `globals.css`
 - **Space Mono** (`font-mono`) - Step numbers, technical elements; via Fontsource
 - **Space Grotesk** (`font-sans`) - Body text, default; via Fontsource
+
+## Internationalisation (i18n)
+
+`next-intl` handles translations. Locale is read from the `NEXT_LOCALE` cookie (default `nl`). Translation files live in `messages/en.json` and `messages/nl.json`.
+
+- In client components: `useTranslations('Namespace')`
+- In server components: `await getTranslations('Namespace')`
+- Locale detection: `src/i18n/request.ts`
+
+When adding new UI strings, add keys to both `messages/en.json` and `messages/nl.json`.
 
 ## Prisma Date/Time Handling
 
@@ -233,9 +244,11 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 - `src/lib/member.ts` - Member utilities
 - `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities
 - `src/contexts/admin-mode.tsx` - Admin/member view toggle context
-- `src/components/ui/` - Shared UI components: `Button` (variants: `primary`, `secondary`, `panel-primary`, `panel-secondary`), `FormInput`, `PasswordInput`, `Badge`, `ListItem`, `Panel`, `Section`, `StatTile` — import from `@/components/ui`
+- `src/components/ui/` - Shared UI components: `Button` (variants: `primary`, `secondary`), `FormInput`, `PasswordInput`, `Badge`, `ListItem`, `Panel`, `Section`, `StatTile` — import from `@/components/ui`
 - `prisma/schema.prisma` - Database schema with all entities
 - `prisma/seed.ts` - Seeds membership plans, superadmin
+- `messages/en.json`, `messages/nl.json` - Translation strings by namespace
+- `src/i18n/request.ts` - Locale detection from cookie
 
 ## Documentation
 

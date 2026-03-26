@@ -22,11 +22,11 @@ export function LandingNav() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-paper border-b border-ink">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-paper border-b border-mustard-gold">
       <div className="flex items-stretch h-14">
         <Link
           href="/"
-          className="flex items-center px-5 border-r border-ink font-display text-[25px] shrink-0 hover:bg-ink hover:text-paper transition-colors"
+          className="flex items-center px-5 border-r border-mustard-gold font-display text-[25px] shrink-0 hover:bg-mustard-gold hover:text-ink transition-colors"
         >
           Löyly
         </Link>
@@ -37,7 +37,7 @@ export function LandingNav() {
             <a
               key={item.href}
               href={item.href}
-              className="flex items-center px-4 border-r border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors"
+              className="flex items-center px-4 border-r border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors"
             >
               {item.label}
             </a>
@@ -48,7 +48,7 @@ export function LandingNav() {
         <div className="flex-1" />
 
         {/* Language toggle — desktop */}
-        <div className="hidden lg:flex items-center px-4 border-l border-ink">
+        <div className="hidden lg:flex items-center px-4 border-l border-mustard-gold">
           <LanguageToggle />
         </div>
 
@@ -56,13 +56,13 @@ export function LandingNav() {
           <>
             <a
               href={`${APP_URL}/`}
-              className="hidden lg:flex items-center px-5 border-l border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors"
+              className="hidden lg:flex items-center px-5 border-l border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors"
             >
               {t('myAccount')}
             </a>
             <a
               href={`${APP_URL}/logout`}
-              className="hidden lg:flex items-center px-5 border-l border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors"
+              className="hidden lg:flex items-center px-5 border-l border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors"
             >
               {t('logout')}
             </a>
@@ -71,13 +71,13 @@ export function LandingNav() {
           <>
             <a
               href={`${APP_URL}/login`}
-              className="hidden lg:flex items-center px-5 border-l border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors"
+              className="hidden lg:flex items-center px-5 border-l border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors"
             >
               {t('login')}
             </a>
             <a
               href={`${APP_URL}/register`}
-              className="hidden lg:flex items-center px-5 border-l border-ink bg-ember text-ink font-mono text-[11px] uppercase tracking-widest hover:bg-ember-dark transition-colors"
+              className="hidden lg:flex items-center px-5 border-l border-mustard-gold bg-mustard-gold text-ink font-mono text-[11px] uppercase tracking-widest hover:bg-mustard-gold-dark transition-colors"
             >
               {t('preRegister')}
             </a>
@@ -86,7 +86,7 @@ export function LandingNav() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden flex items-center justify-center w-14 border-l border-ink font-mono text-sm cursor-pointer hover:bg-ink hover:text-paper transition-colors"
+          className="lg:hidden flex items-center justify-center w-14 border-l border-mustard-gold font-mono text-sm cursor-pointer hover:bg-mustard-gold hover:text-ink transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
@@ -97,13 +97,13 @@ export function LandingNav() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden border-t border-ink bg-paper" role="navigation" aria-label="Mobile navigation">
+        <div className="lg:hidden border-t border-mustard-gold bg-paper" role="navigation" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="block px-5 py-4 border-b border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors"
+              className="block px-5 py-4 border-b border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors"
             >
               {item.label}
             </a>
@@ -112,14 +112,14 @@ export function LandingNav() {
             <div className="grid grid-cols-2">
               <a
                 href={`${APP_URL}/`}
-                className="block px-5 py-4 border-b border-r border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors text-center"
+                className="block px-5 py-4 border-b border-r border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
                 {t('myAccount')}
               </a>
               <a
                 href={`${APP_URL}/logout`}
-                className="block px-5 py-4 border-b border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors text-center"
+                className="block px-5 py-4 border-b border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
                 {t('logout')}
@@ -129,14 +129,14 @@ export function LandingNav() {
             <div className="grid grid-cols-2">
               <a
                 href={`${APP_URL}/login`}
-                className="block px-5 py-4 border-b border-r border-ink font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-ink hover:text-paper transition-colors text-center"
+                className="block px-5 py-4 border-b border-r border-mustard-gold font-mono text-[11px] uppercase tracking-widest text-timber hover:bg-mustard-gold hover:text-ink transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
                 {t('login')}
               </a>
               <a
                 href={`${APP_URL}/register`}
-                className="block px-5 py-4 border-b border-ink bg-ember text-ink font-mono text-[11px] uppercase tracking-widest hover:bg-ember-dark transition-colors text-center"
+                className="block px-5 py-4 border-b border-mustard-gold bg-mustard-gold text-ink font-mono text-[11px] uppercase tracking-widest hover:bg-mustard-gold-dark transition-colors text-center"
                 onClick={() => setMenuOpen(false)}
               >
                 {t('preRegister')}
@@ -144,7 +144,7 @@ export function LandingNav() {
             </div>
           )}
           {/* Language toggle — mobile */}
-          <div className="px-5 py-4 border-b border-ink flex justify-end">
+          <div className="px-5 py-4 border-b border-mustard-gold flex justify-end">
             <LanguageToggle />
           </div>
         </div>

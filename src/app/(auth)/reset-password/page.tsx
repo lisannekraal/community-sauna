@@ -109,7 +109,7 @@ function ResetPasswordForm() {
         </div>
         <Link
           href="/login"
-          className="block w-full p-3 font-medium border bg-ink text-paper border-ink text-center hover:bg-ink-hover"
+          className="block w-full p-3 font-medium border bg-mustard-gold text-ink border-mustard-gold text-center hover:bg-mustard-gold-dark"
         >
           {t('resetPassword.goToLogin')}
         </Link>

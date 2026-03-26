@@ -83,7 +83,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="min-h-[calc(100vh-3.5rem)] border-b border-ink flex flex-col">
+      <section className="min-h-[calc(100vh-3.5rem)] flex flex-col">
           <div className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-20 py-20 max-w-7xl mx-auto w-full">
 
             <h1 className="font-display leading-none mb-8 text-[clamp(4rem,13vw,11rem)]">
@@ -123,18 +123,18 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="crowdfunding" className="bg-ink text-paper border-b border-ink">
+        <section id="crowdfunding" className="bg-forest-green text-paper">
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-2">
 
               <div className="px-8 md:px-12 py-22">
-                <div className="inline-block border border-ash/40 px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-8 text-ash">
+                <div className="inline-block px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-8 text-paper">
                   {t('crowdfunding.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,5vw,4rem)] mb-8">
                   {t('crowdfunding.heading')}
                 </h2>
-                <p className="text-ash text-lg leading-relaxed mb-10 max-w-lg">
+                <p className="text-paper text-lg leading-relaxed mb-10 max-w-lg">
                   {t('crowdfunding.body')}
                 </p>
                 <a
@@ -147,7 +147,7 @@ export default async function HomePage() {
                 </a>
               </div>
 
-              <div className="lg:border-l border-ink min-h-[360px] relative overflow-hidden order-first lg:order-last">
+              <div className="min-h-[360px] relative overflow-hidden order-first lg:order-last">
                 <Image
                   src="/images/crowdfunding.jpg"
                   alt={t('crowdfunding.imageAlt')}
@@ -159,7 +159,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="about" className="border-b border-ink">
+        <section id="about" className="border-b border-mustard-gold">
           <div className="max-w-7xl mx-auto px-8 md:px-12 py-22">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
@@ -173,7 +173,7 @@ export default async function HomePage() {
               </div>
 
               <div className="flex flex-col justify-center">
-                <div className="inline-block border border-ink px-3 font-mono text-[10px] uppercase tracking-widest mb-8 self-start text-ash">
+                <div className="inline-block border border-mustard-gold px-3 font-mono text-[10px] uppercase tracking-widest mb-8 self-start text-ash">
                   {t('about.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,5vw,4rem)] mb-8">
@@ -198,10 +198,10 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="how" className="border-b border-ink">
+        <section id="how" className="border-b border-mustard-gold">
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-24">
             <div className="mb-12">
-              <div className="inline-block border border-ink px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6 text-ash">
+              <div className="inline-block border border-mustard-gold px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6 text-ash">
                 {t('how.badge')}
               </div>
               <h2 className="font-display leading-none text-[clamp(2rem,6vw,4.5rem)]">
@@ -215,18 +215,18 @@ export default async function HomePage() {
               {HOW_STEPS.map((step, i) => (
                 <div
                   key={step.number}
-                  className={`border border-ink p-6 flex flex-col bg-paper ${i % 2 !== 0 ? 'lg:mt-10' : ''}`}
+                  className={`border border-mustard-gold p-6 flex flex-col bg-paper ${i % 2 !== 0 ? 'lg:mt-10' : ''}`}
                 >
-                  <div className="font-mono text-6xl font-bold text-ember/15 mb-4 leading-none select-none">
+                  <div className="font-mono text-6xl font-bold text-mustard-gold/15 mb-4 leading-none select-none">
                     {step.number}
                   </div>
                   <h3 className="font-display font-bold text-2xl mb-3">{step.title}</h3>
                   <p className="text-timber text-sm leading-relaxed flex-1">{step.description}</p>
                   {step.cta && (
-                    <div className="mt-5 pt-4 border-t border-ink">
+                    <div className="mt-5 pt-4 border-t border-mustard-gold">
                       <a
                         href={step.cta.href}
-                        className="font-mono text-[11px] uppercase tracking-widest text-ember hover:underline"
+                        className="font-mono text-[11px] uppercase tracking-widest hover:underline"
                       >
                         {step.cta.label}
                       </a>
@@ -238,11 +238,11 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="plans" className="border-b border-ink">
+        <section id="plans" className="border-b border-mustard-gold">
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-24">
             <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
               <div>
-                <div className="inline-block border border-ink px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6 text-ash">
+                <div className="inline-block border border-mustard-gold px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6 text-ash">
                   {t('plans.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,6vw,4.5rem)]">
@@ -261,14 +261,13 @@ export default async function HomePage() {
                 <p className="font-mono text-[10px] uppercase tracking-widest text-ash mb-4">{t('plans.subscriptions')}</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-12">
                   {subscriptionPlans.map((plan) => (
-                    <div key={plan.id} className="border border-ink p-5 flex flex-col bg-paper">
-                      <div className="font-display font-bold text-2xl leading-tight mb-3">{plan.name}</div>
-                      <div className="font-mono text-2xl leading-none mb-1 text-ember">{formatPrice(plan.priceCents)}</div>
+                    <div key={plan.id} className="border border-mustard-gold p-5 flex flex-col bg-paper">
+                      <div className="text-lg leading-tight mb-3">{plan.name}</div>
+                      <div className="font-mono text-2xl leading-none mb-1 text-deep-crimson">{formatPrice(plan.priceCents)}</div>
                       <div className="font-mono text-[10px] uppercase tracking-widest mb-5 text-ash pb-8">
                         {formatPeriod(plan)}
                       </div>
-                      <div className="border-t border-ink/10 pt-4 mt-auto">
-                        {/* <div className="font-mono text-[11px] font-bold mb-2">{formatSessions(plan)}</div> */}
+                      <div className="border-t border-mustard-gold/10 pt-4 mt-auto">
                         <p className="text-xs leading-relaxed text-timber">{formatDetail(plan)}</p>
                       </div>
                     </div>
@@ -282,14 +281,14 @@ export default async function HomePage() {
                 <p className="font-mono text-[10px] uppercase tracking-widest text-ash mb-4">{t('plans.punchCards')}</p>
                 <div className="grid sm:grid-cols-3 gap-3">
                   {punchCardPlans.map((plan) => (
-                    <div key={plan.id} className="border border-ink p-5 bg-paper flex items-center justify-between gap-4">
+                    <div key={plan.id} className="border border-mustard-gold p-5 bg-paper flex items-center justify-between gap-4">
                       <div>
-                        <div className="font-display font-bold text-2xl">{plan.name}</div>
+                        <div className="text-lg">{plan.name}</div>
                         <div className="font-mono text-[10px] uppercase tracking-widest text-ash mt-1">
                           {formatSessions(plan)} · {formatDetail(plan)}
                         </div>
                       </div>
-                      <div className="font-mono text-2xl shrink-0 text-ember">{formatPrice(plan.priceCents)}</div>
+                      <div className="font-mono text-2xl shrink-0 text-deep-crimson">{formatPrice(plan.priceCents)}</div>
                     </div>
                   ))}
                 </div>
@@ -299,11 +298,11 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="schedule" className="border-b border-ink">
+        <section id="schedule" className="border-b border-mustard-gold">
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-24">
             <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
               <div>
-                <div className="inline-block border border-ink px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6 text-ash">
+                <div className="inline-block border border-mustard-gold px-3 py-1 font-mono text-[10px] uppercase tracking-widest mb-6 text-ash">
                   {t('schedule.badge')}
                 </div>
                 <h2 className="font-display leading-none text-[clamp(2rem,6vw,4.5rem)]">
@@ -321,9 +320,9 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="contact" className="border-b border-ink">
+        <section id="contact">
           <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink">
+            <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-mustard-gold">
 
               <div className="px-8 md:px-10 pt-12 pb-20">
                 <div className="font-mono text-[10px] uppercase tracking-widest text-ash mb-5">{t('contact.locationLabel')}</div>
@@ -337,7 +336,7 @@ export default async function HomePage() {
                 <div className="font-mono text-[10px] uppercase tracking-widest text-ash mb-5">{t('contact.contactLabel')}</div>
                 <h3 className="font-display text-3xl mb-5">{t('contact.contactHeading')}</h3>
                 <p className="text-sm text-timber mb-2">
-                  <a href="mailto:info@buurtsaunaloyly.nl" className="text-ember underline hover:no-underline">
+                  <a href="mailto:info@buurtsaunaloyly.nl" className="text-mustard-gold underline hover:no-underline">
                     info@buurtsaunaloyly.nl
                   </a>
                 </p>
@@ -354,7 +353,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <footer className="border-t border-ink">
+        <footer className="border-t border-mustard-gold">
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-6 flex flex-wrap items-center justify-between gap-6">
             <Link href="/" className="font-display text-[25px]">Löyly</Link>
             <div className="flex items-center gap-6">

@@ -27,7 +27,7 @@ function getPasswordStrength(password: string): { level: 'weak' | 'medium' | 'st
   if (/[^a-zA-Z0-9]/.test(password)) score++;
 
   if (score <= 2) return { level: 'weak', color: colors.textError };
-  if (score <= 4) return { level: 'medium', color: 'text-ember' };
+  if (score <= 4) return { level: 'medium', color: 'text-mustard-gold' };
   return { level: 'strong', color: 'text-timber' };
 }
 

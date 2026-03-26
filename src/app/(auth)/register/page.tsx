@@ -187,7 +187,7 @@ export default function RegisterPage() {
             {steps.map((_, i) => (
               <div
                 key={i}
-                className={`h-1 flex-1 ${i <= step ? 'bg-ink' : 'bg-ash/40'}`}
+                className={`h-1 flex-1 ${i <= step ? 'bg-forest-green' : 'bg-ash/40'}`}
               />
             ))}
           </div>
@@ -254,7 +254,7 @@ export default function RegisterPage() {
                       error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
                     />
 
-                    <p className="text-xs text-ash pt-1">
+                    <p className={`text-xs ${colors.textDisabled} pt-1`}>
                       {t('register.privacyNotice')}{' '}
                       <Link href="/privacy" target="_blank" className="underline hover:no-underline">
                         {t('register.privacyPolicy')}
@@ -377,7 +377,7 @@ export default function RegisterPage() {
                   <button
                     type="button"
                     disabled
-                    className={`w-full p-3 ${colors.textDisabled} cursor-not-allowed`}
+                    className={`w-full p-3 ${colors.textDisabled} ${interactive.cursorDisabled}`}
                   >
                     {t('register.skipButton')}
                   </button>
