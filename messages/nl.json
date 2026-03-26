@@ -42,8 +42,8 @@
   "Landing": {
     "hero": {
       "subtitle": "Een buurtsauna\nin Amsterdam Noord",
-      "ctaBecomeMember": "Word lid\u00a0\u2192",
-      "ctaSeeSchedule": "Bekijk het rooster",
+      "ctaPreRegister": "Pre-registreren\u00a0\u2192",
+      "ctaHowItWorks": "Hoe werkt het?",
       "definition": "de stoom van de sauna",
       "noun": "zelfstandig naamwoord",
       "origin": "Fins"

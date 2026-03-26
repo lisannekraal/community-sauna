@@ -101,13 +101,13 @@ export default async function HomePage() {
                 href={`${APP_URL}/register`}
                 className={`${buttons.cta} ${buttons.ctaPrimary}`}
               >
-                {t('hero.ctaBecomeMember')}
+                {t('hero.ctaPreRegister')}
               </a>
               <a
-                href="/#schedule"
+                href="/#how"
                 className={`${buttons.cta} ${buttons.ctaSecondary}`}
               >
-                {t('hero.ctaSeeSchedule')}
+                {t('hero.ctaHowItWorks')}
               </a>
             </div>
 
@@ -226,7 +226,7 @@ export default async function HomePage() {
                     <div className="mt-5 pt-4 border-t border-mustard-gold">
                       <a
                         href={step.cta.href}
-                        className="font-mono text-[11px] uppercase tracking-widest hover:underline"
+                        className="font-mono text-[11px] uppercase tracking-widest hover:opacity-60"
                       >
                         {step.cta.label}
                       </a>
@@ -357,13 +357,13 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-6 flex flex-wrap items-center justify-between gap-6">
             <Link href="/" className="font-display text-[25px]">Löyly</Link>
             <div className="flex items-center gap-6">
-              <a href={`${APP_URL}/login`} className="font-mono text-[11px] uppercase tracking-widest text-timber hover:underline">
+              <a href={`${APP_URL}/login`} className="font-mono text-[11px] uppercase tracking-widest text-timber hover:opacity-60">
                 {t('footer.memberLogin')}
               </a>
-              <a href={`${APP_URL}/register`} className="font-mono text-[11px] uppercase tracking-widest text-timber hover:underline">
+              <a href={`${APP_URL}/register`} className="font-mono text-[11px] uppercase tracking-widest text-timber hover:opacity-60">
                 {t('footer.preRegister')}
               </a>
-              <a href={`${APP_URL}/privacy`} className="font-mono text-[11px] uppercase tracking-widest text-timber hover:underline">
+              <a href={`${APP_URL}/privacy`} className="font-mono text-[11px] uppercase tracking-widest text-timber hover:opacity-60">
                 {t('footer.privacy')}
               </a>
             </div>
