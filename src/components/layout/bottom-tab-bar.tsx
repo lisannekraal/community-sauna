@@ -59,12 +59,13 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
                   href={item.href}
                   className={nav.item.tab}
                 >
+                  <span className={active ? 'text-forest-green' : ''}>
                   <Icon
                     width={icons.nav.size}
                     height={icons.nav.size}
                     strokeWidth={active ? icons.strokeActive : icons.nav.strokeWidth}
-                    className={active ? 'text-forest-green' : ''}
                   />
+                  </span>
                   <span
                     className={`${nav.item.tabLabel} ${
                       active ? 'font-bold text-forest-green' : colors.textMuted
