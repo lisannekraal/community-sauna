@@ -115,6 +115,7 @@ export function SlotDetailPanel({ slot, isBooked, bookingId, onClose, onBook, on
                   <textarea
                     value={cancelReason}
                     onChange={(e) => setCancelReason(e.target.value)}
+                    maxLength={500}
                     className={`mt-1 w-full border border-mustard-gold p-3 ${typography.mono.caption} resize-none h-20 focus:outline-none`}
                     placeholder={t('panel.cancelReasonPlaceholder')}
                   />

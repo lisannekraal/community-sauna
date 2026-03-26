@@ -51,7 +51,7 @@ export async function DELETE(
       data: {
         status: 'cancelled',
         cancelledAt: new Date(),
-        cancellationReason: reason || null,
+        cancellationReason: reason?.slice(0, 500) || null,
       },
     });
 
