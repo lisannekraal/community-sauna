@@ -300,3 +300,93 @@ The styling is very brutalist, non-design, DIY culture, but with a modern UX in 
 - **Devina Garden** (`font-display`) - Display headings; loaded from `/public/fonts/devina-garden.ttf` via `globals.css`
 - **Space Mono** (`font-mono`) - Step numbers, technical elements
 - **Space Grotesk** (`font-sans`) - Body text, default
+
+# Löyly — Color Design Statement
+
+## Palette
+
+| Name | Hex | Role |
+|---|---|---|
+| Paper | `#F4EDD8` | Page background — aged, unbleached. Never pure white. |
+| Ink | `#0A0A0A` | Text, borders, nav, secondary buttons |
+| Ember | `#E8821A` | Primary CTA only — heat of the sauna stones |
+| Timber | `#6B5C47` | Subtitles, body copy, secondary text |
+| Ash | `#A89F8C` | Muted text, section labels, footnotes, disabled states |
+
+## CSS Variables
+
+```css
+:root {
+  --color-paper:   #F4EDD8;
+  --color-ink:     #0A0A0A;
+  --color-ember:   #E8821A;
+  --color-timber:  #6B5C47;
+  --color-ash:     #A89F8C;
+}
+```
+
+## Tailwind Config
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        paper:  '#F4EDD8',
+        ink:    '#0A0A0A',
+        ember:  '#E8821A',
+        timber: '#6B5C47',
+        ash:    '#A89F8C',
+      },
+    },
+  },
+}
+```
+
+---
+
+## Button Rules
+
+There are exactly two button types. No transparent buttons. No light text on light backgrounds. Ever.
+
+| Type | Background | Text | Hover | Use |
+|---|---|---|---|---|
+| Primary | `#E8821A` ember | `#0A0A0A` ink | `#C96E10` | Book, join, primary action |
+| Secondary | `#0A0A0A` ink | `#F4EDD8` paper | `#2A2A2A` | View schedule, secondary action |
+
+---
+
+## Usage Rules
+
+**Background** — always `#F4EDD8`. Not white. The warmth is load-bearing for the whole aesthetic.
+
+**Borders** — always `1px solid #0A0A0A`. Hard, flat. No box shadows. Border radius max `2px`.
+
+**Ember is a signal color** — used only for: primary CTA buttons, step numbers, active/booked states in schedule, featured plan prices, list markers. Never as a large surface background.
+
+**Timber for secondary text** — subtitles, body copy, feature list items. Never for headings or interactive elements.
+
+**Ash for muted/meta** — section labels, footnotes, timestamps, inactive nav items. Never for body copy that needs to be read.
+
+**Dark sections** (featured plan card, dark feature blocks) — flip to `#0A0A0A` background with `#F4EDD8` text. Ember still works on dark. Timber does not — use Ash instead on dark surfaces.
+
+---
+
+## State Colors — Schedule / Booking
+
+| State | Background | Text |
+|---|---|---|
+| Available | `#F4EDD8` paper | `#0A0A0A` ink |
+| Booked (yours) | `#E8821A` ember | `#0A0A0A` ink |
+| Full | `#6B5C47` timber | `#F4EDD8` paper |
+
+---
+
+## What Not To Do
+
+- No transparent buttons on paper — invisible
+- No white or light text on paper — unreadable
+- No saturated greens or warm spa browns — kills the brutalist tone
+- No gradients, drop shadows, or blur
+- No additional accent colors — ember is the only signal color

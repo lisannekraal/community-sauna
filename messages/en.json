@@ -53,8 +53,7 @@
       "heading": "A sauna for the neighborhood",
       "body": "We\u2019re raising funds to make this community sauna happen. You can pre-buy punch cards or become an early member right away.",
       "cta": "Support L\u00f6yly\u00a0\u2192",
-      "imagePlaceholder": "Photo",
-      "imageCaption": "Crowdfunding campaign image"
+      "imageAlt": "Location Het Keerwater overlooking the water and the towers on the background"
     },
     "about": {
       "badge": "About us",
@@ -62,8 +61,7 @@
       "para1": "L\u00f6yly is a member-run sauna. We believe sauna should be accessible to everyone \u2014 a place to unwind, connect with neighbors, and care for your body and mind. That\u2019s why we\u2019re building an affordable, community-run sauna in Amsterdam Noord, hosted by volunteers.",
       "para2": "We\u2019re converting a container at \u2019t Keerwater on the Buiksloterweg into a full sauna, shower, and changing room. The structure is up, insulation is in, and our second-hand sauna is custom-fitted and ready. We\u2019re now in the final stretch \u2014 flooring, tiling, and finishing touches. Want to be part of it?",
       "cta": "Crowdfunding\u00a0\u2192",
-      "imagePlaceholder": "Photo",
-      "imageCaption": "Community sauna interior"
+      "imageAlt": "Camille and Barnaby with their family"
     },
     "how": {
       "badge": "How it works",

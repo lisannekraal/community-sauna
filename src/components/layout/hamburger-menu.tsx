@@ -41,7 +41,7 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
 
       {/* Overlay menu */}
       {isOpen && (
-        <div className={`fixed inset-0 z-50 ${colors.bgSecondary} flex flex-col ${animation.fadeIn}`}>
+        <div className={`fixed inset-0 z-50 ${colors.bgPrimary} flex flex-col ${animation.fadeIn}`}>
           <div className="flex items-center justify-between px-6 py-4">
             <Link href="/" onClick={() => setIsOpen(false)} className="font-display text-[22px]">
               Löyly
@@ -72,11 +72,11 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center gap-4 py-4 -mx-3 px-3 ${
                         active
-                          ? nav.activeState
+                          ? 'border-l-2 border-forest-green text-forest-green pl-[10px]'
                           : ''
                       }`}
                     >
-                      <Icon width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={icons.navMobile.strokeWidth} />
+                      <Icon width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={active ? icons.strokeActive : icons.navMobile.strokeWidth} />
                       <span className="text-xl">
                         {t(item.label as Parameters<typeof t>[0])}
                       </span>
@@ -99,11 +99,11 @@ export function HamburgerMenu({ userName, userRole }: HamburgerMenuProps) {
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center gap-4 py-2.5 -mx-3 px-4 ${
                         active
-                          ? nav.activeState
+                          ? 'border-l-2 border-forest-green text-forest-green pl-[14px]'
                           : ''
                       }`}
                     >
-                      <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={icons.navSmall.strokeWidth} />
+                      <Icon width={icons.navSmall.size} height={icons.navSmall.size} strokeWidth={active ? icons.strokeActive : icons.navSmall.strokeWidth} />
                       <span className={nav.text.main}>{t(item.label as Parameters<typeof t>[0])}</span>
                     </Link>
                   </li>

@@ -51,7 +51,7 @@ export function MemberDetail({ member }: MemberDetailProps) {
       {/* Back link */}
       <Link
         href="/members"
-        className={`inline-flex items-center gap-2 mb-6 ${interactive.hoverInvert} ${interactive.transition} px-2 py-1 -ml-2`}
+        className={`inline-flex items-center gap-2 mb-6 hover:opacity-60 ${interactive.transition} -ml-2`}
       >
         <NavArrowLeft
           width={icons.action.size}
@@ -103,8 +103,8 @@ export function MemberDetail({ member }: MemberDetailProps) {
       {/* Contact */}
       <Section title={t('contact')}>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button variant="panel-secondary" onClick={() => setActivePanel('contact')}>{t('contactInfo')}</Button>
-          <Button variant="panel-secondary" onClick={() => setActivePanel('emergency')} disabled={!member.emergencyContactName}>{t('emergencyContact')}</Button>
+          <Button variant="primary" onClick={() => setActivePanel('contact')} className="sm:w-auto">{t('contactInfo')}</Button>
+          <Button variant="secondary" onClick={() => setActivePanel('emergency')} disabled={!member.emergencyContactName} className="sm:w-auto">{t('emergencyContact')}</Button>
         </div>
       </Section>
 
@@ -126,14 +126,14 @@ export function MemberDetail({ member }: MemberDetailProps) {
             )}
             <div className="flex flex-col sm:flex-row gap-3">
               {/* disabled for now untill we are tracking plans */}
-              <Button variant="panel-secondary" onClick={() => setActivePanel('past-plans')} disabled>{t('pastPlans')}</Button>
-              <Button variant="panel-secondary" onClick={() => setActivePanel('add-plan')}>{t('addFreePlan')}</Button>
+              <Button variant="secondary" onClick={() => setActivePanel('past-plans')} disabled className="sm:w-auto">{t('pastPlans')}</Button>
+              <Button variant="primary" onClick={() => setActivePanel('add-plan')} className="sm:w-auto">{t('addFreePlan')}</Button>
             </div>
           </div>
         ) : (
           <>
             <div className={`text-sm ${colors.textMuted} mb-3`}>-</div>
-            <Button variant="panel-secondary" onClick={() => setActivePanel('add-plan')}>{t('addFreePlan')}</Button>
+            <Button variant="secondary" onClick={() => setActivePanel('add-plan')} className="sm:w-auto">{t('addFreePlan')}</Button>
           </>
         )}
       </Section>
@@ -166,7 +166,7 @@ export function MemberDetail({ member }: MemberDetailProps) {
                 {member.payments.pendingCount > 0 && `${member.payments.pendingCount} ${t('pending')}`}
               </span>
             </div>
-            <Button variant="panel-secondary" onClick={() => setActivePanel('payment-history')} className="w-full sm:w-auto">{t('paymentHistory')}</Button>
+            <Button variant="secondary" onClick={() => setActivePanel('payment-history')} className="sm:w-auto">{t('paymentHistory')}</Button>
           </div>
         ) : (
           <div className={`text-sm ${colors.textMuted}`}>-</div>
@@ -203,7 +203,7 @@ export function MemberDetail({ member }: MemberDetailProps) {
         )}
         {(member.upcomingBookings.length > 0 || member.lastBooking) && (
           <div className="mt-3">
-            <Button variant="panel-secondary" onClick={() => setActivePanel('all-bookings')} className="w-full sm:w-auto">{t('allBookings')}</Button>
+            <Button variant="secondary" onClick={() => setActivePanel('all-bookings')} className="sm:w-auto">{t('allBookings')}</Button>
           </div>
         )}
       </Section>

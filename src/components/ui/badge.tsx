@@ -8,9 +8,9 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default: `${colors.bgPrimary} ${colors.textInverse}`,
-  inverted: `${colors.bgSecondary} ${colors.textPrimary} border-2 ${colors.borderPrimary}`,
-  outline: `border-2 ${colors.borderPrimary}`,
+  default: 'bg-forest-green text-paper',
+  inverted: `${colors.bgPrimary} ${colors.textPrimary} border ${colors.borderPrimary}`,
+  outline: 'border border-deep-crimson text-deep-crimson',
   muted: `${colors.bgSubtle} ${colors.textSubtle}`,
 };
 

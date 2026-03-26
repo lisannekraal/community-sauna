@@ -9,19 +9,33 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-
   /* Font families */
   --font-mono: 'Space Mono', monospace;
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
   --font-display: 'Devina Garden', serif;
+
+  /* Löyly palette */
+  --color-paper:             #F5F2EB;
+  --color-ink:               #0A0A0A;
+  --color-timber:            #6B5C47;
+  --color-ash:               #A89F8C;
+  --color-mustard-gold:      #E8821A;
+  --color-mustard-gold-dark: #C96E10;
+  --color-deep-crimson:      #9B3040;
+  --color-forest-green:      #4A6B35;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-display: 'Devina Garden', serif;
+  /* Löyly palette — generates bg-paper, text-ink, text-timber, text-ash, etc. */
+  --color-paper:              #F5F2EB;
+  --color-ink:                #0A0A0A;
+  --color-timber:             #6B5C47;
+  --color-ash:                #A89F8C;
+  --color-mustard-gold:       #E8821A;
+  --color-mustard-gold-dark:  #C96E10;
+  --color-deep-crimson:       #9B3040;
+  --color-forest-green:       #4A6B35;
 }
 
 html {
@@ -29,14 +43,14 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
 }
 
 
 *:focus-visible {
-  outline: 2px solid black;
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
 
@@ -52,9 +66,4 @@ body {
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }

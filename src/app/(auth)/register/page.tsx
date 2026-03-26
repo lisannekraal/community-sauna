@@ -187,7 +187,7 @@ export default function RegisterPage() {
             {steps.map((_, i) => (
               <div
                 key={i}
-                className={`h-1 flex-1 ${i <= step ? 'bg-black' : 'bg-gray-300'}`}
+                className={`h-1 flex-1 ${i <= step ? 'bg-forest-green' : 'bg-ash/40'}`}
               />
             ))}
           </div>
@@ -254,7 +254,7 @@ export default function RegisterPage() {
                       error={touched.confirmPassword && errors.confirmPassword ? errors.confirmPassword : undefined}
                     />
 
-                    <p className="text-xs text-gray-500 pt-1">
+                    <p className={`text-xs ${colors.textDisabled} pt-1`}>
                       {t('register.privacyNotice')}{' '}
                       <Link href="/privacy" target="_blank" className="underline hover:no-underline">
                         {t('register.privacyPolicy')}
@@ -302,7 +302,7 @@ export default function RegisterPage() {
                     <div>
                       <label htmlFor="gender" className={inputs.label}>
                         {t('fields.gender')}
-                        <span className="text-gray-500 font-normal ml-2">{tCommon('optional')}</span>
+                        <span className="text-ash font-normal ml-2">{tCommon('optional')}</span>
                       </label>
                       <select
                         id="gender"
@@ -310,7 +310,7 @@ export default function RegisterPage() {
                         value={values.gender}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className={`${inputs.base} ${colors.borderPrimary} bg-white`}
+                        className={`${inputs.base} ${colors.borderPrimary} bg-paper`}
                       >
                         {GENDER_OPTIONS.map((opt) => (
                           <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -356,7 +356,7 @@ export default function RegisterPage() {
                     <button
                       type="button"
                       onClick={handleBack}
-                      className={`flex-1 p-3 border-2 font-mono text-sm uppercase tracking-wider ${colors.borderPrimary} hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
+                      className={`flex-1 p-3 border font-mono text-sm uppercase tracking-wider ${colors.borderPrimary} hover:bg-timber/10 focus:outline-none focus:ring-2 focus:ring-ink focus:ring-offset-1`}
                     >
                       {t('register.backButton')}
                     </button>
@@ -377,7 +377,7 @@ export default function RegisterPage() {
                   <button
                     type="button"
                     disabled
-                    className={`w-full p-3 ${colors.textDisabled} cursor-not-allowed`}
+                    className={`w-full p-3 ${colors.textDisabled} ${interactive.cursorDisabled}`}
                   >
                     {t('register.skipButton')}
                   </button>
