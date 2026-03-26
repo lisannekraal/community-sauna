@@ -18,7 +18,8 @@ export async function POST(request: Request) {
   try {
     const body: RegisterFormData = await request.json();
 
-    const { email, password, firstName, lastName, phone, gender, emergencyContactName, emergencyContactPhone } = body;
+    const { password, firstName, lastName, phone, gender, emergencyContactName, emergencyContactPhone } = body;
+    const email = body.email?.toLowerCase().trim();
 
     if (!email || !password || !firstName || !phone) {
       return NextResponse.json(
