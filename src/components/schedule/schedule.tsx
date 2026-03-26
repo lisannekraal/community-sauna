@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { type TimeSlotData } from '@/types';
 import { formatDateISO, formatNowTime } from '@/lib/schedule';
+import { colors, interactive } from '@/lib/design-tokens';
 import { SlotCard } from './slot-card';
 import { SlotDetailPanel } from './slot-detail-panel';
 
@@ -160,11 +161,11 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
   return (
     <div className="w-full">
       {/* Week navigation header */}
-      <div className="border-2 border-black">
-        <div className="flex items-stretch border-b-2 border-black">
+      <div className="border border-mustard-gold">
+        <div className="flex items-stretch border-b border-mustard-gold">
           <button
             onClick={() => handleWeekChange(weekOffset - 1)}
-            className="border-r-2 border-black px-4 py-3 font-mono text-sm hover:bg-black hover:text-white transition-colors shrink-0 cursor-pointer"
+            className={`border-r border-mustard-gold px-4 py-3 font-mono text-sm ${interactive.hoverInvert} ${interactive.transition} shrink-0 ${interactive.cursorPointer}`}
             aria-label={t('previousWeek')}
           >
             &larr;
@@ -179,18 +180,18 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
 
           <button
             onClick={() => handleWeekChange(weekOffset + 1)}
-            className="border-l-2 border-black px-4 py-3 font-mono text-sm hover:bg-black hover:text-white transition-colors shrink-0 cursor-pointer"
+            className={`border-l border-mustard-gold px-4 py-3 font-mono text-sm ${interactive.hoverInvert} ${interactive.transition} shrink-0 ${interactive.cursorPointer}`}
             aria-label={t('nextWeekAria')}
           >
             &rarr;
           </button>
         </div>
 
-        <div className="border-b-2 border-black h-[32px] flex items-center justify-center">
+        <div className="border-b border-mustard-gold h-[32px] flex items-center justify-center">
           {weekOffset !== 0 && (
             <button
               onClick={() => handleWeekChange(0)}
-              className="w-full h-full text-xs hover:bg-black hover:text-white transition-colors cursor-pointer"
+              className={`w-full h-full text-xs ${interactive.hoverInvert} ${interactive.transition} ${interactive.cursorPointer}`}
             >
 {t('backToCurrentWeek')}
             </button>
@@ -200,7 +201,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
         {/* ===== MOBILE: Day picker strip + slot list ===== */}
         <div className="md:hidden">
           {/* Day picker — all 7 days visible */}
-          <div className="grid grid-cols-7 border-b-2 border-black">
+          <div className="grid grid-cols-7 border-b border-mustard-gold">
             {weekDates.map((date, i) => {
               const dateStr = formatDateISO(date);
               const isToday = dateStr === todayStr;
@@ -212,14 +213,14 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                 <button
                   key={`pick-${i}`}
                   onClick={() => setSelectedDayIndex(i)}
-                  className={`relative py-3 text-center transition-colors cursor-pointer ${
-                    i < 6 ? 'border-r-2 border-black' : ''
+                  className={`relative py-3 text-center ${interactive.transition} ${interactive.cursorPointer} ${
+                    i < 6 ? 'border-r border-mustard-gold' : ''
                   } ${
                     isSelected
-                      ? 'bg-black text-white'
+                      ? 'bg-mustard-gold text-ink'
                       : isPast
-                        ? 'text-gray-300'
-                        : 'hover:bg-gray-100'
+                        ? 'text-ash/60'
+                        : 'hover:bg-timber/10'
                   }`}
                   aria-label={`${DAY_LABELS[i]} ${date.getDate()}`}
                   aria-pressed={isSelected}
@@ -231,7 +232,7 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                     </div>
                     {hasSlots && (
                       <div className={`w-1.5 h-1.5 rounded-full mt-1 ${
-                        isSelected ? 'bg-white' : isPast ? 'bg-gray-300' : 'bg-black'
+                        isSelected ? 'bg-ink' : isPast ? 'bg-ash/50' : 'bg-mustard-gold'
                       }`} />
                     )}
                   </div>
@@ -248,20 +249,20 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
                 {selectedDate.toLocaleDateString(dateLocale, { weekday: 'long' })}
               </span>
               {selectedIsToday && (
-                <span className="font-mono uppercase text-[10px] border-2 border-black px-2 py-0.5">
+                <span className="font-mono uppercase text-[10px] border border-mustard-gold px-2 py-0.5">
                   {t('today')}
                 </span>
               )}
               {selectedIsPast && (
-                <span className="font-mono uppercase text-[10px] border-2 border-gray-400 px-2 py-0.5 text-gray-400">
+                <span className={`font-mono uppercase text-[10px] border ${colors.borderDisabled} px-2 py-0.5 ${colors.textDisabled}`}>
                   {t('past')}
                 </span>
               )}
             </div>
 
             {selectedSlots.length === 0 ? (
-              <div className="py-12 text-center border-2 border-dashed border-gray-200">
-                <span className="font-mono uppercase text-sm text-gray-300">{t('noSessions')}</span>
+              <div className="py-12 text-center border border-dashed border-ash/30">
+                <span className={`font-mono uppercase text-sm ${colors.textDisabled}`}>{t('noSessions')}</span>
               </div>
             ) : (
               <div className="space-y-3">
@@ -291,9 +292,9 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
               return (
                 <div
                   key={`header-${i}`}
-                  className={`border-b-2 border-black p-2 text-center ${
-                    i < 6 ? 'border-r-2' : ''
-                  } ${isToday ? 'bg-black text-white' : ''}`}
+                  className={`border-b border-mustard-gold p-2 text-center ${
+                    i < 6 ? 'border-r' : ''
+                  } ${isToday ? 'bg-mustard-gold text-ink' : ''}`}
                 >
                   <div className="flex flex-col items-center h-[64px] justify-start">
                     <div className="font-mono text-[10px] uppercase tracking-wider">{DAY_LABELS[i]}</div>
@@ -320,13 +321,13 @@ export function Schedule({ timeSlots: initialTimeSlots, userBookings: initialUse
               return (
                 <div
                   key={`day-${i}`}
-                  className={`min-h-[140px] p-1.5 ${i < 6 ? 'border-r-2 border-black' : ''} ${
-                    isToday ? 'bg-gray-50' : ''
+                  className={`min-h-[140px] p-1.5 ${i < 6 ? 'border-r border-mustard-gold' : ''} ${
+                    isToday ? 'bg-timber/5' : ''
                   }`}
                 >
                   {daySlots.length === 0 ? (
                     <div className="h-full flex items-center justify-center">
-                      <span className="text-gray-200 font-mono text-xs">&mdash;</span>
+                      <span className="text-ash/40 font-mono text-xs">&mdash;</span>
                     </div>
                   ) : (
                     <div className="space-y-1.5">

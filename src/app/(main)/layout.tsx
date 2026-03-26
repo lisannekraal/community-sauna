@@ -8,7 +8,7 @@ export default function LandingLayout({
   return (
     <>
       <LandingNav />
-      <main className="pt-14">{children}</main>
+      <main className="pt-14 bg-paper text-ink">{children}</main>
     </>
   );
 }

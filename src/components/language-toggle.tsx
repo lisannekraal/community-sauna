@@ -3,6 +3,7 @@
 import { useTransition } from 'react';
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { interactive } from '@/lib/design-tokens';
 
 const LOCALES = ['nl', 'en'] as const;
 
@@ -28,7 +29,7 @@ export function LanguageToggle() {
           className={`px-1.5 py-0.5 transition-opacity ${
             l === locale
               ? 'font-bold'
-              : 'opacity-35 hover:opacity-100 cursor-pointer'
+              : `opacity-35 hover:opacity-100 ${interactive.cursorPointer}`
           }${i > 0 ? ' border-l border-current' : ''}`}
         >
           {l.toUpperCase()}

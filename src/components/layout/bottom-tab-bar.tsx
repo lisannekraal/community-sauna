@@ -20,7 +20,7 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 pb-[env(safe-area-inset-bottom)]">
-      <div className={`relative ${colors.bgSecondary} border-t ${colors.borderSubtle}`}>
+      <div className={`relative ${colors.bgPrimary} border-t ${colors.borderSubtle}`}>
         <ul className="flex items-end">
           {items.map((item, i) => {
             const active = isActiveRoute(pathname, item.href);
@@ -35,17 +35,15 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
                     className="flex flex-col items-center"
                   >
                     <div
-                      className={`w-13 h-13 rounded-full flex items-center justify-center border-2 ${colors.borderPrimary} ${interactive.transition} ${
-                        active
-                          ? nav.activeState
-                          : `${colors.bgSecondary} ${colors.textPrimary}`
+                      className={`w-13 h-13 rounded-full flex items-center justify-center border-2 ${colors.bgPrimary} ${interactive.transition} ${
+                        active ? 'border-forest-green text-forest-green' : 'border-ink text-ink'
                       }`}
                     >
-                      <Icon width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={1.8} />
+                      <Icon width={icons.navMobile.size} height={icons.navMobile.size} strokeWidth={active ? icons.strokeActive : 1.8} />
                     </div>
                     <span
                       className={`${nav.item.tabLabel} ${
-                        active ? 'font-bold' : ''
+                        active ? 'font-bold text-forest-green' : ''
                       }`}
                     >
                       {t(item.label as Parameters<typeof t>[0])}
@@ -65,10 +63,11 @@ export function BottomTabBar({ userRole }: BottomTabBarProps) {
                     width={icons.nav.size}
                     height={icons.nav.size}
                     strokeWidth={active ? icons.strokeActive : icons.nav.strokeWidth}
+                    className={active ? 'text-forest-green' : ''}
                   />
                   <span
                     className={`${nav.item.tabLabel} ${
-                      active ? 'font-bold' : colors.textMuted
+                      active ? 'font-bold text-forest-green' : colors.textMuted
                     }`}
                   >
                     {t(item.label as Parameters<typeof t>[0])}
