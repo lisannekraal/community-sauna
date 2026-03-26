@@ -168,7 +168,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] uppercase mb-4">{t('resetPassword.heading')}</h1>
+        <h1 className="font-display text-[clamp(2rem,5vw,3rem)] mb-4">{t('resetPassword.heading')}</h1>
         <p className={`${colors.textSubtle} mb-8`}>
           {t('resetPassword.description')}
         </p>
