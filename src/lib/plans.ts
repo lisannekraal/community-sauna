@@ -8,6 +8,7 @@ export type PlanRow = {
   totalCredits: number | null;
   validityMonths: number | null;
   minimumCommitmentMonths: number | null;
+  autoRenew: boolean;
 };
 
 export function formatPrice(cents: number): string {

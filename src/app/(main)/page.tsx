@@ -6,7 +6,7 @@ import { type TimeSlotData } from '@/types';
 import { buttons } from '@/lib/design-tokens';
 import { Schedule } from '@/components/schedule/schedule';
 import { getTranslations } from 'next-intl/server';
-import { formatPrice, formatPeriod, formatSessions, formatDetail } from '@/lib/plans';
+import { PlanCard } from '@/components/plans/plan-card';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://app.localhost:3000';
 
@@ -53,6 +53,7 @@ export default async function HomePage() {
       totalCredits: true,
       validityMonths: true,
       minimumCommitmentMonths: true,
+      autoRenew: true,
     },
   });
 
@@ -261,16 +262,7 @@ export default async function HomePage() {
                 <p className="font-mono text-[10px] uppercase tracking-widest text-ash mb-4">{t('plans.subscriptions')}</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-12">
                   {subscriptionPlans.map((plan) => (
-                    <div key={plan.id} className="border border-mustard-gold p-5 flex flex-col bg-paper">
-                      <div className="text-lg leading-tight mb-3">{plan.name}</div>
-                      <div className="font-mono text-2xl leading-none mb-1 text-deep-crimson">{formatPrice(plan.priceCents)}</div>
-                      <div className="font-mono text-[10px] uppercase tracking-widest mb-5 text-ash pb-8">
-                        {formatPeriod(plan)}
-                      </div>
-                      <div className="border-t border-mustard-gold/10 pt-4 mt-auto">
-                        <p className="text-xs leading-relaxed text-timber">{formatDetail(plan)}</p>
-                      </div>
-                    </div>
+                    <PlanCard key={plan.id} plan={plan} variant="display" />
                   ))}
                 </div>
               </>
@@ -281,15 +273,7 @@ export default async function HomePage() {
                 <p className="font-mono text-[10px] uppercase tracking-widest text-ash mb-4">{t('plans.punchCards')}</p>
                 <div className="grid sm:grid-cols-3 gap-3">
                   {punchCardPlans.map((plan) => (
-                    <div key={plan.id} className="border border-mustard-gold p-5 bg-paper flex items-center justify-between gap-4">
-                      <div>
-                        <div className="text-lg">{plan.name}</div>
-                        <div className="font-mono text-[10px] uppercase tracking-widest text-ash mt-1">
-                          {formatSessions(plan)} · {formatDetail(plan)}
-                        </div>
-                      </div>
-                      <div className="font-mono text-2xl shrink-0 text-deep-crimson">{formatPrice(plan.priceCents)}</div>
-                    </div>
+                    <PlanCard key={plan.id} plan={plan} variant="display" />
                   ))}
                 </div>
               </>

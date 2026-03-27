@@ -80,6 +80,8 @@ Layouts fetch session data server-side via `getServerSession(authOptions)` and p
 
 Admin pages (e.g. `/members`, `/members/[id]`) follow a pattern of fetching all data in the server component via Prisma and passing typed structs as props to client components. Mutations (role changes, membership assignment) are handled via API routes called from the client, followed by `router.refresh()` to re-run the server component and update the UI without a full navigation.
 
+Pages that need to render differently based on admin mode (the client-side toggle, not the server-side role) must delegate to a client wrapper component that calls `useAdminMode()`. The server component passes `isAdmin` as a prop; the client wrapper decides which view to render. See `src/components/plans/plans-content.tsx` as the reference pattern.
+
 ## Design Tokens
 
 `src/lib/design-tokens.ts` exports reusable Tailwind class constants for the brutalist UI system. All components and pages should import from here instead of repeating raw values.
@@ -189,6 +191,13 @@ Roles stack: admin has all host permissions, host has all member permissions.
 - **Suspended status**: Admin action only (manual)
 - **One active membership at a time**: Starting a new membership (admin-assigned or self-signup) must cancel any existing active membership first. Enforced in `POST /api/members/[id]/membership`; must also be enforced in the future `POST /api/memberships` self-signup route.
 
+### Plan Versioning
+`MembershipPlan` has an `isActive` flag. Never mutate a plan that has existing memberships — it would retroactively change credits/price for current members. Instead:
+- Edit with 0 memberships → update in place
+- Edit with ≥1 memberships → archive old (`isActive: false`) + create new plan (enforced in `PATCH /api/plans/[id]`)
+- Archived plans (inactive + has memberships) remain in the DB for historical reference and are shown in a collapsed section in the admin UI
+- Plans with 0 memberships can be hard-deleted
+
 ### Slot Cancellation by Admin
 When admin cancels a time slot with existing bookings:
 - Auto-cancel all bookings
@@ -230,6 +239,11 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 - `POST /api/bookings` - Create a booking (validates slot, capacity, membership credits)
 - `DELETE /api/bookings/[id]` - Cancel a booking (with optional reason)
 - `GET /api/plans` - Fetch active membership plans (used on landing page and member filter panel)
+- `POST /api/plans` - Create a new membership plan; admin only
+- `GET /api/plans/admin` - Fetch all plans (active + archived) with membership counts; admin only
+- `PATCH /api/plans/[id]` - Edit a plan; admin only. If plan has 0 memberships: edit in place. If ≥1 memberships: archive old plan (`isActive: false`) + create new plan in a transaction
+- `DELETE /api/plans/[id]` - Deactivate a plan; admin only. If 0 memberships: hard delete. If ≥1 memberships: archive (`isActive: false`)
+- `GET /api/memberships/current` - Fetch the current user's active membership
 - `PATCH /api/members/[id]` - Update user role (`member` ↔ `host`); admin only; rejects admin/superadmin targets
 - `POST /api/members/[id]/membership` - Assign a free membership to a user; admin only; cancels any existing active membership first. Lives here (not `/api/memberships`) because it's an admin action with no payment flow — future member self-signup belongs at `POST /api/memberships`.
 - `POST /api/auth/register` - User registration
@@ -245,7 +259,8 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 - `src/lib/schedule.ts` - Date/time formatters, slot status logic
 - `src/lib/navigation.ts` - Centralized nav items (main + secondary, role-aware)
 - `src/lib/design-tokens.ts` - UI design tokens (colors, typography, buttons, etc.)
-- `src/lib/plans.ts` - Plan display helpers (`formatPrice`, `formatPeriod`, `formatSessions`, `formatDetail`)
+- `src/lib/plans.ts` - Plan display helpers (`formatPrice`, `formatPeriod`, `formatSessions`, `formatDetail`); `PlanRow` type includes `autoRenew`
+- `src/components/plans/` - Plans feature components: `PlanCard` (variants: `display`, `admin`, `member`), `PlanFormPanel` (create/edit with archive warning), `AdminPlans`, `MemberPlans`, `PlansContent` (role+admin-mode router)
 - `src/lib/member.ts` - Member utilities + `MemberSummary` and `MemberDetail` types (used by members list and detail pages/components)
 - `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities
 - `src/contexts/admin-mode.tsx` - Admin/member view toggle context
