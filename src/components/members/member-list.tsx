@@ -8,7 +8,7 @@ import { colors, icons, interactive, typography } from '@/lib/design-tokens';
 import { ListItem } from '@/components/ui/list-item';
 import { Badge } from '@/components/ui/badge';
 import { EmptyState } from '@/components/ui/empty-state';
-import type { MemberSummary } from '@/lib/mock-members';
+import type { MemberSummary } from '@/lib/member';
 import {
   MemberFilterPanel,
   DEFAULT_FILTERS,

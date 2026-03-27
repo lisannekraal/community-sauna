@@ -34,6 +34,7 @@ See './database-design.md'
 - What defines different membership is defined by the admins and can be configured (e.g. price, duration)
 - We start off with memberships defined in `/prisma/seed.ts`
 - Credits of a monthly membership are valid for one month (no rollover). Punch card credits are valid for the specified period.
+- A user can only have one active membership at a time. Starting a new membership (by the user or by an admin assigning a free plan) automatically cancels any existing active membership.
 - After the minimum duration of a membership, cancellation can be done one month upfront
 - Suspended status is admin action only (manual suspension for rule violations, etc.)
 - Renewal notice emails are sent 7 days before membership expiry/renewal

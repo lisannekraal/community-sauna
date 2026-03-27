@@ -340,7 +340,18 @@
     "filterPaymentFailed": "Betaling mislukt",
     "emptyState": "Geen leden gevonden.",
     "emptyStateFiltered": "Geen leden voldoen aan de actieve filters.",
-    "resetFilters": "Filters resetten"
+    "resetFilters": "Filters resetten",
+    "walkIn": "Losse toegang",
+    "noPaymentsFound": "Geen betalingen gevonden.",
+    "paymentStatusSucceeded": "Geslaagd",
+    "paymentStatusRefunded": "Terugbetaald",
+    "addPlanSetExpiry": "Stel einddatum in",
+    "expiryDateLabel": "Einddatum",
+    "confirm": "Bevestigen",
+    "assigningRole": "Opslaan...",
+    "back": "Terug",
+    "withdrawFreePlan": "Gratis abonnement intrekken",
+    "withdrawingPlan": "Intrekken..."
   },
   "Privacy": {
     "title": "Privacybeleid",

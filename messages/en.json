@@ -340,7 +340,18 @@
     "filterPaymentFailed": "Payment failed",
     "emptyState": "No members found.",
     "emptyStateFiltered": "No members match the active filters.",
-    "resetFilters": "Reset filters"
+    "resetFilters": "Reset filters",
+    "walkIn": "Walk-in",
+    "noPaymentsFound": "No payments found.",
+    "paymentStatusSucceeded": "Succeeded",
+    "paymentStatusRefunded": "Refunded",
+    "addPlanSetExpiry": "Set expiry date",
+    "expiryDateLabel": "Expiry date",
+    "confirm": "Confirm",
+    "assigningRole": "Saving...",
+    "back": "Back",
+    "withdrawFreePlan": "Withdraw free plan",
+    "withdrawingPlan": "Withdrawing..."
   },
   "Privacy": {
     "title": "Privacy Policy",
