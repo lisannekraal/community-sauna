@@ -369,7 +369,7 @@ export function MemberDetail({ member }: MemberDetailProps) {
       {activePanel === 'past-plans' && (
         <Panel title={t('pastPlans')} onClose={() => setActivePanel(null)}>
           {member.pastMemberships.length > 0 ? (
-            <div className={`border-t ${colors.borderSubtle}`}>
+            <div className={"divide-y divide-ink/10"}>
               {member.pastMemberships.map((m) => (
                 <ListItem
                   key={m.id}
@@ -424,7 +424,7 @@ export function MemberDetail({ member }: MemberDetailProps) {
             <div className="space-y-4">
               <p className="text-sm">{t('addFreePlanDescription')}</p>
               <p className={`text-xs ${colors.textMuted}`}>{t('addFreePlanAfter')}</p>
-              <div className={`border-t ${colors.borderSubtle}`}>
+              <div className={"divide-y divide-ink/10"}>
                 {plansLoading ? (
                   <div className={`py-4 text-sm ${colors.textMuted}`}>{t('filterPlanLoading')}</div>
                 ) : plans.length === 0 ? (
@@ -443,7 +443,7 @@ export function MemberDetail({ member }: MemberDetailProps) {
       {activePanel === 'payment-history' && (
         <Panel title={t('paymentHistory')} onClose={() => setActivePanel(null)}>
           {member.payments.history.length > 0 ? (
-            <div className={`border-t ${colors.borderSubtle}`}>
+            <div className={"divide-y divide-ink/10"}>
               {member.payments.history.map((payment) => {
                 const label = payment.planName ?? t('walkIn');
                 const date = new Date(payment.createdAt).toLocaleDateString(dateLocale, {
@@ -473,7 +473,7 @@ export function MemberDetail({ member }: MemberDetailProps) {
       {activePanel === 'all-bookings' && (
         <Panel title={t('allBookings')} onClose={() => setActivePanel(null)}>
           {member.upcomingBookings.length > 0 || member.pastBookings.length > 0 ? (
-            <div className={`border-t ${colors.borderSubtle}`}>
+            <div className={"divide-y divide-ink/10"}>
               {member.upcomingBookings.map((booking) => (
                 <ListItem
                   key={booking.id}

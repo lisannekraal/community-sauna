@@ -23,7 +23,7 @@ interface MemberListProps {
 }
 
 function roleBadge(role: string) {
-  if (role === 'admin') return <Badge>Admin</Badge>;
+  if (role === 'admin' || role === 'superadmin') return <Badge>Admin</Badge>;
   if (role === 'host') return <Badge variant="outline">Host</Badge>;
   return null;
 }
@@ -42,7 +42,10 @@ export function MemberList({ members }: MemberListProps) {
     let result = members;
 
     if (filters.roles.length > 0) {
-      result = result.filter((m) => filters.roles.includes(m.role as 'admin' | 'host'));
+      result = result.filter((m) => {
+        const effectiveRole = m.role === 'superadmin' ? 'admin' : m.role;
+        return filters.roles.includes(effectiveRole as 'admin' | 'host');
+      });
     }
     if (filters.genders.length > 0) {
       result = result.filter((m) => {
@@ -125,7 +128,7 @@ export function MemberList({ members }: MemberListProps) {
       </div>
 
       {/* Member list */}
-      <div className={`border-t ${colors.borderSubtle}`}>
+      <div className="divide-y divide-ink/10">
         {filteredMembers.length === 0 ? (
           <EmptyState
             message={filtered ? t('emptyStateFiltered') : t('emptyState')}

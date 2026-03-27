@@ -52,13 +52,13 @@ export function ListItem({ label, badges, secondaryLeft, secondaryRight, onClick
 
   if (!isInteractive) {
     return (
-      <div className={`flex items-center gap-3 w-full px-4 py-3 border-b ${colors.borderSubtle} text-left`}>
+      <div className="flex items-center gap-3 w-full px-4 py-3 text-left">
         {content}
       </div>
     );
   }
 
-  const className = `group flex items-center gap-3 w-full px-4 py-3 border-b ${colors.borderSubtle} border-l-2 border-l-transparent hover:border-l-mustard-gold ${interactive.transition} ${interactive.cursorPointer} text-left`;
+  const className = `group flex items-center gap-3 w-full px-4 py-3 border-l-2 border-l-transparent hover:border-l-mustard-gold ${interactive.transition} ${interactive.cursorPointer} text-left`;
 
   if (href) {
     return (
