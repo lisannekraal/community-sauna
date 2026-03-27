@@ -375,6 +375,7 @@
     "deactivate": "Deactiveren",
     "currentPlan": "Huidig abonnement",
     "buy": "Kopen",
+    "trialUnavailable": "Proefperiode niet beschikbaar",
     "yourMembership": "Jouw abonnement",
     "noMembership": "Geen actief abonnement",
     "expires": "verloopt {date}",
@@ -398,7 +399,8 @@
       "validityHintSubscription": "Leeg laten voor doorlopend",
       "validityHintPunchCard": "Verplicht voor strippenkaarten",
       "minimumCommitment": "Minimale verbintenis (maanden)",
-      "autoRenew": "Automatisch verlengen"
+      "autoRenew": "Automatisch verlengen",
+      "isTrial": "Proeflidmaatschap (alleen voor nieuwe abonnees)"
     }
   },
   "Privacy": {

@@ -25,6 +25,7 @@ type FormState = {
   validityMonths: string;
   minimumCommitmentMonths: string;
   autoRenew: boolean;
+  isTrial: boolean;
 };
 
 function planToForm(plan?: AdminPlanRow): FormState {
@@ -39,6 +40,7 @@ function planToForm(plan?: AdminPlanRow): FormState {
       validityMonths: '',
       minimumCommitmentMonths: '',
       autoRenew: false,
+      isTrial: false,
     };
   }
   return {
@@ -51,6 +53,7 @@ function planToForm(plan?: AdminPlanRow): FormState {
     validityMonths: plan.validityMonths !== null ? String(plan.validityMonths) : '',
     minimumCommitmentMonths: plan.minimumCommitmentMonths !== null ? String(plan.minimumCommitmentMonths) : '',
     autoRenew: plan.autoRenew,
+    isTrial: plan.isTrial,
   };
 }
 
@@ -105,6 +108,7 @@ export function PlanFormPanel({ plan, onClose, onSaved }: PlanFormPanelProps) {
       minimumCommitmentMonths: form.type === 'subscription' && form.minimumCommitmentMonths !== ''
         ? parseInt(form.minimumCommitmentMonths, 10) : null,
       autoRenew: form.autoRenew,
+      isTrial: form.isTrial,
     };
 
     setLoading(true);
@@ -275,6 +279,14 @@ export function PlanFormPanel({ plan, onClose, onSaved }: PlanFormPanelProps) {
             label={t('form.autoRenew')}
             checked={form.autoRenew}
             onChange={() => set('autoRenew', !form.autoRenew)}
+          />
+        )}
+
+        {form.type === 'subscription' && (
+          <CheckboxItem
+            label={t('form.isTrial')}
+            checked={form.isTrial}
+            onChange={() => set('isTrial', !form.isTrial)}
           />
         )}
       </div>

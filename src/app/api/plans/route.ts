@@ -16,6 +16,7 @@ const PLAN_SELECT = {
   validityMonths: true,
   minimumCommitmentMonths: true,
   autoRenew: true,
+  isTrial: true,
 } as const;
 
 export async function GET() {
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
   const {
     name, description, type, priceCents,
     creditsPerMonth, totalCredits, validityMonths,
-    minimumCommitmentMonths, autoRenew,
+    minimumCommitmentMonths, autoRenew, isTrial,
   } = body;
 
   if (!name || !description || !type || priceCents === undefined) {
@@ -57,6 +58,7 @@ export async function POST(request: Request) {
       validityMonths: validityMonths ?? null,
       minimumCommitmentMonths: minimumCommitmentMonths ?? null,
       autoRenew: autoRenew ?? false,
+      isTrial: isTrial ?? false,
       isActive: true,
     },
     select: { ...PLAN_SELECT, isActive: true, _count: { select: { memberships: true } } },

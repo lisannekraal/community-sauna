@@ -15,6 +15,7 @@ export type AdminPlanRow = {
   validityMonths: number | null;
   minimumCommitmentMonths: number | null;
   autoRenew: boolean;
+  isTrial: boolean;
   isActive: boolean;
   membershipCount: number;
 };
@@ -39,6 +40,7 @@ export async function GET() {
       validityMonths: true,
       minimumCommitmentMonths: true,
       autoRenew: true,
+      isTrial: true,
       isActive: true,
       _count: { select: { memberships: true } },
     },
@@ -55,6 +57,7 @@ export async function GET() {
     validityMonths: p.validityMonths,
     minimumCommitmentMonths: p.minimumCommitmentMonths,
     autoRenew: p.autoRenew,
+    isTrial: p.isTrial,
     isActive: p.isActive,
     membershipCount: p._count.memberships,
   }));

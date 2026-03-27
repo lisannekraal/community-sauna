@@ -5,13 +5,13 @@ import { useTranslations } from 'next-intl';
 import { PlanCard } from '@/components/plans/plan-card';
 import { typography, feedback } from '@/lib/design-tokens';
 import type { PlanRow } from '@/lib/plans';
-import type { CurrentMembership } from '@/app/api/memberships/current/route';
+import type { CurrentMembershipResponse } from '@/app/api/memberships/current/route';
 
 export function MemberPlans() {
   const t = useTranslations('Plans');
 
   const [plans, setPlans] = useState<PlanRow[]>([]);
-  const [membership, setMembership] = useState<CurrentMembership>(null);
+  const [membershipData, setMembershipData] = useState<CurrentMembershipResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -20,9 +20,9 @@ export function MemberPlans() {
       fetch('/api/plans').then((r) => r.json()),
       fetch('/api/memberships/current').then((r) => r.json()),
     ])
-      .then(([plansData, membershipData]) => {
+      .then(([plansData, membershipResponse]) => {
         setPlans(plansData);
-        setMembership(membershipData);
+        setMembershipData(membershipResponse);
       })
       .catch(() => setError(t('failedToLoad')))
       .finally(() => setLoading(false));
@@ -37,6 +37,9 @@ export function MemberPlans() {
       </div>
     );
   }
+
+  const membership = membershipData?.membership ?? null;
+  const hasHadSubscription = membershipData?.hasHadSubscription ?? false;
 
   const subscriptionPlans = plans.filter((p) => p.type === 'subscription');
   const punchCardPlans = plans.filter((p) => p.type === 'punch_card');
@@ -70,6 +73,7 @@ export function MemberPlans() {
                 plan={plan}
                 variant="member"
                 isCurrentPlan={membership?.planName === plan.name}
+                trialUnavailable={plan.isTrial && hasHadSubscription}
               />
             ))}
           </div>

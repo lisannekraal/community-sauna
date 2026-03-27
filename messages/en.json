@@ -375,6 +375,7 @@
     "deactivate": "Deactivate",
     "currentPlan": "Current plan",
     "buy": "Buy",
+    "trialUnavailable": "Trial not available",
     "yourMembership": "Your membership",
     "noMembership": "No active membership",
     "expires": "expires {date}",
@@ -398,7 +399,8 @@
       "validityHintSubscription": "Leave empty for ongoing",
       "validityHintPunchCard": "Required for punch cards",
       "minimumCommitment": "Minimum commitment (months)",
-      "autoRenew": "Auto-renew"
+      "autoRenew": "Auto-renew",
+      "isTrial": "Trial plan (first-time subscribers only)"
     }
   },
   "Privacy": {

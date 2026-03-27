@@ -3,15 +3,21 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { formatDateISO } from '@/lib/schedule';
+import { hasHadSubscription } from '@/lib/plans';
 
-export type CurrentMembership = {
+export type ActiveMembership = {
   id: number;
   planName: string;
   planType: string;
   status: string;
   startsAt: string;
   expiresAt: string | null;
-} | null;
+};
+
+export type CurrentMembershipResponse = {
+  membership: ActiveMembership | null;
+  hasHadSubscription: boolean;
+};
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -31,15 +37,20 @@ export async function GET() {
     },
   });
 
-  if (!membership) return NextResponse.json(null);
+  const hadSubscription = await hasHadSubscription(userId);
 
-  const result: CurrentMembership = {
-    id: membership.id,
-    planName: membership.membershipPlan.name,
-    planType: membership.membershipPlan.type,
-    status: membership.status,
-    startsAt: formatDateISO(membership.startsAt),
-    expiresAt: membership.expiresAt ? formatDateISO(membership.expiresAt) : null,
+  const result: CurrentMembershipResponse = {
+    membership: membership
+      ? {
+          id: membership.id,
+          planName: membership.membershipPlan.name,
+          planType: membership.membershipPlan.type,
+          status: membership.status,
+          startsAt: formatDateISO(membership.startsAt),
+          expiresAt: membership.expiresAt ? formatDateISO(membership.expiresAt) : null,
+        }
+      : null,
+    hasHadSubscription: hadSubscription,
   };
 
   return NextResponse.json(result);

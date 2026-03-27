@@ -401,6 +401,13 @@ export function MemberDetail({ member }: MemberDetailProps) {
                   className={`w-full border px-3 py-2 text-sm font-mono ${colors.borderSubtle} bg-transparent`}
                 />
               </div>
+              {selectedPlan.isTrial && member.hasHadSubscription && (
+                <div className={feedback.alertError}>
+                  <p className="font-mono text-sm">
+                    This member has already had a subscription. Trial plans are only available to first-time subscribers.
+                  </p>
+                </div>
+              )}
               {addPlanError && (
                 <div className={feedback.errorBox}>
                   <span className={feedback.errorText}>{addPlanError}</span>

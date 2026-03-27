@@ -18,6 +18,7 @@ async function main() {
       validityMonths: 1,
       minimumCommitmentMonths: 1,
       autoRenew: false,
+      isTrial: true,
       isActive: true,
     },
     {

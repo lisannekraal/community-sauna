@@ -90,7 +90,7 @@ export function AdminPlans() {
       <div className="flex items-center justify-between mb-8">
         <button
           onClick={openCreate}
-          className="flex items-center gap-2 border border-ink px-4 py-2 font-mono text-sm uppercase tracking-wider hover:bg-ink hover:text-paper transition-colors"
+          className="cursor-pointer flex items-center gap-2 border border-ink px-4 py-2 font-mono text-sm uppercase tracking-wider hover:bg-ink hover:text-paper transition-colors"
         >
           <Plus {...icons.action} />
           {t('addPlan')}
@@ -149,7 +149,7 @@ export function AdminPlans() {
         <div className="mt-10">
           <button
             onClick={() => setShowArchived((v) => !v)}
-            className="flex items-center gap-2 font-mono text-sm uppercase tracking-wider text-ash hover:text-ink transition-colors mb-4"
+            className="cursor-pointer flex items-center gap-2 font-mono text-sm uppercase tracking-wider text-ash hover:text-ink transition-colors mb-4"
           >
             {showArchived ? '▲' : '▼'} {t('archivedPlans', { count: archivedPlans.length })}
           </button>

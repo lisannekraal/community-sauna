@@ -54,6 +54,7 @@ export default async function HomePage() {
       validityMonths: true,
       minimumCommitmentMonths: true,
       autoRenew: true,
+      isTrial: true,
     },
   });
 

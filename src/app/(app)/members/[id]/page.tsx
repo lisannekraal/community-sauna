@@ -6,6 +6,7 @@ import { MemberDetail } from '@/components/members/member-detail';
 import { prisma } from '@/lib/db';
 import { formatDateISO, formatTimeUTC } from '@/lib/schedule';
 import type { MemberDetail as MemberDetailType } from '@/lib/member';
+import { hasHadSubscription } from '@/lib/plans';
 
 interface MemberDetailPageProps {
   params: Promise<{ id: string }>;
@@ -166,6 +167,7 @@ export default async function MemberDetailPage({ params }: MemberDetailPageProps
         planName: p.membership?.membershipPlan.name ?? null,
       })),
     },
+    hasHadSubscription: await hasHadSubscription(memberId),
     pastMemberships,
     upcomingBookings,
     pastBookings,

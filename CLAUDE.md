@@ -191,6 +191,17 @@ Roles stack: admin has all host permissions, host has all member permissions.
 - **Suspended status**: Admin action only (manual)
 - **One active membership at a time**: Starting a new membership (admin-assigned or self-signup) must cancel any existing active membership first. Enforced in `POST /api/members/[id]/membership`; must also be enforced in the future `POST /api/memberships` self-signup route.
 
+### Trial Plan Restriction
+`MembershipPlan.isTrial` (Boolean, default false) marks the trial plan. Trial plans are only available to members who have **never held a subscription-type membership** (punch cards and walk-in bookings don't count).
+
+Enforced in:
+- `POST /api/memberships` (future member self-signup) — must reject with 422 if `plan.isTrial && hasHadSubscription(userId)`. **Not** enforced on `POST /api/members/[id]/membership` — admins can assign trial plans freely.
+- `GET /api/memberships/current` — returns `hasHadSubscription: boolean` so the member plans UI can disable the trial card
+- `src/components/plans/plan-card.tsx` — renders "Trial not available" instead of "Buy" when `trialUnavailable` prop is true
+- `src/components/members/member-detail.tsx` — shows a warning in the admin assign-plan panel when selecting a trial for a member who has already had a subscription
+
+`hasHadSubscription(userId)` lives in `src/lib/plans.ts` and counts any `Membership` record with a subscription-type plan (regardless of status).
+
 ### Plan Versioning
 `MembershipPlan` has an `isActive` flag. Never mutate a plan that has existing memberships — it would retroactively change credits/price for current members. Instead:
 - Edit with 0 memberships → update in place
@@ -259,7 +270,7 @@ Prisma `@db.Date` fields return JS Dates at midnight UTC. Prisma `@db.Time(0)` f
 - `src/lib/schedule.ts` - Date/time formatters, slot status logic
 - `src/lib/navigation.ts` - Centralized nav items (main + secondary, role-aware)
 - `src/lib/design-tokens.ts` - UI design tokens (colors, typography, buttons, etc.)
-- `src/lib/plans.ts` - Plan display helpers (`formatPrice`, `formatPeriod`, `formatSessions`, `formatDetail`); `PlanRow` type includes `autoRenew`
+- `src/lib/plans.ts` - Plan display helpers (`formatPrice`, `formatPeriod`, `formatSessions`, `formatDetail`); `PlanRow` type includes `autoRenew` and `isTrial`; `hasHadSubscription(userId)` utility for trial eligibility checks
 - `src/components/plans/` - Plans feature components: `PlanCard` (variants: `display`, `admin`, `member`), `PlanFormPanel` (create/edit with archive warning), `AdminPlans`, `MemberPlans`, `PlansContent` (role+admin-mode router)
 - `src/lib/member.ts` - Member utilities + `MemberSummary` and `MemberDetail` types (used by members list and detail pages/components)
 - `src/types/index.ts` - TypeScript types + NextAuth extensions + role utilities

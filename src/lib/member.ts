@@ -51,6 +51,7 @@ export interface MemberDetail {
       planName: string | null;
     }[];
   };
+  hasHadSubscription: boolean;
   pastMemberships: {
     id: number;
     planName: string;

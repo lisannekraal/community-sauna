@@ -12,6 +12,7 @@ interface PlanCardProps {
   variant?: PlanCardVariant;
   membershipCount?: number;
   isCurrentPlan?: boolean;
+  trialUnavailable?: boolean;
   onEdit?: () => void;
   onDeactivate?: () => void;
 }
@@ -21,6 +22,7 @@ export function PlanCard({
   variant = 'display',
   membershipCount,
   isCurrentPlan,
+  trialUnavailable = false,
   onEdit,
   onDeactivate,
 }: PlanCardProps) {
@@ -49,7 +51,7 @@ export function PlanCard({
             {onEdit && (
               <button
                 onClick={onEdit}
-                className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider hover:text-mustard-gold transition-colors"
+                className="cursor-pointer flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider hover:text-mustard-gold transition-colors"
               >
                 <EditPencil {...icons.action} />
                 {t('edit')}
@@ -58,7 +60,7 @@ export function PlanCard({
             {onDeactivate && (
               <button
                 onClick={onDeactivate}
-                className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-timber hover:text-deep-crimson transition-colors ml-auto"
+                className="cursor-pointer flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-timber hover:text-deep-crimson transition-colors ml-auto"
               >
                 <Trash {...icons.action} />
                 {t('deactivate')}
@@ -72,7 +74,7 @@ export function PlanCard({
             {isCurrentPlan ? (
               <span className="font-mono text-[11px] uppercase tracking-wider text-mustard-gold">{t('currentPlan')}</span>
             ) : (
-              <button className="font-mono text-[11px] uppercase tracking-wider border border-ink px-3 py-1.5 hover:bg-ink hover:text-paper transition-colors">
+              <button className="cursor-pointer font-mono text-[11px] uppercase tracking-wider border border-ink px-3 py-1.5 hover:bg-ink hover:text-paper transition-colors">
                 {t('buy')}
               </button>
             )}
@@ -109,7 +111,7 @@ export function PlanCard({
           {onEdit && (
             <button
               onClick={onEdit}
-              className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider hover:text-mustard-gold transition-colors"
+              className="cursor-pointer flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider hover:text-mustard-gold transition-colors"
             >
               <EditPencil {...icons.action} />
               {t('edit')}
@@ -118,7 +120,7 @@ export function PlanCard({
           {onDeactivate && (
             <button
               onClick={onDeactivate}
-              className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-timber hover:text-deep-crimson transition-colors ml-auto"
+              className="cursor-pointer flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-timber hover:text-deep-crimson transition-colors ml-auto"
             >
               <Trash {...icons.action} />
               {t('deactivate')}
@@ -131,8 +133,10 @@ export function PlanCard({
         <div className="border-t border-mustard-gold/20 pt-3 mt-3">
           {isCurrentPlan ? (
             <span className="font-mono text-[11px] uppercase tracking-wider text-mustard-gold">{t('currentPlan')}</span>
+          ) : trialUnavailable ? (
+            <span className="font-mono text-[11px] uppercase tracking-wider text-ash">{t('trialUnavailable')}</span>
           ) : (
-            <button className="font-mono text-[11px] uppercase tracking-wider border border-ink px-3 py-1.5 hover:bg-ink hover:text-paper transition-colors">
+            <button className="cursor-pointer font-mono text-[11px] uppercase tracking-wider border border-ink px-3 py-1.5 hover:bg-ink hover:text-paper transition-colors">
               {t('buy')}
             </button>
           )}

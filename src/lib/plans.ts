@@ -9,6 +9,7 @@ export type PlanRow = {
   validityMonths: number | null;
   minimumCommitmentMonths: number | null;
   autoRenew: boolean;
+  isTrial: boolean;
 };
 
 export function formatPrice(cents: number): string {
@@ -36,4 +37,21 @@ export function formatDetail(plan: PlanRow): string {
     return `Min. ${plan.minimumCommitmentMonths} month${plan.minimumCommitmentMonths > 1 ? 's' : ''}`;
   }
   return '';
+}
+
+/**
+ * Returns true if the user has ever held a subscription-type membership.
+ * Used to enforce the trial-once rule: trial plans are only available to
+ * members who have never had a subscription (punch cards and walk-ins don't count).
+ */
+import { prisma } from '@/lib/db';
+
+export async function hasHadSubscription(userId: number): Promise<boolean> {
+  const count = await prisma.membership.count({
+    where: {
+      userId,
+      membershipPlan: { type: 'subscription' },
+    },
+  });
+  return count > 0;
 }
